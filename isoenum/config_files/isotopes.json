@@ -1,0 +1,18 @@
+{
+    "C": {
+        "isotopes": ["12", "13"],
+        "default": "12"
+    },
+    "H": {
+        "isotopes": ["1", "2", "3"],
+        "default": "1"
+    },
+    "N": {
+        "isotopes": ["14", "15"],
+        "default": "14"
+    },
+    "O": {
+        "isotopes": ["16", "17"],
+        "default": "16"
+    }
+}
