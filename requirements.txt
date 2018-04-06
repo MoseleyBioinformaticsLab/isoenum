@@ -1,2 +1,2 @@
-docopt
-ctfile
+docopt >= 0.6.2
+ctfile >= 0.1.0
