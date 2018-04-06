@@ -5,7 +5,7 @@
 isoenum.conf
 ~~~~~~~~~~~~
 
-This module provides configuration files necessary for 
+This module provides processing of configuration files necessary for 
 isotopic enumerator.
 """
 
