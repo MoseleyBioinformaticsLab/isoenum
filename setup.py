@@ -29,7 +29,7 @@ def find_version():
 
 REQUIRES = [
     'docopt >= 0.6.2',
-    'ctfile'
+    'ctfile >= 0.1.0'
 ]
 
 
@@ -59,5 +59,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Topic :: Software Development :: Libraries :: Python Modules',
-    ],
+    ]
 )
