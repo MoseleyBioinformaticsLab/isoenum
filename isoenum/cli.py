@@ -68,25 +68,29 @@ def cli(cmdargs):
         existing_iso = ['{}-{}-{}'.format(isotope['atom_symbol'], isotope['isotope'], isotope['position'])
                         for isotope in ctf.iso]
 
+        ctfile_atoms = ctf.atoms
+        ctfile_positions = ctf.positions
+
+
         all_param_iso = _all_param_ok(isotopes=all_param_iso,
                                       isotopes_conf=isotopes_conf,
-                                      ctfile_atoms=ctf.atoms,
-                                      ctfile_positions=ctf.positions)
+                                      ctfile_atoms=ctfile_atoms,
+                                      ctfile_positions=ctfile_positions)
 
         specific_param_iso = _specific_param_ok(isotopes=specific_param_iso,
                                                 isotopes_conf=isotopes_conf,
-                                                ctfile_atoms=ctf.atoms,
-                                                ctfile_positions=ctf.positions)
+                                                ctfile_atoms=ctfile_atoms,
+                                                ctfile_positions=ctfile_positions)
 
         existing_iso = _specific_param_ok(isotopes=existing_iso,
                                           isotopes_conf=isotopes_conf,
-                                          ctfile_atoms=ctf.atoms,
-                                          ctfile_positions=ctf.positions)
+                                          ctfile_atoms=ctfile_atoms,
+                                          ctfile_positions=ctfile_positions)
 
         enumerate_param_iso = _enumerate_param_ok(enumerate_param=enumerate_param_iso,
                                                   all_param=all_param_iso,
                                                   isotopes_conf=isotopes_conf,
-                                                  ctfile_atoms=ctf.atoms)
+                                                  ctfile_atoms=ctfile_atoms)
 
         labeling_schema = _create_labeling_schema(full_labeling_schema=cmdargs['--full'],
                                                   ignore_existing_isotopes=cmdargs['--ignore-iso'],
@@ -95,8 +99,8 @@ def cli(cmdargs):
                                                   specific_param_iso=specific_param_iso,
                                                   existing_iso=existing_iso,
                                                   isotopes_conf=isotopes_conf,
-                                                  ctfile_atoms=ctf.atoms,
-                                                  ctfile_positions=ctf.positions)
+                                                  ctfile_atoms=ctfile_atoms,
+                                                  ctfile_positions=ctfile_positions)
 
         for schema in labeling_schema:
             e = Enumerator(ctf)
@@ -257,7 +261,7 @@ def _create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
     :param list ctfile_atoms: List of atoms.
     :param list ctfile_positions: List of atom positions.
     :return: Labeling schema.
-    :rtype: dict
+    :rtype: :py:class:`list`
     """
     ctfile_position_atom = dict(zip(ctfile_positions, ctfile_atoms))
     starting_iso = {}
@@ -278,36 +282,35 @@ def _create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
     if not enumerate_param_iso:
         # add default isotopes if "--full" parameter is specified
         if full_labeling_schema:
-            for position in ctfile_positions:
-                if position not in starting_iso:
-                    atom = ctfile_position_atom[position]
-                    isotope = isotopes_conf[atom]['default']
-                    starting_iso[position] = {"atom_symbol": atom, "isotope": isotope, "position": position}
+            default_iso = _default_isotopes(ctfile_atoms, ctfile_positions, isotopes_conf, starting_iso)
+            starting_iso.update(default_iso)
 
         labeling_schema = sorted(starting_iso.values(), key=lambda k: int(k['position']))
         yield labeling_schema
 
     else:
-        atom_isotope = defaultdict(set)
-        for entry in enumerate_param_iso:
-            atom_isotope[entry['atom_symbol']].add(entry['isotope'])
-            atom_isotope[entry['atom_symbol']].add(None)  # None designates that isotope is not specified
+        isotopes_per_atom = defaultdict(set)
 
-        enum = defaultdict(list)
+        for entry in enumerate_param_iso:
+            isotopes_per_atom[entry['atom_symbol']].add(entry['isotope'])
+            isotopes_per_atom[entry['atom_symbol']].add(None)  # None designates that isotope is not specified
+
+        list_of_isotopes_per_position = defaultdict(list)
         for position, atom in ctfile_position_atom.items():
-            enum[position].extend(atom_isotope.get(atom, [None]))
+            list_of_isotopes_per_position[position].extend(isotopes_per_atom.get(atom, [None]))
 
         for entry in starting_iso.values():
-            enum[entry['position']] = [entry['isotope']]
+            list_of_isotopes_per_position[entry['position']] = [entry['isotope']]
 
-        enum_sorted_by_position = [enum[iso] for iso in sorted(enum, key=int)]
-        labeling_product = itertools.product(*enum_sorted_by_position)
+        list_of_isotopes_per_position_sorted_by_position = [list_of_isotopes_per_position[iso] for iso in
+                                                            sorted(list_of_isotopes_per_position, key=int)]
 
+        labeling_product = itertools.product(*list_of_isotopes_per_position_sorted_by_position)
         for prod in labeling_product:
             labeling_schema = {}
 
-            atom_isotope = ['{}-{}'.format(atom, isotope) for atom, isotope in zip(ctfile_atoms, prod)]
-            counter = Counter(atom_isotope)
+            isotopes_per_atom = ['{}-{}'.format(atom, isotope) for atom, isotope in zip(ctfile_atoms, prod)]
+            counter = Counter(isotopes_per_atom)
 
             valid_labeling = [True
                               if entry['min'] <= counter['{}-{}'.format(entry['atom_symbol'],
@@ -320,14 +323,35 @@ def _create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
                     if isotope:
                         labeling_schema[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
 
-            labeling_schema = sorted(labeling_schema.values(), key=lambda k: int(k['position']))
+            if full_labeling_schema:
+                default_iso = _default_isotopes(ctfile_atoms, ctfile_positions, isotopes_conf, labeling_schema)
+                labeling_schema.update(default_iso)
 
+            labeling_schema = sorted(labeling_schema.values(), key=lambda k: int(k['position']))
             if labeling_schema:
                 yield labeling_schema
 
 
-def _add_default_isotopes(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
-    pass
+def _default_isotopes(ctfile_atoms, ctfile_positions, isotopes_conf, starting_iso):
+    """Create dictionary with default isotopes.
+    
+    :param list ctfile_atoms: List of atoms.
+    :param list ctfile_positions: List of atom positions.
+    :param dict isotopes_conf: Default isotopes.
+    :param dict starting_iso: Starting isotopes. 
+    :return: Default isotopes.
+    :rtype: :py:class:`dict`
+    """
+    default_iso = {}
+
+    ctfile_position_atom = dict(zip(ctfile_positions, ctfile_atoms))
+
+    for position in ctfile_positions:
+        if position not in starting_iso:
+            atom = ctfile_position_atom[position]
+            isotope = isotopes_conf[atom]['default']
+            default_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
+    return default_iso
 
 
 def _unpack_isotopes(param):
