@@ -36,7 +36,7 @@ from collections import defaultdict
 from collections import Counter
 
 import ctfile
-from .enumerator import Enumerator
+from .iso_property import create_iso_property
 from .openbabel import mol_to_inchi
 from .openbabel import inchi_to_mol
 from .conf import isotopes_conf
@@ -70,7 +70,6 @@ def cli(cmdargs):
         ctfile_atoms = ctf.atoms
         ctfile_positions = ctf.positions
 
-
         all_param_iso = _all_param_ok(isotopes=all_param_iso,
                                       isotopes_conf=isotopes_conf,
                                       ctfile_atoms=ctfile_atoms,
@@ -102,11 +101,8 @@ def cli(cmdargs):
                                                  ctfile_positions=ctfile_positions)
 
         for schema in labeling_schema:
-            e = Enumerator(ctf)
-            iso_property_generator = e.isoenum(labeling_schema=schema)
-
-            for new_iso_property in iso_property_generator:
-                ctf['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
+            new_iso_property = create_iso_property(labeling_schema=schema)
+            ctf['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
 
             with tempfile.NamedTemporaryFile() as moltempfh, tempfile.NamedTemporaryFile() as inchitempfh:
                 moltempfh.write(bytes(ctf.writestr(file_format='ctfile'), encoding='utf-8'))
