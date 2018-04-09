@@ -253,7 +253,9 @@ def _create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
                             isotopes_conf, ctfile_atoms, ctfile_positions):
     """Create labeling schema.
 
-    :param full_labeling_schema: 
+    :param bool full_labeling_schema: Specifies if default isotopes to be added to isotopic layer.
+    :param bool ignore_existing_isotopes: Specifies if will ignore existing isotopic layer.
+    :param list enumerate_param_iso: List of isotope strings from `--enumerate` parameter. 
     :param list all_param_iso: List of isotope strings from `--all` parameter.
     :param list specific_param_iso: List of isotope strings from `--specific` parameter.
     :param list existing_iso: List of isotope strings that were defined within `CTfile` or `InChI`.
