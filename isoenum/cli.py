@@ -52,12 +52,18 @@ def cli(cmdargs):
     """
     if cmdargs['name']:
         if cmdargs['--ctfile']:
-            ctf = ctfile.read_file(path=cmdargs['--ctfile'])
+            path = cmdargs['--ctfile']
+
+            with open(path, 'r') as infile:
+                ctf = ctfile.load(infile)
 
         elif cmdargs["--inchi"]:
             with tempfile.NamedTemporaryFile() as moltempfh:
                 inchi_to_mol(infilename=cmdargs["--inchi"], outfilename=moltempfh.name)
-                ctf = ctfile.read_file(path=moltempfh.name)
+                path = moltempfh.name
+
+                with open(path, 'r') as infile:
+                    ctf = ctfile.load(infile)
         else:
             raise ValueError('Incorrect input.')
 
