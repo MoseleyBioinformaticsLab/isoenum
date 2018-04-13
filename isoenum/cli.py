@@ -281,7 +281,7 @@ def _create_ctfile(path):
 def _create_ctfile_from_inchi(path):
     """Creates ``CTfile`` from ``InChI`` identifier.
     
-    :param str path: 
+    :param str path: Path to file containing ``InChI`` identifier.
     :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
     :rtype: :class:`~ctfile.ctfile.CTfile`.
     """
