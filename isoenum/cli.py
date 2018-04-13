@@ -7,7 +7,7 @@ Isotopic enumerator (isoenum) command-line interface
 Usage:
     isoenum -h | --help
     isoenum --version
-    isoenum name (<path-to-ctfile-inchi-file-or-inchi-string>) 
+    isoenum name (<path-to-ctfile-file-or-inchi-file-or-inchi-string>) 
                  [--specific=<element-isotope-position>...] 
                  [--all=<element-isotope>...] 
                  [--enumerate=<element-isotope-count>...] 
@@ -52,7 +52,7 @@ def cli(cmdargs):
     """
     if cmdargs['name']:
 
-        path = cmdargs['<path-to-ctfile-inchi-file-or-inchi-string>']
+        path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
 
         try:
             ctf = _create_ctfile(path)
