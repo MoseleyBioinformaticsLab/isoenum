@@ -7,18 +7,17 @@ Isotopic enumerator (isoenum) command-line interface
 Usage:
     isoenum -h | --help
     isoenum --version
-    isoenum name (--ctfile=<path> | --inchi=<path-or-string>) [--specific=<element-isotope-position>...] 
-                 [--all=<element-isotope>...] [--enumerate=<element-isotope-count>...] 
-                 [--full | --partial] [--ignore-iso]
+    isoenum name (<path-to-ctfile-inchi-file-or-inchi-string>) 
+                 [--specific=<element-isotope-position>...] 
+                 [--all=<element-isotope>...] 
+                 [--enumerate=<element-isotope-count>...] 
+                 [--full | --partial] 
+                 [--ignore-iso]
 
 Options:
     -h, --help                                 Show this screen.
     --version                                  Show version.
     --verbose                                  Print what files are processing.
-
-    --ctfile=<path>                            Path to CTfile (e.g. Molfile or SDfile).
-    --inchi=<path-or-string>                   Path to file containing standard InChI or InChI string.
-
     -a, --all=<element-isotope>                Specify element and isotope, e.g. -a C-13 or --all=C-13
     -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
                                                e.g. -s C-13-1 or --specific=C-13-1.
@@ -32,6 +31,7 @@ Options:
 """
 
 import tempfile
+import os
 from collections import defaultdict
 from collections import Counter
 
@@ -51,21 +51,13 @@ def cli(cmdargs):
     :rtype: :py:obj:`None`
     """
     if cmdargs['name']:
-        if cmdargs['--ctfile']:
-            path = cmdargs['--ctfile']
 
-            with open(path, 'r') as infile:
-                ctf = ctfile.load(infile)
+        path = cmdargs['<path-to-ctfile-inchi-file-or-inchi-string>']
 
-        elif cmdargs["--inchi"]:
-            with tempfile.NamedTemporaryFile() as moltempfh:
-                inchi_to_mol(infilename=cmdargs["--inchi"], outfilename=moltempfh.name)
-                path = moltempfh.name
-
-                with open(path, 'r') as infile:
-                    ctf = ctfile.load(infile)
-        else:
-            raise ValueError('Incorrect input.')
+        try:
+            ctf = _create_ctfile(path)
+        except:
+            raise SystemExit('Unknown file path or string provided: {}'.format(path))
 
         enumerate_param_iso = _unpack_isotopes(cmdargs['--enumerate'])
         all_param_iso = _unpack_isotopes(cmdargs['--all'])
@@ -110,13 +102,13 @@ def cli(cmdargs):
             new_iso_property = create_iso_property(labeling_schema=schema)
             ctf['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
 
-            with tempfile.NamedTemporaryFile() as moltempfh, tempfile.NamedTemporaryFile() as inchitempfh:
-                moltempfh.write(bytes(ctf.writestr(file_format='ctfile'), encoding='utf-8'))
+            with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
+                moltempfh.write(ctf.writestr(file_format='ctfile'))
                 moltempfh.flush()
                 mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
 
-                inchi_result = inchitempfh.read().decode()
-                print("result:", inchi_result)
+                inchi_result = inchitempfh.read()
+                print(inchi_result)
 
 
 def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms):
@@ -260,3 +252,48 @@ def _unpack_isotopes(param):
     for isotopestr in param:
         isotopes.extend(isotopestr.split(','))
     return isotopes
+
+
+def _create_ctfile(path):
+    """Guesses what type of path is provided, i.e. is it existing file in ``Molfile`` format, 
+    existing file in ``SDfile`` file format, existing file containing ``InChI`` string, 
+    or ``InChI`` string and tries to create ``CTfile`` object.
+    
+    :param str path: Path to ``Molfile``, ``SDfile``, ``InChI``, or ``InChI`` string.
+    :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
+    :rtype: :class:`~ctfile.ctfile.CTfile`.
+    """
+    if os.path.isfile(path):
+        with open(path, 'r') as infile:
+            string = infile.read()
+
+            try:
+                ctf = ctfile.loadstr(string)
+                return ctf
+
+            except IndexError:
+                return _create_ctfile_from_inchi(path=path)
+    else:
+        if not path.lower().startswith('inchi='):
+            inchi_str = 'InChI={}'.format(path)
+        else:
+            inchi_str = path
+
+        with tempfile.NamedTemporaryFile(mode='w') as tempfh:
+            tempfh.write(inchi_str)
+            tempfh.flush()
+            return _create_ctfile_from_inchi(path=tempfh.name)
+
+
+def _create_ctfile_from_inchi(path):
+    """Creates ``CTfile`` from ``InChI`` identifier.
+    
+    :param str path: 
+    :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
+    :rtype: :class:`~ctfile.ctfile.CTfile`.
+    """
+    with tempfile.NamedTemporaryFile() as tempfh:
+        inchi_to_mol(infilename=path, outfilename=tempfh.name)
+        with open(tempfh.name, 'r') as infile:
+            ctf = ctfile.load(infile)
+            return ctf
