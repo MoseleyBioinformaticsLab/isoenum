@@ -268,8 +268,7 @@ def _create_ctfile(path):
             string = infile.read()
 
             try:
-                ctf = ctfile.loadstr(string)
-                return ctf
+                return ctfile.loadstr(string)
 
             except IndexError:
                 return _create_ctfile_from_inchi(path=path)
@@ -295,5 +294,4 @@ def _create_ctfile_from_inchi(path):
     with tempfile.NamedTemporaryFile() as tempfh:
         inchi_to_mol(infilename=path, outfilename=tempfh.name)
         with open(tempfh.name, 'r') as infile:
-            ctf = ctfile.load(infile)
-            return ctf
+            return ctfile.load(infile)
