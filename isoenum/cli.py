@@ -17,7 +17,7 @@ Usage:
 Options:
     -h, --help                                 Show this screen.
     --version                                  Show version.
-    --verbose                                  Print what files are processing.
+    --verbose                                  Print more information.
     -a, --all=<element-isotope>                Specify element and isotope, e.g. -a C-13 or --all=C-13
     -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
                                                e.g. -s C-13-1 or --specific=C-13-1.
@@ -101,14 +101,8 @@ def cli(cmdargs):
         for schema in labeling_schema:
             new_iso_property = create_iso_property(labeling_schema=schema)
             ctf['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
-
-            with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
-                moltempfh.write(ctf.writestr(file_format='ctfile'))
-                moltempfh.flush()
-                mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
-
-                inchi_result = inchitempfh.read()
-                print(inchi_result)
+            inchi_result = _create_inchi_from_ctfile(ctf)
+            print(inchi_result)
 
 
 def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms):
@@ -295,3 +289,19 @@ def _create_ctfile_from_inchi(path):
         inchi_to_mol(infilename=path, outfilename=tempfh.name)
         with open(tempfh.name, 'r') as infile:
             return ctfile.load(infile)
+
+
+def _create_inchi_from_ctfile(ctf):
+    """Create ``InChI`` from ``CTfile`` instance.
+    
+    :param ctf: Instance of :class:`~ctfile.ctfile.CTfile`.
+    :type ctf: :class:`~ctfile.ctfile.CTfile`
+    :return: ``InChI`` string.
+    :rtype: :py:class:`str` 
+    """
+    with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
+        moltempfh.write(ctf.writestr(file_format='ctfile'))
+        moltempfh.flush()
+        mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
+        inchi_result = inchitempfh.read()
+        return inchi_result
