@@ -4,7 +4,7 @@
 from ctfile.conf import ctab_properties_conf
 
 
-def create_iso_property(labeling_schema, version='V2000'):
+def create_iso_property(labeling_schema, ctab_properties_conf=ctab_properties_conf, version='V2000'):
     """Create "ISO" property block.
 
     :param list labeling_schema: Labeling schema containing info about atom, isotope, and its position.
