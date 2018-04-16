@@ -26,5 +26,19 @@ This package includes the following modules:
     between ``InChI`` and ``CTfile`` formatted files. 
 """
 
+import logging
+
 
 __version__ = '0.1.0'
+
+
+try:  # Python 2/3 compatibility code
+    from logging import NullHandler
+except ImportError:
+    class NullHandler(logging.Handler):
+        def emit(self, record):
+            pass
+
+
+# Setting default logging handler
+logging.getLogger(__name__).addHandler(NullHandler())
