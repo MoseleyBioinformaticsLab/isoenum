@@ -1,6 +1,20 @@
 isoenum
 =======
 
+
+.. image:: https://img.shields.io/pypi/l/isoenum.svg
+   :target: https://choosealicense.com/licenses/bsd-3-clause-clear/
+   :alt: License information
+
+.. image:: https://img.shields.io/pypi/v/isoenum.svg
+   :target: https://pypi.org/project/isoenum
+   :alt: Current library version
+
+.. image:: https://img.shields.io/pypi/pyversions/isoenum.svg
+   :target: https://pypi.org/project/isoenum
+   :alt: Supported Python versions
+
+
 Isotopic (``iso``) enumerator (``enum``) - create isotopically resolved
 InChI (`International Chemical Identifier`_) for metabolites.
 
