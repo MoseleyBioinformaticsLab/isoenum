@@ -59,50 +59,57 @@ def cli(cmdargs):
         except:
             raise SystemExit('Unknown file path or string provided: {}'.format(path))
 
-        enumerate_param_iso = _unpack_isotopes(cmdargs['--enumerate'])
-        all_param_iso = _unpack_isotopes(cmdargs['--all'])
-        specific_param_iso = _unpack_isotopes(cmdargs['--specific'])
-        existing_iso = ['{}-{}-{}'.format(isotope['atom_symbol'], isotope['isotope'], isotope['position'])
-                        for isotope in ctf.iso]
+        if isinstance(ctf, ctfile.ctfile.Molfile) or isinstance(ctf, ctfile.ctfile.SDfile):
+            molfiles = ctf.molfiles
+        else:
+            raise ValueError('Unknow "CTfile" type.')
 
-        ctfile_atoms = ctf.atoms
-        ctfile_positions = ctf.positions
+        for molfile in molfiles:
 
-        all_param_iso = _all_param_ok(isotopes=all_param_iso,
-                                      isotopes_conf=isotopes_conf,
-                                      ctfile_atoms=ctfile_atoms,
-                                      ctfile_positions=ctfile_positions)
+            enumerate_param_iso = _unpack_isotopes(cmdargs['--enumerate'])
+            all_param_iso = _unpack_isotopes(cmdargs['--all'])
+            specific_param_iso = _unpack_isotopes(cmdargs['--specific'])
+            existing_iso = ['{}-{}-{}'.format(isotope['atom_symbol'], isotope['isotope'], isotope['position'])
+                            for isotope in molfile.iso]
 
-        specific_param_iso = _specific_param_ok(isotopes=specific_param_iso,
-                                                isotopes_conf=isotopes_conf,
-                                                ctfile_atoms=ctfile_atoms,
-                                                ctfile_positions=ctfile_positions)
+            ctfile_atoms = molfile.atoms
+            ctfile_positions = molfile.positions
 
-        existing_iso = _specific_param_ok(isotopes=existing_iso,
+            all_param_iso = _all_param_ok(isotopes=all_param_iso,
                                           isotopes_conf=isotopes_conf,
                                           ctfile_atoms=ctfile_atoms,
                                           ctfile_positions=ctfile_positions)
 
-        enumerate_param_iso = _enumerate_param_ok(enumerate_param=enumerate_param_iso,
-                                                  all_param=all_param_iso,
-                                                  isotopes_conf=isotopes_conf,
-                                                  ctfile_atoms=ctfile_atoms)
+            specific_param_iso = _specific_param_ok(isotopes=specific_param_iso,
+                                                    isotopes_conf=isotopes_conf,
+                                                    ctfile_atoms=ctfile_atoms,
+                                                    ctfile_positions=ctfile_positions)
 
-        labeling_schema = create_labeling_schema(full_labeling_schema=cmdargs['--full'],
-                                                 ignore_existing_isotopes=cmdargs['--ignore-iso'],
-                                                 enumerate_param_iso=enumerate_param_iso,
-                                                 all_param_iso=all_param_iso,
-                                                 specific_param_iso=specific_param_iso,
-                                                 existing_iso=existing_iso,
-                                                 isotopes_conf=isotopes_conf,
-                                                 ctfile_atoms=ctfile_atoms,
-                                                 ctfile_positions=ctfile_positions)
+            existing_iso = _specific_param_ok(isotopes=existing_iso,
+                                              isotopes_conf=isotopes_conf,
+                                              ctfile_atoms=ctfile_atoms,
+                                              ctfile_positions=ctfile_positions)
 
-        for schema in labeling_schema:
-            new_iso_property = create_iso_property(labeling_schema=schema)
-            ctf['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
-            inchi_result = _create_inchi_from_ctfile(ctf)
-            print(inchi_result)
+            enumerate_param_iso = _enumerate_param_ok(enumerate_param=enumerate_param_iso,
+                                                      all_param=all_param_iso,
+                                                      isotopes_conf=isotopes_conf,
+                                                      ctfile_atoms=ctfile_atoms)
+
+            labeling_schema = create_labeling_schema(full_labeling_schema=cmdargs['--full'],
+                                                     ignore_existing_isotopes=cmdargs['--ignore-iso'],
+                                                     enumerate_param_iso=enumerate_param_iso,
+                                                     all_param_iso=all_param_iso,
+                                                     specific_param_iso=specific_param_iso,
+                                                     existing_iso=existing_iso,
+                                                     isotopes_conf=isotopes_conf,
+                                                     ctfile_atoms=ctfile_atoms,
+                                                     ctfile_positions=ctfile_positions)
+
+            for schema in labeling_schema:
+                new_iso_property = create_iso_property(labeling_schema=schema)
+                molfile['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
+                inchi_result = _create_inchi_from_ctfile(ctf)
+                print(inchi_result)
 
 
 def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms):
