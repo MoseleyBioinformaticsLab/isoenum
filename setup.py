@@ -29,7 +29,7 @@ def find_version():
 
 REQUIRES = [
     'docopt >= 0.6.2',
-    'ctfile >= 0.1.0'
+    'ctfile >= 0.1.3'
 ]
 
 
@@ -43,6 +43,7 @@ setup(
     license='BSD',
     url='https://github.com/MoseleyBioinformaticsLab/isoenum',
     packages=find_packages(),
+    package_data={'isoenum': ['config_files/*.json']},
     platforms='any',
     long_description=readme(),
     install_requires=REQUIRES,
