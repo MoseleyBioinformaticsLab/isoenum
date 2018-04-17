@@ -29,8 +29,8 @@ def mol_to_inchi(infilename, outfilename):
     :return: None.
     :rtype: :py:obj:`None`
     """
-    result = subprocess.run(['obabel', '-imol', '{}'.format(infilename),
-                             '-oinchi', '-O{}'.format(outfilename)], stdout=subprocess.PIPE)
+    result = subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
+                                      '-oinchi', '-O{}'.format(outfilename)], shell=False)
 
 
 def inchi_to_mol(infilename, outfilename):
@@ -41,5 +41,5 @@ def inchi_to_mol(infilename, outfilename):
     :return: None.
     :rtype: :py:obj:`None`
     """
-    result = subprocess.run(['obabel', '-iinchi', '{}'.format(infilename),
-                             '-omol', '-O{}'.format(outfilename), '--gen3D'], stdout=subprocess.PIPE)
+    result = subprocess.check_output(['obabel', '-iinchi', '{}'.format(infilename),
+                                      '-omol', '-O{}'.format(outfilename), '--gen3D'], shell=False)
