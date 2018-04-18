@@ -18,6 +18,10 @@ isoenum
    :target: https://travis-ci.org/MoseleyBioinformaticsLab/isoenum
    :alt: Travis CI status
 
+.. image:: https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum/branch/master/graphs/badge.svg?branch=master
+   :target: https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum
+   :alt: Code coverage information
+
 
 Isotopic (``iso``) enumerator (``enum``) - create isotopically resolved
 InChI (`International Chemical Identifier`_) for metabolites.
