@@ -57,7 +57,7 @@ def cli(cmdargs):
         try:
             ctf = _create_ctfile(path)
         except:
-            raise SystemExit('Unknown file path or string provided: {}'.format(path))
+            raise
 
         if isinstance(ctf, ctfile.ctfile.Molfile) or isinstance(ctf, ctfile.ctfile.SDfile):
             molfiles = ctf.molfiles
