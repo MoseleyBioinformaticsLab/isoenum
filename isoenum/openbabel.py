@@ -13,12 +13,14 @@ import subprocess
 
 
 try:
-    openbabel_version_test = subprocess.run(['obabel', '-V'], stdout=subprocess.PIPE)
-    if not openbabel_version_test.returncode == 0:
-        raise SystemExit
-except FileNotFoundError:
-    print('Open Babel software is not installed, exiting.')
-    raise SystemExit
+    openbabel_version_test = subprocess.check_output(['obabel', '-V'])
+    openbabel_version = openbabel_version_test.decode('utf-8')
+    if not openbabel_version.startswith('Open Babel'):
+        raise SystemExit('Open Babel version information cannot be found: {}'.format(openbabel_version))
+except OSError:
+    raise SystemExit('Open Babel software is not installed, exiting. '
+                     'See installation instructions to get Open Babel '
+                     'software for your system: http://openbabel.org/wiki/Get_Open_Babel')
 
 
 def mol_to_inchi(infilename, outfilename):
