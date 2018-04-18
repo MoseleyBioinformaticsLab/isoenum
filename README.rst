@@ -14,6 +14,10 @@ isoenum
    :target: https://pypi.org/project/isoenum
    :alt: Supported Python versions
 
+.. image:: https://travis-ci.org/MoseleyBioinformaticsLab/isoenum.svg?branch=master
+   :target: https://travis-ci.org/MoseleyBioinformaticsLab/isoenum
+   :alt: Travis CI status
+
 
 Isotopic (``iso``) enumerator (``enum``) - create isotopically resolved
 InChI (`International Chemical Identifier`_) for metabolites.
