@@ -14,5 +14,5 @@ import pytest
     ('-e C-13', 'tests/example_data/bmse000040.inchi')
 ])
 def test_name_command(path, parameters):
-    command = "python3 -m isoenum name {} {}".format(path, parameters)
+    command = "python -m isoenum name {} {}".format(path, parameters)
     assert os.system(command) == 0
