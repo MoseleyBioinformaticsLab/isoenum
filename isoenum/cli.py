@@ -34,6 +34,7 @@ Options:
     -r, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
     -o, --output=<path>                        Path to output file.
 """
+from __future__ import print_function, division, unicode_literals
 
 import tempfile
 import os
@@ -121,14 +122,14 @@ def cli(cmdargs):
                 new_iso_property = create_iso_property(labeling_schema=schema)
                 molfile['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
 
-                inchi_string = _create_inchi_from_ctfile(molfile)
+                inchi_str = _create_inchi_from_ctfile_obj(molfile)
 
                 # need to create new ctfile from inchi string in order to normalize it
                 # in case original file had wrong atom numbering
-                new_molfile = _create_ctfile(inchi_string)
+                new_molfile = _create_ctfile_from_inchi_str(inchi_str=inchi_str)
 
-                new_molfile_string = new_molfile.writestr(file_format='ctfile')
-                results.append({'inchi': inchi_string, 'molfile': new_molfile_string})
+                new_molfile_str = new_molfile.writestr(file_format='ctfile')
+                results.append({'inchi': inchi_str, 'molfile': new_molfile_str})
 
         _create_output(results, path=cmdargs['--output'], format=cmdargs['--format'])
 
@@ -293,20 +294,30 @@ def _create_ctfile(path):
                 return ctfile.loadstr(string)
 
             except IndexError:
-                return _create_ctfile_from_inchi(path=path)
+                return _create_ctfile_from_inchi_file(path=path)
     else:
-        if not path.lower().startswith('inchi='):
-            inchi_str = 'InChI={}'.format(path)
-        else:
-            inchi_str = path
-
-        with tempfile.NamedTemporaryFile(mode='w') as tempfh:
-            tempfh.write(inchi_str)
-            tempfh.flush()
-            return _create_ctfile_from_inchi(path=tempfh.name)
+        return _create_ctfile_from_inchi_str(inchi_str=path)
 
 
-def _create_ctfile_from_inchi(path):
+def _create_ctfile_from_inchi_str(inchi_str):
+    """Create ``CTfile`` object from ``InChI`` string.
+    
+    :param str inchi_str: ``InChI`` string. 
+    :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
+    :rtype: :class:`~ctfile.ctfile.CTfile`. 
+    """
+    if not inchi_str.lower().startswith('inchi='):
+        inchi_str = 'InChI={}'.format(inchi_str)
+    else:
+        inchi_str = inchi_str
+
+    with tempfile.NamedTemporaryFile(mode='w') as tempfh:
+        tempfh.write(inchi_str)
+        tempfh.flush()
+        return _create_ctfile_from_inchi_file(path=tempfh.name)
+
+
+def _create_ctfile_from_inchi_file(path):
     """Creates ``CTfile`` from ``InChI`` identifier.
     
     :param str path: Path to file containing ``InChI`` identifier.
@@ -319,7 +330,7 @@ def _create_ctfile_from_inchi(path):
             return ctfile.load(infile)
 
 
-def _create_inchi_from_ctfile(ctf):
+def _create_inchi_from_ctfile_obj(ctf):
     """Create ``InChI`` from ``CTfile`` instance.
     
     :param ctf: Instance of :class:`~ctfile.ctfile.CTfile`.
