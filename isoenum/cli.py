@@ -122,13 +122,13 @@ def cli(cmdargs):
                 new_iso_property = create_iso_property(labeling_schema=schema)
                 molfile['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
 
-                inchi_str = _create_inchi_from_ctfile_obj(molfile)
+                inchi_str = '{}'.format(_create_inchi_from_ctfile_obj(molfile))
 
                 # need to create new ctfile from inchi string in order to normalize it
                 # in case original file had wrong atom numbering
                 new_molfile = _create_ctfile_from_inchi_str(inchi_str=inchi_str)
 
-                new_molfile_str = new_molfile.writestr(file_format='ctfile')
+                new_molfile_str = '{}'.format(new_molfile.writestr(file_format='ctfile'))
                 results.append({'inchi': inchi_str, 'molfile': new_molfile_str})
 
         _create_output(results, path=cmdargs['--output'], format=cmdargs['--format'])
