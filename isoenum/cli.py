@@ -13,11 +13,14 @@ Usage:
                  [--enumerate=<element-isotope-count>...] 
                  [--full | --partial] 
                  [--ignore-iso]
+                 [--format=<format>]
+                 [--output=<path>]
+                 [--verbose]
 
 Options:
     -h, --help                                 Show this screen.
-    --version                                  Show version.
     --verbose                                  Print more information.
+    -v, --version                              Show version.
     -a, --all=<element-isotope>                Specify element and isotope, e.g. -a C-13 or --all=C-13
     -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
                                                e.g. -s C-13-1 or --specific=C-13-1.
@@ -28,10 +31,14 @@ Options:
     -p, --partial                              Use partial labeling schema, i.e. generate labeling schema
                                                from the provided labeling information.
     -i, --ignore-iso                           Ignore "ISO" specification in the CTfile or InChI.
+    -r, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
+    -o, --output=<path>                        Path to output file.
 """
 
 import tempfile
 import os
+import sys
+import io
 from collections import defaultdict
 from collections import Counter
 
@@ -63,6 +70,11 @@ def cli(cmdargs):
             molfiles = ctf.molfiles
         else:
             raise ValueError('Unknow "CTfile" type.')
+
+        if cmdargs['--format'] not in ('inchi', 'mol', 'sdf'):
+            raise ValueError('Unknown output format provided: "{}"'.format(cmdargs['--format']))
+
+        results = []
 
         for molfile in molfiles:
 
@@ -108,8 +120,17 @@ def cli(cmdargs):
             for schema in labeling_schema:
                 new_iso_property = create_iso_property(labeling_schema=schema)
                 molfile['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
-                inchi_result = _create_inchi_from_ctfile(ctf)
-                print(inchi_result)
+
+                inchi_string = _create_inchi_from_ctfile(molfile)
+
+                # need to create new ctfile from inchi string in order to normalize it
+                # in case original file had wrong atom numbering
+                new_molfile = _create_ctfile(inchi_string)
+
+                new_molfile_string = new_molfile.writestr(file_format='ctfile')
+                results.append({'inchi': inchi_string, 'molfile': new_molfile_string})
+
+        _create_output(results, path=cmdargs['--output'], format=cmdargs['--format'])
 
 
 def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms):
@@ -312,3 +333,57 @@ def _create_inchi_from_ctfile(ctf):
         mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
         inchi_result = inchitempfh.read()
         return inchi_result
+
+
+def _create_output(results, path=None, format='inchi'):
+    """Create output containing conversion results.
+    
+    :param list results: List of dictionaries, each containing ``InChI`` string and corresponding ``Molfile`` string.
+    :param str path: Path to where file will be saved. 
+    :param str format: File format: 'inchi', 'mol', or 'sdf'. 
+    :return: None.
+    :rtype: :py:obj:`None`
+    """
+    output_format = format.lower()
+
+    if output_format == 'inchi':
+        output = io.StringIO()
+
+        for result in results:
+            inchi_string = result['inchi']
+            output.write(inchi_string)
+
+    elif output_format in ('mol', 'sdf'):
+        output = io.StringIO()
+
+        for result in results:
+            molfile_string = result['molfile']
+            inchi_string = result['inchi']
+
+            output.write(molfile_string)
+            output.write('> <InChI>\n')
+            output.write(inchi_string)
+            output.write('\n')
+            output.write('$$$$\n')
+
+    else:
+        raise ValueError('Unknown output format provided: "{}"'.format(format))
+
+    if path:
+        dirpath, basename = os.path.split(os.path.normpath(path))
+        filename, extension = os.path.splitext(basename)
+
+        if not extension:
+            extension = '.{}'.format(output_format)
+
+        filename = '{}{}'.format(filename, extension)
+        filepath = os.path.join(dirpath, filename)
+
+        if dirpath and not os.path.exists(dirpath):
+            raise IOError('Directory does not exist: "{}"'.format(dirpath))
+
+        with open(filepath, 'w') as outfile:
+            print(output.getvalue(), file=outfile)
+
+    else:
+        print(output.getvalue(), file=sys.stdout)
