@@ -2,6 +2,7 @@ include README.rst
 include LICENSE
 include CHANGELOG.rst
 include requirements.txt
+include Dockerfile
 include docs/Makefile
 include isoenum/config_files/*.json
 recursive-include docs *.rst *.txt *.py *.png *.svg
