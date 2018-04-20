@@ -22,6 +22,20 @@ isoenum
    :target: https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum
    :alt: Code coverage information
 
+|
+
+.. image:: https://img.shields.io/docker/automated/moseleybioinformaticslab/isoenum.svg
+   :target: https://github.com/MoseleyBioinformaticsLab/isoenum
+   :alt: Docker automated build
+
+.. image:: https://img.shields.io/docker/build/moseleybioinformaticslab/isoenum.svg
+   :target: https://hub.docker.com/r/moseleybioinformaticslab/isoenum
+   :alt: Docker build status
+
+.. image:: https://img.shields.io/docker/pulls/moseleybioinformaticslab/isoenum.svg
+   :target: https://hub.docker.com/r/moseleybioinformaticslab/isoenum
+   :alt: Docker pulls status
+
 
 Isotopic (``iso``) enumerator (``enum``) - create isotopically resolved
 InChI (`International Chemical Identifier`_) for metabolites.
