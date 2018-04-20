@@ -34,6 +34,7 @@ Options:
     -r, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
     -o, --output=<path>                        Path to output file.
 """
+
 from __future__ import print_function, division, unicode_literals
 
 import tempfile
