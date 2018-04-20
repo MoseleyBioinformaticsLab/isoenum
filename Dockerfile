@@ -9,7 +9,7 @@ MAINTAINER	Andrey Smelter
 COPY . /isoenum/
 WORKDIR /isoenum
 
-# Install gcc and python
+# Install python
 RUN dnf update -y
 RUN dnf install python3 -y
 RUN dnf install python3-pip -y
