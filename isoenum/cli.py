@@ -11,7 +11,7 @@ Usage:
                  [--specific=<element-isotope-position>...] 
                  [--all=<element-isotope>...] 
                  [--enumerate=<element-isotope-count>...] 
-                 [--full | --partial] 
+                 [--complete | --partial] 
                  [--ignore-iso]
                  [--format=<format>]
                  [--output=<path>]
@@ -25,13 +25,13 @@ Options:
     -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
                                                e.g. -s C-13-1 or --specific=C-13-1.
     -e, --enumerate=<element-isotope-min-max>  Enumerate all isotopically-resolved CTfile or InChI.
-    -f, --full                                 Use full labeling schema, i.e. every atom must specify
+    -c, --complete                             Use complete labeling schema, i.e. every atom must specify
                                                "ISO" property, partial labeling schema will be used otherwise
                                                for specified labeling information only.
     -p, --partial                              Use partial labeling schema, i.e. generate labeling schema
                                                from the provided labeling information.
     -i, --ignore-iso                           Ignore "ISO" specification in the CTfile or InChI.
-    -r, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
+    -f, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
     -o, --output=<path>                        Path to output file.
 """
 
@@ -109,7 +109,7 @@ def cli(cmdargs):
                                                       isotopes_conf=isotopes_conf,
                                                       ctfile_atoms=ctfile_atoms)
 
-            labeling_schema = create_labeling_schema(full_labeling_schema=cmdargs['--full'],
+            labeling_schema = create_labeling_schema(full_labeling_schema=cmdargs['--complete'],
                                                      ignore_existing_isotopes=cmdargs['--ignore-iso'],
                                                      enumerate_param_iso=enumerate_param_iso,
                                                      all_param_iso=all_param_iso,
