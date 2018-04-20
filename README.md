@@ -6,6 +6,10 @@
 [![Travis CI status](https://travis-ci.org/MoseleyBioinformaticsLab/isoenum.svg?branch=master)](https://travis-ci.org/MoseleyBioinformaticsLab/isoenum)
 [![Code coverage information](https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum)
 
+[![Docker Automated build](https://img.shields.io/docker/automated/moseleybioinformaticslab/isoenum/isoenum.svg)](https://github.com/MoseleyBioinformaticsLab/isoenum)
+[![Docker Build Status](https://img.shields.io/docker/build/moseleybioinformaticslab/isoenum.svg)](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+[![Docker Pulls Status](https://img.shields.io/docker/pulls/moseleybioinformaticslab/isoenum.svg)](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+
 
 Isotopic (``iso``) enumerator (``enum``) - create isotopically resolved
 InChI ([International Chemical Identifier](https://www.inchi-trust.org/)) for metabolites.
