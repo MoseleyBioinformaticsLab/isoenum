@@ -3,6 +3,17 @@
 Release History
 ===============
 
+0.1.3 (2018-04-20)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Added "Dockerfile" to create docker container with ``isoenum`` software and all
+  required dependencies ready-to-use.
+- Changes to cli options: replaced "-f" and "--full" with "-c" and "--complete"
+  to specify labeling schema. Used "-f" for "--format" option.
+
+
 0.1.2 (2018-04-19)
 ~~~~~~~~~~~~~~~~~~
 
