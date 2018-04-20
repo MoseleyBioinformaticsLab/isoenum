@@ -5,7 +5,7 @@ FROM fedora:27
 
 MAINTAINER	Andrey Smelter
 
-# Copy ssc code to the root directory and set working directory
+# Copy isoenum code to the root directory and set working directory
 COPY . /isoenum/
 WORKDIR /isoenum
 
