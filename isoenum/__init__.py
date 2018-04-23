@@ -12,6 +12,10 @@ This package includes the following modules:
 ``cli``
     This module provides command-line interface for the ``isoenum`` package.
 
+``conf``
+    This module provides processing of configuration files necessary for 
+    isotopic enumerator.
+
 ``iso_property``
     This module provides the :func:`~isoenum.iso_property.create_iso_property` 
     function that is responsible for generating ``Ctab`` properties block (part of 
