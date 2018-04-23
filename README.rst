@@ -101,12 +101,14 @@ and ``pull`` or ``build`` docker container:
 1. Install `docker`:
 
    * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
+
       * Ubuntu_
       * Debian_
       * CentOS_
       * Fedora_
       * Mac_
       * Windows_
+
 2. Setup ``isoenum`` container:
 
    * ``pull`` built image from the docker hub:
@@ -123,8 +125,6 @@ and ``pull`` or ``build`` docker container:
    .. code-block:: none
 
       # docker build -t isoenum .
-
-
 
 
 License
