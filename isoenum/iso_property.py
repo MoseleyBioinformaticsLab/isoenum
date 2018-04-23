@@ -1,6 +1,14 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
 
+"""
+isoenum.iso_property
+~~~~~~~~~~~~~~~~~~~~
+
+This module contains function to generate isotopic properties block from 
+provided atom labeling schema.
+"""
+
 from ctfile.conf import ctab_properties_conf
 
 
