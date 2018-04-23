@@ -50,9 +50,9 @@ itself.
 Links
 ~~~~~
 
-   * isoenum `@GitHub`_
-   * isoenum `@PyPI`_
-   * isoenum `@DockerHub`_
+   * isoenum @ GitHub_
+   * isoenum @ PyPI_
+   * isoenum @ DockerHub_
 
 
 Installation
@@ -89,15 +89,51 @@ Refer to the official documentation to install `Open Babel`_ on your system:
    * Official Installation Instructions: http://openbabel.org/wiki/Category:Installation
 
 
+Docker
+~~~~~~
+
+In addition to PyPI_ package, ``Dockerfile`` and automatically build DockerHub_ container
+which contains ``isoenum`` Python package and all its dependencies are also provided.
+
+To use ``isoenum`` Python package, you will need to setup docker for your system
+and ``pull`` or ``build`` docker container:
+
+1. Install `docker`:
+   * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
+      * Ubuntu_
+      * Debian_
+      * CentOS_
+      * Fedora_
+      * Mac_
+      * Windows_
+2. Setup ``isoenum`` container:
+   * ``pull`` built image from the docker hub:
+
+   .. code-block:: none
+
+      # docker pull moseleybioinformaticslab/isoenum
+      # docker tag moseleybioinformaticslab/isoenum:latest isoenum:latest  # retag docker image
+      # docker rmi moseleybioinformaticslab/isoenum  # remove after you have retagged it
+
+   * or ``build`` an image using ``Dockerfile`` at the root of this repo by running
+     ``docker build`` from directory containing ``Dockerfile``:
+
+   .. code-block:: none
+
+      # docker build -t isoenum .
+
+
+
+
 License
 ~~~~~~~
 
 This package is distributed under the BSD_ `license`.
 
 
-.. _@GitHub: https://github.com/MoseleyBioinformaticsLab/isoenum
-.. _@PyPI: https://pypi.org/project/isoenum
-.. _@DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum/
+.. _GitHub: https://github.com/MoseleyBioinformaticsLab/isoenum
+.. _PyPI: https://pypi.org/project/isoenum
+.. _DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum/
 
 .. _pip: https://pip.pypa.io
 
@@ -105,5 +141,11 @@ This package is distributed under the BSD_ `license`.
 .. _Chemical Table file: https://en.wikipedia.org/wiki/Chemical_table_file
 .. _International Chemical Identifier: https://www.inchi-trust.org/
 
-
 .. _BSD: https://choosealicense.com/licenses/bsd-3-clause-clear
+
+.. _Ubuntu: https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu
+.. _Debian: https://docs.docker.com/engine/installation/linux/docker-ce/debian
+.. _CentOS: https://docs.docker.com/engine/installation/linux/docker-ce/centos
+.. _Fedora: https://docs.docker.com/engine/installation/linux/docker-ce/fedora
+.. _Mac: https://docs.docker.com/docker-for-mac/install
+.. _Windows: https://docs.docker.com/docker-for-windows/install
