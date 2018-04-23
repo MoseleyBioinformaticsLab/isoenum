@@ -99,6 +99,7 @@ To use ``isoenum`` Python package, you will need to setup docker for your system
 and ``pull`` or ``build`` docker container:
 
 1. Install `docker`:
+
    * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
       * Ubuntu_
       * Debian_
@@ -107,6 +108,7 @@ and ``pull`` or ``build`` docker container:
       * Mac_
       * Windows_
 2. Setup ``isoenum`` container:
+
    * ``pull`` built image from the docker hub:
 
    .. code-block:: none
