@@ -60,8 +60,8 @@ Refer to the official documentation to install [Open Babel](http://openbabel.org
 ## Docker
 
 In addition to [PyPI](https://pypi.org/project/isoenum) package, ``Dockerfile`` and
-automatically build DockerHub_ container which contains ``isoenum`` Python package
-and all its dependencies are also provided.
+automatically build [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+container which contains ``isoenum`` Python package and all its dependencies are also provided.
 
 To use ``isoenum`` Python package, you will need to setup docker for your system
 and ``pull`` or ``build`` docker container:
