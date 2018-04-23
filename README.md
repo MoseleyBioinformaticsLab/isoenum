@@ -23,9 +23,9 @@ itself.
 
 ## Links
 
-   * isoenum [@GitHub](https://github.com/MoseleyBioinformaticsLab/isoenum)
-   * isoenum [@PyPI](https://pypi.org/project/isoenum)
-   * isoenum [@DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+   * isoenum @ [GitHub](https://github.com/MoseleyBioinformaticsLab/isoenum)
+   * isoenum @ [PyPI](https://pypi.org/project/isoenum)
+   * isoenum @ [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
 
 
 ## Installation
@@ -55,6 +55,37 @@ to perform ``InChI`` conversions.
 Refer to the official documentation to install [Open Babel](http://openbabel.org) on your system:
 
    * Official Installation Instructions: http://openbabel.org/wiki/Category:Installation
+
+
+## Docker
+
+In addition to [PyPI](https://pypi.org/project/isoenum) package, ``Dockerfile`` and
+automatically build DockerHub_ container which contains ``isoenum`` Python package
+and all its dependencies are also provided.
+
+To use ``isoenum`` Python package, you will need to setup docker for your system
+and ``pull`` or ``build`` docker container:
+
+1. Install ``docker``:
+   * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
+      * [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu)
+      * [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian)
+      * [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos)
+      * [Fedora](https://docs.docker.com/engine/installation/linux/docker-ce/fedora)
+      * [Mac](https://docs.docker.com/docker-for-mac/install)
+      * [Windows](https://docs.docker.com/docker-for-windows/install)
+2. Setup ``isoenum`` container:
+   * ``pull`` built image from the [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum):
+   ```
+   # docker pull moseleybioinformaticslab/isoenum
+   # docker tag moseleybioinformaticslab/isoenum:latest isoenum:latest  # retag docker image
+   # docker rmi moseleybioinformaticslab/isoenum  # remove after you have retagged it
+   ```
+   * or ``build`` an image using ``Dockerfile`` at the root of this repo by running
+     ``docker build`` from directory containing ``Dockerfile``:
+   ```
+   # docker build -t isoenum .
+   ```
 
 
 ## License
