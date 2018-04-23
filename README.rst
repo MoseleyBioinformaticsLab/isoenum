@@ -50,8 +50,9 @@ itself.
 Links
 ~~~~~
 
-   * isoenum @ GitHub_
-   * isoenum @ PyPI_
+   * isoenum `@GitHub`_
+   * isoenum `@PyPI`_
+   * isoenum `@DockerHub`_
 
 
 Installation
@@ -94,10 +95,11 @@ License
 This package is distributed under the BSD_ `license`.
 
 
-.. _GitHub: https://github.com/MoseleyBioinformaticsLab/isoenum
-.. _PyPI: https://pypi.org/project/isoenum
-.. _pip: https://pip.pypa.io
+.. _@GitHub: https://github.com/MoseleyBioinformaticsLab/isoenum
+.. _@PyPI: https://pypi.org/project/isoenum
+.. _@DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum/
 
+.. _pip: https://pip.pypa.io
 
 .. _Open Babel: http://openbabel.org
 .. _Chemical Table file: https://en.wikipedia.org/wiki/Chemical_table_file
