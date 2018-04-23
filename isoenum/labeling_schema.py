@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+
+"""
+isoenum.labeling_schema
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This module contains function to generate labeling schema 
+based on provided cli parameters.
+"""
+
 import itertools
 from collections import defaultdict
 from collections import Counter
