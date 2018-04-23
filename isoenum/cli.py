@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
+isoenum.cli
+~~~~~~~~~~~
+
 Isotopic enumerator (isoenum) command-line interface
 
 Usage:
