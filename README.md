@@ -66,7 +66,9 @@ container which contains ``isoenum`` Python package and all its dependencies are
 To use ``isoenum`` Python package, you will need to setup docker for your system
 and ``pull`` or ``build`` docker container:
 
-1. Install ``docker``:
+### Install docker
+
+Install ``docker``:
    * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
       * [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu)
       * [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian)
@@ -74,7 +76,10 @@ and ``pull`` or ``build`` docker container:
       * [Fedora](https://docs.docker.com/engine/installation/linux/docker-ce/fedora)
       * [Mac](https://docs.docker.com/docker-for-mac/install)
       * [Windows](https://docs.docker.com/docker-for-windows/install)
-2. Setup ``isoenum`` container:
+
+### Setup container
+
+Setup ``isoenum`` container:
    * ``pull`` built image from the [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum):
    ```
    # docker pull moseleybioinformaticslab/isoenum

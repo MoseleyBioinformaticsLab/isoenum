@@ -96,9 +96,13 @@ In addition to PyPI_ package, ``Dockerfile`` and automatically build DockerHub_ 
 which contains ``isoenum`` Python package and all its dependencies are also provided.
 
 To use ``isoenum`` Python package, you will need to setup docker for your system
-and ``pull`` or ``build`` docker container:
+and ``pull`` or ``build`` docker container.
 
-1. Install ``docker``:
+
+Install docker
+--------------
+
+Install ``docker``:
 
    * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
 
@@ -109,7 +113,10 @@ and ``pull`` or ``build`` docker container:
       * Mac_
       * Windows_
 
-2. Setup ``isoenum`` container:
+Setup container
+---------------
+
+Setup ``isoenum`` container:
 
    * ``pull`` built image from the DockerHub_:
 
