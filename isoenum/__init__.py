@@ -32,8 +32,6 @@ This package includes the following modules:
 
 import logging
 
-from . import cli
-
 
 __version__ = '0.1.4'
 
