@@ -12,15 +12,21 @@ to convert between ``InChI`` and ``CTfile`` formatted files.
 import subprocess
 
 
-try:
-    openbabel_version_test = subprocess.check_output(['obabel', '-V'])
-    openbabel_version = openbabel_version_test.decode('utf-8')
-    if not openbabel_version.startswith('Open Babel'):
-        raise SystemExit('Open Babel version information cannot be found: {}'.format(openbabel_version))
-except OSError:
-    raise SystemExit('Open Babel software is not installed, exiting. '
-                     'See installation instructions to get Open Babel '
-                     'software for your system: http://openbabel.org/wiki/Get_Open_Babel')
+def _test_openbabel():
+    """Test if Open Babel software is installed.
+    
+    :return: None.
+    :rtype: :py:obj:`None`
+    """
+    try:
+        openbabel_version_test = subprocess.check_output(['obabel', '-V'])
+        openbabel_version = openbabel_version_test.decode('utf-8')
+        if not openbabel_version.startswith('Open Babel'):
+            raise SystemExit('Open Babel version information cannot be found: {}'.format(openbabel_version))
+    except OSError:
+        raise SystemExit('Open Babel software is not installed, exiting. '
+                         'See installation instructions to get Open Babel '
+                         'software for your system: http://openbabel.org/wiki/Get_Open_Babel')
 
 
 def mol_to_inchi(infilename, outfilename):
@@ -31,6 +37,7 @@ def mol_to_inchi(infilename, outfilename):
     :return: None.
     :rtype: :py:obj:`None`
     """
+    _test_openbabel()
     result = subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
                                       '-oinchi', '-O{}'.format(outfilename)], shell=False)
 
@@ -43,5 +50,6 @@ def inchi_to_mol(infilename, outfilename):
     :return: None.
     :rtype: :py:obj:`None`
     """
+    _test_openbabel()
     result = subprocess.check_output(['obabel', '-iinchi', '{}'.format(infilename),
                                       '-omol', '-O{}'.format(outfilename), '--gen3D'], shell=False)
