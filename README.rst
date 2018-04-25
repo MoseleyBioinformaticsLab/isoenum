@@ -121,7 +121,7 @@ Setup ``isoenum`` container:
 
    * ``pull`` built image from the DockerHub_:
 
-   .. code-block:: none
+   .. code:: bash
 
       # docker pull moseleybioinformaticslab/isoenum
       # docker tag moseleybioinformaticslab/isoenum:latest isoenum:latest  # retag docker image
@@ -130,7 +130,7 @@ Setup ``isoenum`` container:
    * or ``build`` an image using ``Dockerfile`` at the root of this repo by running
      ``docker build`` from directory containing ``Dockerfile``:
 
-   .. code-block:: none
+   .. code:: bash
 
       # docker build -t isoenum .
 
