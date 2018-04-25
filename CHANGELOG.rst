@@ -3,6 +3,14 @@
 Release History
 ===============
 
+0.1.4 (2018-04-25)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Added ReadTheDocs documentation: http://isoenum.readthedocs.io
+
+
 0.1.3 (2018-04-20)
 ~~~~~~~~~~~~~~~~~~
 
