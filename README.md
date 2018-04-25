@@ -16,8 +16,8 @@ InChI ([International Chemical Identifier](https://www.inchi-trust.org/)) for me
 
 The ``isoenum`` Python package provides command-line interface that
 allows you to create isotopically-resolved ``InChI`` from one of
-the [Chemical Table file](https://en.wikipedia.org/wiki/Chemical_table_file) (``CTfile``) formats (i.e. ``molfile``, ``SDfile``)
-used to describe chemical molecules and reactions as well as from ``InChI``
+the [Chemical Table file](https://en.wikipedia.org/wiki/Chemical_table_file) (``CTfile``) formats
+(i.e. ``molfile``, ``SDfile``) used to describe chemical molecules and reactions as well as from ``InChI``
 itself.
 
 
@@ -26,6 +26,7 @@ itself.
    * isoenum @ [GitHub](https://github.com/MoseleyBioinformaticsLab/isoenum)
    * isoenum @ [PyPI](https://pypi.org/project/isoenum)
    * isoenum @ [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+   * isoenum @ [ReadTheDocs](http://isoenum.readthedocs.io)
 
 
 ## Installation

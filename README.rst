@@ -53,6 +53,7 @@ Links
    * isoenum @ GitHub_
    * isoenum @ PyPI_
    * isoenum @ DockerHub_
+   * isoenum @ ReadTheDocs_
 
 
 Installation
@@ -142,7 +143,8 @@ This package is distributed under the BSD_ `license`.
 
 .. _GitHub: https://github.com/MoseleyBioinformaticsLab/isoenum
 .. _PyPI: https://pypi.org/project/isoenum
-.. _DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum/
+.. _DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum
+.. _ReadTheDocs: http://isoenum.readthedocs.io
 
 .. _pip: https://pip.pypa.io
 
