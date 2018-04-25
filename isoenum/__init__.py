@@ -32,8 +32,10 @@ This package includes the following modules:
 
 import logging
 
+from . import cli
 
-__version__ = '0.1.3'
+
+__version__ = '0.1.4'
 
 
 try:  # Python 2/3 compatibility code
