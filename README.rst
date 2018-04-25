@@ -81,8 +81,8 @@ Dependencies
 ------------
 
 The ``isoenum`` Python package requires **non-pip-installable** dependency:
-`Open Babel`_ chemistry library which relies on ``InChI`` library
-to perform ``InChI`` conversions.
+`Open Babel`_ chemistry library version 2.3.90 or later which relies on
+``InChI`` library version 1.0.4 or later to perform ``InChI`` conversions.
 
 Refer to the official documentation to install `Open Babel`_ on your system:
 
