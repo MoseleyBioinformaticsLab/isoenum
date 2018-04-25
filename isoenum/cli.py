@@ -33,7 +33,7 @@ Options:
                                                for specified labeling information only.
     -p, --partial                              Use partial labeling schema, i.e. generate labeling schema
                                                from the provided labeling information.
-    -i, --ignore-iso                           Ignore "ISO" specification in the CTfile or InChI.
+    -i, --ignore-iso                           Ignore existing "ISO" specification in the CTfile or InChI.
     -f, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
     -o, --output=<path>                        Path to output file.
 """
