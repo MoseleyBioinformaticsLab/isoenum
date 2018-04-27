@@ -89,8 +89,8 @@ Dependencies
 ------------
 
 The ``isoenum`` Python package requires **non-pip-installable** dependency:
-`Open Babel`_ chemistry library version 2.3.90 or later which relies on
-``InChI`` library version 1.0.4 or later to perform ``InChI`` conversions.
+the `Open Babel`_ chemistry library version 2.3.90 or later which relies on
+``InChI`` library_ version 1.0.4 or later to perform ``InChI`` conversions.
 
 Refer to the official documentation to install `Open Babel`_ on your system:
 
@@ -100,11 +100,12 @@ Refer to the official documentation to install `Open Babel`_ on your system:
 Docker
 ~~~~~~
 
-In addition to PyPI_ package, ``Dockerfile`` and automatically build DockerHub_ container
-which contains ``isoenum`` Python package and all its dependencies are also provided.
+In addition to PyPI_ package, ``Dockerfile`` and the automatically built DockerHub_
+container which contains the ``isoenum`` Python package and all its dependencies are
+also provided.
 
-To use ``isoenum`` Python package, you will need to setup docker for your system
-and ``pull`` or ``build`` docker container.
+To use the ``isoenum`` Python package, you will need to setup docker for your system
+and ``pull`` or ``build`` the docker container.
 
 
 Install docker
@@ -112,7 +113,7 @@ Install docker
 
 Install ``docker``:
 
-   * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
+   * Follow the instructions to install docker on your system: https://docs.docker.com/engine/installation
 
       * Ubuntu_
       * Debian_
@@ -124,9 +125,9 @@ Install ``docker``:
 Setup container
 ---------------
 
-Setup ``isoenum`` container:
+Setup the ``isoenum`` container:
 
-   * ``pull`` built image from the DockerHub_:
+   * ``pull`` the built image from the DockerHub_:
 
    .. code:: bash
 
@@ -135,7 +136,7 @@ Setup ``isoenum`` container:
       # docker rmi moseleybioinformaticslab/isoenum  # remove after you have retagged it
 
    * or ``build`` an image using ``Dockerfile`` at the root of this repo by running
-     ``docker build`` from directory containing ``Dockerfile``:
+     ``docker build`` from the directory containing ``Dockerfile``:
 
    .. code:: bash
 
@@ -153,6 +154,7 @@ This package is distributed under the BSD_ `license`.
 .. _DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum
 .. _ReadTheDocs: http://isoenum.readthedocs.io
 .. _Tutorial: http://isoenum.readthedocs.io/en/latest/tutorial.html
+.. _library: https://www.inchi-trust.org/downloads
 
 .. _pip: https://pip.pypa.io
 

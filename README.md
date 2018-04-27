@@ -53,9 +53,9 @@ py -3 -m pip install isoenum
 
 ### Dependencies
 
-The ``isoenum`` Python package requires **non-pip-installable** dependency:
+The ``isoenum`` Python package requires **non-pip-installable** dependency: the
 [Open Babel](http://openbabel.org) chemistry library version 2.3.90 or later
-which relies on ``InChI`` library version 1.0.4 or later to perform ``InChI``
+which relies on ``InChI`` [library](https://www.inchi-trust.org/downloads) version 1.0.4 or later to perform ``InChI``
 conversions.
 
 Refer to the official documentation to install [Open Babel](http://openbabel.org) on your system:
@@ -66,16 +66,17 @@ Refer to the official documentation to install [Open Babel](http://openbabel.org
 ## Docker
 
 In addition to [PyPI](https://pypi.org/project/isoenum) package, ``Dockerfile`` and
-automatically build [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
-container which contains ``isoenum`` Python package and all its dependencies are also provided.
+the automatically built [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+container which contains the ``isoenum`` Python package and all its dependencies are 
+also provided.
 
-To use ``isoenum`` Python package, you will need to setup docker for your system
-and ``pull`` or ``build`` docker container.
+To use the ``isoenum`` Python package, you will need to setup docker for your system
+and ``pull`` or ``build`` the docker container.
 
 ### Install docker
 
 Install ``docker``:
-   * Follow instructions to install docker for your system: https://docs.docker.com/engine/installation
+   * Follow the instructions to install docker on your system: https://docs.docker.com/engine/installation
       * [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu)
       * [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian)
       * [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos)
@@ -85,15 +86,15 @@ Install ``docker``:
 
 ### Setup container
 
-Setup ``isoenum`` container:
-   * ``pull`` built image from the [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum):
+Setup the ``isoenum`` container:
+   * ``pull`` the built image from the [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum):
    ```
    # docker pull moseleybioinformaticslab/isoenum
    # docker tag moseleybioinformaticslab/isoenum:latest isoenum:latest  # retag docker image
    # docker rmi moseleybioinformaticslab/isoenum  # remove after you have retagged it
    ```
    * or ``build`` an image using ``Dockerfile`` at the root of this repo by running
-     ``docker build`` from directory containing ``Dockerfile``:
+     ``docker build`` from the directory containing ``Dockerfile``:
    ```
    # docker build -t isoenum .
    ```
