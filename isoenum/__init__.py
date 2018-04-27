@@ -23,7 +23,7 @@ This package includes the following modules:
     provided labeling schema.
 
 ``labeling_schema``
-    This module provides functions foe generating labeling schema.
+    This module provides functions for generating labeling schema.
 
 ``openbabel``
     This module provides functions to call Open Babel software to convert 
