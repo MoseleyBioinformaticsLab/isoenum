@@ -3,6 +3,14 @@
 Release History
 ===============
 
+0.1.5 (2018-04-26)
+~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fixed incorrect rendering on PyPI project page.
+
+
 0.1.4 (2018-04-25)
 ~~~~~~~~~~~~~~~~~~
 
