@@ -50,6 +50,9 @@ the `Chemical Table file`_  (``CTfile``) formats (i.e. ``molfile``, ``SDfile``)
 used to describe chemical molecules and reactions as well as from ``InChI``
 itself.
 
+See Tutorial_ documentation for usage examples of ``isoenum`` Python package
+as well as ``isoenum`` docker container.
+
 
 Links
 ~~~~~
@@ -149,6 +152,7 @@ This package is distributed under the BSD_ `license`.
 .. _PyPI: https://pypi.org/project/isoenum
 .. _DockerHub: https://hub.docker.com/r/moseleybioinformaticslab/isoenum
 .. _ReadTheDocs: http://isoenum.readthedocs.io
+.. _Tutorial: http://isoenum.readthedocs.io/en/latest/tutorial.html
 
 .. _pip: https://pip.pypa.io
 

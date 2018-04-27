@@ -21,6 +21,9 @@ the [Chemical Table file](https://en.wikipedia.org/wiki/Chemical_table_file) (``
 (i.e. ``molfile``, ``SDfile``) used to describe chemical molecules and reactions as well as from ``InChI``
 itself.
 
+See [Tutorial](http://isoenum.readthedocs.io/en/latest/tutorial.html) documentation for
+usage examples of ``isoenum`` Python package as well as ``isoenum`` docker container.
+
 
 ## Links
 
