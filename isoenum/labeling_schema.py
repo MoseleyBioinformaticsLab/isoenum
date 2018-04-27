@@ -6,7 +6,7 @@
 isoenum.labeling_schema
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-This module contains function to generate labeling schema 
+This module contains a function to generate a labeling schema 
 based on provided cli parameters.
 """
 

@@ -5,7 +5,7 @@
 isoenum.iso_property
 ~~~~~~~~~~~~~~~~~~~~
 
-This module contains function to generate isotopic properties block from 
+This module contains a function to generate isotopic properties block from 
 provided atom labeling schema.
 """
 
