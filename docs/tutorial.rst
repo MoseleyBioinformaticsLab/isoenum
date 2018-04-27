@@ -4,9 +4,9 @@ The isoenum Tutorial
 Command-line interface
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The ``isoenum`` package provides easy-to-use command-line interface
-that allows specification of isotopes necessary to create isotopically-resolved
-``InChI``.
+The ``isoenum`` package provides an easy-to-use command-line interface
+that allows the specification of isotopes for the creation of
+isotopically-resolved ``InChI``.
 
 
 To display all available options, run:
@@ -132,7 +132,7 @@ which is file or string with information required to create isotopically-resolve
 
       $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol
 
-   * Path to file containing ``InChI``.
+   * Path to the file containing an ``InChI``.
 
    .. code-block:: none
 
@@ -154,8 +154,9 @@ which is file or string with information required to create isotopically-resolve
 Isotopic layer specification: specific atoms
 ''''''''''''''''''''''''''''''''''''''''''''
 
-* To add isotope designation to specific atom within ``Molfile``. For example,
-  if we want to add carbon 13 specification to second carbon atom:
+* To designate the isotope of a specific atom within a given ``Molfile``, use
+  the ``-s`` or ``--specific`` option. For example, specify the second carbon
+  atom as carbon 13:
 
    .. code-block:: none
 
@@ -173,7 +174,7 @@ Isotopic layer specification: specific atoms
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
-* To add isotope designation to several specific atoms just repeat ``-s`` or ``--specific`` option:
+* To designate the isotope for several atoms, repeat ``-s`` or ``--specific`` option:
 
    .. code-block:: none
 
@@ -196,7 +197,7 @@ Isotopic layer specification: specific atoms
       Since original file already contained ``ISO`` specification for the first carbon atom,
       it did not change the designation of that atom (i.e. ``i1+0`` was retained).
 
-* To ignore existing ``ISO`` specification provide ``-i`` or ``--ignore-iso`` oprtion:
+* To ignore existing ``ISO`` specifications, provide the ``-i`` or ``--ignore-iso`` option:
 
    .. code-block:: none
 
@@ -215,10 +216,11 @@ Isotopic layer specification: specific atoms
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1
 
 
-Isotopic layer specification: all atoms of specific type
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Isotopic layer specification: all atoms of a specific type
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-* To add isotope designation to all atoms of specific type use ``-a`` or ``--all`` option:
+* To add isotope designations to all atoms of a specific element,
+  use the ``-a`` or ``--all`` option:
 
    .. code-block:: none
 
@@ -236,8 +238,8 @@ Isotopic layer specification: all atoms of specific type
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1
 
-* To add isotope designation to different types of atoms just repeat ``-a`` or ``--all`` option
-  for desired atom type:
+* To add isotope designations to different types of atoms,
+  repeat the ``-a`` or ``--all`` option for each desired element:
 
    .. code-block:: none
 
@@ -255,7 +257,7 @@ Isotopic layer specification: all atoms of specific type
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1,6+2,7+2
 
-* To ignore existing ``ISO`` specification combine with ``-i`` or ``--ignore-iso`` option:
+* To ignore existing ``ISO`` specifications, combine with the ``-i`` or ``--ignore-iso`` option:
 
    .. code-block:: none
 
@@ -273,7 +275,7 @@ Isotopic layer specification: all atoms of specific type
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1,3+1,4+1,5+1,6+2,7+2
 
-* Also ``-a`` or ``--all`` option can be combined with ``-s`` or ``--specific`` option
+* Also the ``-a`` or ``--all`` option can be combined with the ``-s`` or ``--specific`` option
   which has higher priority:
 
    .. code-block:: none
@@ -296,7 +298,7 @@ Isotopic layer specification: all atoms of specific type
 Isotopic layer specification: enumerate atoms of specific type
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-* To enumerate atoms of specific type use ``-e`` or ``--enumerate`` option:
+* To enumerate atoms of a specific element type, use the ``-e`` or ``--enumerate`` option:
 
    .. code-block:: none
 
@@ -329,8 +331,8 @@ Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,5+1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0
 
-* Minimum and maximum number can be set to limit ``InChI`` generation to desired minimum and maximum
-  number of atoms of specific type. For example generate all possible ``InChI`` where the number of
+* A minimum and maximum number can be set to limit ``InChI`` generation to desired minimum and maximum
+  number of atoms of the specified element. For example, generate all possible ``InChI`` where the number of
   carbon 13 atoms is in the range from 3 to 4:
 
    .. code-block:: none
@@ -353,7 +355,7 @@ Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,4+1,5+1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+1,4+1,5+1
 
-* To ignore existing ``ISO`` specification combine it with ``-i`` or ``ignore-iso`` option:
+* To ignore existing ``ISO`` specifications, combine it with the ``-i`` or ``ignore-iso`` option:
 
    .. code-block:: none
 
@@ -385,7 +387,8 @@ Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i2+1,4+1,5+1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i3+1,4+1,5+1
 
-   * To enumerate multiple atom types just repeat ``-e`` or ``--enumerate`` option for desired atom type:
+* To enumerate multiple atom types just repeat the  ``-e`` or ``--enumerate`` option
+  for the desired element:
 
    .. code-block:: none
 
@@ -417,8 +420,9 @@ Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+1,4+1,5+1,6+2/t5-/m0/s1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+1,4+1,5+1,6+2/t5-/m1/s1
 
-* Also ``-e`` (``--enumerate``) can be combined with ``-a`` (``--all``) and ``-s`` (``--specific``) options
-  except ``-e`` (``--enumerate``) option cannot specify the same atom type as ``-a`` (``--all``) option.
+* The ``-e`` (``--enumerate``) option can be combined with the ``-a`` (``--all``) and
+  ``-s`` (``--specific``) options except ``-e`` (``--enumerate``) option cannot specify
+  the same element as the ``-a`` (``--all``) option.
 
    .. code-block:: none
 
@@ -439,9 +443,9 @@ Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+0,5+1,6+2,7+2
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+0,4+1,5+1,6+2,7+2
 
-* It is also possible to combine ``-e`` or ``--enumerate`` option for the same element but different
-  isotopes (also note that we are not specifying minimum number in this example, it will be set 0 by default).
-  For, example we want to generate ``InChI`` with up to 2 carbon 12 and up to 2 carbon 13:
+* It is also possible to combine the ``-e`` or ``--enumerate`` option for the same element but different
+  isotopes (also note that we are not specifying minimum number in this example, it will be set to 0 by default).
+  For example, we want to generate ``InChI`` with up to 2 carbon 12 and up to 2 carbon 13:
 
    .. code-block:: none
 
@@ -507,8 +511,8 @@ Output format
    * ``sdf`` - which produces ``SDfile`` with one or more ``Molfile`` and ``InChI`` associated with it.
    * ``mol`` - same as ``sdf``.
 
-* To specify ``inchi`` output format (which is set to default and does not require format specification)
-  use ``-f`` or ``--format`` option:
+* To specify the ``inchi`` output format (which is set to default and does not require
+  format specification), use the ``-f`` or ``--format`` option followed by ``inchi``:
 
    .. code-block:: none
 
@@ -526,7 +530,8 @@ Output format
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
-* To specify ``mol`` or ``sdf`` output format:
+* To specify the ``mol`` or ``sdf`` output format, use the ``-f`` or ``--format``
+  option followed by ``mol`` or ``sdf``:
 
    .. code-block:: none
 
@@ -594,8 +599,8 @@ Output format
 Output file
 '''''''''''
 
-* To save generated output into a file use ``-o`` or ``--output`` option.
-  For example, to save generated output in ``inchi`` format:
+* To save the generated output into a file, use ``-o`` or ``--output`` option followed by filename.
+  For example, save the generated output in ``inchi`` format:
 
    .. code-block:: none
 
@@ -614,7 +619,7 @@ Output file
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1
 
 
-* To save generated output in ``mol`` or ``sdf`` format:
+* To save the generated output in ``mol`` or ``sdf`` format:
 
    .. code-block:: none
 
@@ -682,11 +687,11 @@ Output file
 Docker usage examples
 ~~~~~~~~~~~~~~~~~~~~~
 
-This section contains example provided above but with the use of provided docker
+This section contains the examples provided above but with the use of a docker
 container with ``isoenum`` Python package and all its dependencies instead of using
 ``isoenum`` Python package directly.
 
-After you ``docker pull`` or ``docker build`` ``isoenum`` container you can verify
+After you ``docker pull`` or ``docker build`` the ``isoenum`` container, you can verify
 that it is available.
 
 .. code-block:: none
@@ -701,7 +706,7 @@ You should see output similar to the following:
    isoenum             latest              0e4c431aa519        1 day ago           862MB
 
 
-* To access ``isoenum`` command-line interface from docker container:
+* To access the ``isoenum`` command-line interface from docker container:
 
    .. code-block:: none
 
@@ -811,25 +816,25 @@ Docker examples
 Docker input file/string specification
 ''''''''''''''''''''''''''''''''''''''
 
-As shown above, ``isoenum`` command-line interface asks user
+As shown above, the ``isoenum`` command-line interface asks the user
 to provide one required parameter ``<path-to-ctfile-file-or-inchi-file-or-inchi-string>``
 which is file or string with information required to create isotopically-resolved ``InChI``.
 
-In order to provide input file path to ``isoenum`` docker container
-you will need to mount it as volume for docker container so it can see it.
+In order to provide the input file path to the ``isoenum`` docker container,
+you will need to mount it as a volume for the docker container so the container can see it.
 
 
 .. warning::
 
-   You need to provide absolute path to input file, otherwise docker container
+   You need to provide the absolute path to the input file, otherwise the docker container
    will not be able to see it.
 
    For example, ``-v /absolute/path/to/input.txt:/input.txt``, where path on the
-   left side of ``:`` is absolute path on host machine and path on the right side of ``:``
-   is path within docker container.
+   left side of ``:`` is the absolute path on the host machine and the path on the
+   right side of ``:`` is the path within the docker container.
 
 
-To illustrate, let's invoke ``isoenum`` docker container and provide input files:
+To illustrate, let's invoke the ``isoenum`` docker container and provide input files:
 
    * Path to ``CTfile`` (i.e. ``Molfile`` or ``SDfile``).
 
@@ -837,7 +842,7 @@ To illustrate, let's invoke ``isoenum`` docker container and provide input files
 
       # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol
 
-   * Path to file containing ``InChI``.
+   * Path to the file containing an ``InChI``.
 
    .. code-block:: none
 
@@ -859,8 +864,9 @@ To illustrate, let's invoke ``isoenum`` docker container and provide input files
 Docker isotopic layer specification: specific atoms
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 
-* To add isotope designation to specific atom within ``Molfile``. For example,
-  if we want to add carbon 13 specification to second carbon atom:
+* To designate the isotope of a specific atom within a given ``Molfile``, use
+  the ``-s`` or ``--specific`` option. For example, specify the second carbon
+  atom as carbon 13:
 
    .. code-block:: none
 
@@ -878,7 +884,7 @@ Docker isotopic layer specification: specific atoms
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
-* To add isotope designation to several specific atoms just repeat ``-s`` or ``--specific`` option:
+* To designate the isotope for several atoms, repeat ``-s`` or ``--specific`` option:
 
    .. code-block:: none
 
@@ -901,7 +907,7 @@ Docker isotopic layer specification: specific atoms
       Since original file already contained ``ISO`` specification for the first carbon atom,
       it did not change the designation of that atom (i.e. ``i1+0`` was retained).
 
-* To ignore existing ``ISO`` specification provide ``-i`` or ``--ignore-iso`` oprtion:
+* To ignore existing ``ISO`` specifications, provide the ``-i`` or ``--ignore-iso`` option:
 
    .. code-block:: none
 
@@ -920,10 +926,11 @@ Docker isotopic layer specification: specific atoms
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1
 
 
-Docker Isotopic layer specification: all atoms of specific type
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Docker Isotopic layer specification: all atoms of a specific type
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-* To add isotope designation to all atoms of specific type use ``-a`` or ``--all`` option:
+* To add isotope designations to all atoms of a specific element,
+  use the ``-a`` or ``--all`` option:
 
    .. code-block:: none
 
@@ -941,8 +948,8 @@ Docker Isotopic layer specification: all atoms of specific type
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1
 
-* To add isotope designation to different types of atoms just repeat ``-a`` or ``--all`` option
-  for desired atom type:
+* To add isotope designations to different types of atoms,
+  repeat the ``-a`` or ``--all`` option for each desired element:
 
    .. code-block:: none
 
@@ -960,7 +967,7 @@ Docker Isotopic layer specification: all atoms of specific type
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1,6+2,7+2
 
-* To ignore existing ``ISO`` specification combine with ``-i`` or ``--ignore-iso`` option:
+* To ignore existing ``ISO`` specifications, combine with the ``-i`` or ``--ignore-iso`` option:
 
    .. code-block:: none
 
@@ -978,7 +985,7 @@ Docker Isotopic layer specification: all atoms of specific type
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1,3+1,4+1,5+1,6+2,7+2
 
-* Also ``-a`` or ``--all`` option can be combined with ``-s`` or ``--specific`` option
+* Also the ``-a`` or ``--all`` option can be combined with the ``-s`` or ``--specific`` option
   which has higher priority:
 
    .. code-block:: none
@@ -1001,7 +1008,7 @@ Docker Isotopic layer specification: all atoms of specific type
 Docker Isotopic layer specification: enumerate atoms of specific type
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-* To enumerate atoms of specific type use ``-e`` or ``--enumerate`` option:
+* To enumerate atoms of a specific element type, use the ``-e`` or ``--enumerate`` option:
 
    .. code-block:: none
 
@@ -1034,8 +1041,8 @@ Docker Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,5+1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0
 
-* Minimum and maximum number can be set to limit ``InChI`` generation to desired minimum and maximum
-  number of atoms of specific type. For example generate all possible ``InChI`` where the number of
+* A minimum and maximum number can be set to limit ``InChI`` generation to desired minimum and maximum
+  number of atoms of the specified element. For example, generate all possible ``InChI`` where the number of
   carbon 13 atoms is in the range from 3 to 4:
 
    .. code-block:: none
@@ -1058,7 +1065,7 @@ Docker Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,4+1,5+1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+1,4+1,5+1
 
-* To ignore existing ``ISO`` specification combine it with ``-i`` or ``ignore-iso`` option:
+* To ignore existing ``ISO`` specifications, combine it with the ``-i`` or ``ignore-iso`` option:
 
    .. code-block:: none
 
@@ -1090,7 +1097,8 @@ Docker Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i2+1,4+1,5+1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i3+1,4+1,5+1
 
-   * To enumerate multiple atom types just repeat ``-e`` or ``--enumerate`` option for desired atom type:
+* To enumerate multiple atom types, repeat the  ``-e`` or ``--enumerate`` option
+  for the desired element:
 
    .. code-block:: none
 
@@ -1122,8 +1130,9 @@ Docker Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+1,4+1,5+1,6+2/t5-/m0/s1
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+1,4+1,5+1,6+2/t5-/m1/s1
 
-* Also ``-e`` (``--enumerate``) can be combined with ``-a`` (``--all``) and ``-s`` (``--specific``) options
-  except ``-e`` (``--enumerate``) option cannot specify the same atom type as ``-a`` (``--all``) option.
+* The ``-e`` (``--enumerate``) option can be combined with the ``-a`` (``--all``) and
+  ``-s`` (``--specific``) options except ``-e`` (``--enumerate``) option cannot specify
+  the same element as the ``-a`` (``--all``) option.
 
    .. code-block:: none
 
@@ -1144,9 +1153,9 @@ Docker Isotopic layer specification: enumerate atoms of specific type
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+0,5+1,6+2,7+2
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,3+0,4+1,5+1,6+2,7+2
 
-* It is also possible to combine ``-e`` or ``--enumerate`` option for the same element but different
-  isotopes (also note that we are not specifying minimum number in this example, it will be set 0 by default).
-  For, example we want to generate ``InChI`` with up to 2 carbon 12 and up to 2 carbon 13:
+* It is also possible to combine the ``-e`` or ``--enumerate`` option for the same element but different
+  isotopes (also note that we are not specifying minimum number in this example, it will be set to 0 by default).
+  For example, we want to generate ``InChI`` with up to 2 carbon 12 and up to 2 carbon 13:
 
    .. code-block:: none
 
@@ -1212,8 +1221,8 @@ Output format
    * ``sdf`` - which produces ``SDfile`` with one or more ``Molfile`` and ``InChI`` associated with it.
    * ``mol`` - same as ``sdf``.
 
-* To specify ``inchi`` output format (which is set to default and does not require format specification)
-  use ``-f`` or ``--format`` option:
+* To specify the ``inchi`` output format (which is set to default and does not require
+  format specification), use the ``-f`` or ``--format`` option followed by ``inchi``:
 
    .. code-block:: none
 
@@ -1231,7 +1240,8 @@ Output format
 
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
-* To specify ``mol`` or ``sdf`` output format:
+* To specify the ``mol`` or ``sdf`` output format, use the ``-f`` or ``--format``
+  option followed by ``mol`` or ``sdf``:
 
    .. code-block:: none
 
@@ -1299,26 +1309,26 @@ Output format
 Docker output file
 ''''''''''''''''''
 
-In case of using ``isoenum`` docker container both input file and output file
-must be mounted as volumes for docker container.
+In the case of using the ``isoenum`` docker container, both the input file and the output file
+must be mounted as volumes for the docker container to see them.
 
 .. warning::
 
-   You need to provide absolute path to input and output files, otherwise docker container
+   You need to provide the absolute path to the input and output files, otherwise the docker container
    will not be able to see them.
 
    For example, ``-v /absolute/path/to/input.txt:/input.txt``, where path on the
-   left side of ``:`` is absolute path on host machine and path on the
-   right side of ``:`` is path within docker container.
+   left side of ``:`` is the absolute path on the host machine and the path on the
+   right side of ``:`` is the path within the docker container.
 
-   The same way, you will need to create an empty text file and mount it as volume,
-   so docker container can write to it, ``-v /absolute/path/to/output.txt:/output.txt``,
-   where path on the left side of ``:`` is absolute path on host machine and path on the
-   right side of ``:`` is path within docker container.
+   In the same way, you will need to create an empty text file and mount it as a volume,
+   so the docker container can write to it, ``-v /absolute/path/to/output.txt:/output.txt``,
+   where the path on the left side of ``:`` is the absolute path on the host machine and the path
+   on the right side of ``:`` is the path within the docker container.
 
 
-* To save generated output into a file use ``-o`` or ``--output`` option.
-  For example, to save generated output in ``inchi`` format:
+* To save the generated output into a file, use ``-o`` or ``--output`` option followed by filename.
+  For example, save the generated output in ``inchi`` format:
 
    .. code-block:: none
 
@@ -1341,7 +1351,7 @@ must be mounted as volumes for docker container.
       InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1
 
 
-* To save generated output in ``mol`` or ``sdf`` format:
+* To save the generated output in ``mol`` or ``sdf`` format:
 
    .. code-block:: none
 
