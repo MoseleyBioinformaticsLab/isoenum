@@ -14,6 +14,10 @@ isoenum
    :target: https://pypi.org/project/isoenum
    :alt: Supported Python versions
 
+.. image:: https://readthedocs.org/projects/isoenum/badge/?version=latest
+   :target: http://isoenum.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 .. image:: https://travis-ci.org/MoseleyBioinformaticsLab/isoenum.svg?branch=master
    :target: https://travis-ci.org/MoseleyBioinformaticsLab/isoenum
    :alt: Travis CI status

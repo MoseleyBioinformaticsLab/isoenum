@@ -3,6 +3,7 @@
 [![License information](https://img.shields.io/pypi/l/isoenum.svg)](https://choosealicense.com/licenses/bsd-3-clause-clear/)
 [![Current library version](https://img.shields.io/pypi/v/isoenum.svg)](https://pypi.org/project/isoenum)
 [![Supported Python versions](https://img.shields.io/pypi/pyversions/isoenum.svg)](https://pypi.org/project/isoenum)
+[![Documentation Status](https://readthedocs.org/projects/isoenum/badge/?version=latest)](http://isoenum.readthedocs.io/en/latest/?badge=latest)
 [![Travis CI status](https://travis-ci.org/MoseleyBioinformaticsLab/isoenum.svg?branch=master)](https://travis-ci.org/MoseleyBioinformaticsLab/isoenum)
 [![Code coverage information](https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum)
 
