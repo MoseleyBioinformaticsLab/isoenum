@@ -11,9 +11,19 @@ import pytest
     ('-s C-13-2', 'tests/example_data/bmse000040.mol'),
     ('-a C-13', 'tests/example_data/bmse000040.sdf'),
     ('-e C-13', 'tests/example_data/bmse000040.sdf'),
-     ('-s C-13-2', 'tests/example_data/bmse000040.sdf'),
+    ('-s C-13-2', 'tests/example_data/bmse000040.sdf'),
     ('-a C-13', 'tests/example_data/bmse000040.inchi'),
-    ('-e C-13', 'tests/example_data/bmse000040.inchi')
+    ('-e C-13', 'tests/example_data/bmse000040.inchi'),
+    ('-s C-13-2', 'tests/example_data/bmse000040.inchi'),
+    ('-a C-13', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.mol'),
+    ('-e C-13', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.mol'),
+    ('-s C-13-2', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.mol'),
+    ('-a C-13', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.sdf'),
+    ('-e C-13', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.sdf'),
+    ('-s C-13-2', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.sdf'),
+    ('-a C-13', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.inchi'),
+    ('-e C-13', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.inchi'),
+    ('-s C-13-2', 'https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.inchi'),
 ])
 def test_name_command(path, parameters):
     command = "python -m isoenum name {} {}".format(path, parameters)
