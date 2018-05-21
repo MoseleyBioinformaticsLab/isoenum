@@ -46,6 +46,7 @@ import sys
 import io
 from collections import defaultdict
 from collections import Counter
+import requests
 
 import ctfile
 from .iso_property import create_iso_property
@@ -53,6 +54,11 @@ from .openbabel import mol_to_inchi
 from .openbabel import inchi_to_mol
 from .conf import isotopes_conf
 from .labeling_schema import create_labeling_schema
+
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 
 def cli(cmdargs):
@@ -296,9 +302,15 @@ def _create_ctfile(path):
 
             try:
                 return ctfile.loadstr(string)
-
             except IndexError:
                 return _create_ctfile_from_inchi_file(path=path)
+
+    elif is_url(path):
+        try:
+            return ctfile.read_file(path)
+        except IndexError:
+            inchi_str = requests.get(path).text
+            return _create_ctfile_from_inchi_str(inchi_str=inchi_str)
     else:
         return _create_ctfile_from_inchi_str(inchi_str=path)
 
@@ -402,3 +414,16 @@ def _create_output(results, path=None, format='inchi'):
 
     else:
         print(output.getvalue(), file=sys.stdout)
+
+
+def is_url(path):
+    """Test if path represents a valid URL.
+    :param str path: Path to file.
+    :return: True if path is valid url string, False otherwise.
+    :rtype: :py:obj:`True` or :py:obj:`False`
+    """
+    try:
+        parse_result = urlparse(path)
+        return all((parse_result.scheme, parse_result.netloc, parse_result.path))
+    except ValueError:
+        return False
