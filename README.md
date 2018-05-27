@@ -12,7 +12,7 @@
 [![Docker Pulls Status](https://img.shields.io/docker/pulls/moseleybioinformaticslab/isoenum.svg)](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
 
 
-Isotopic (``iso``) enumerator (``enum``) - enumerate isotopically resolved
+Isotopic (``iso``) enumerator (``enum``) - enumerates isotopically resolved
 InChI ([International Chemical Identifier](https://www.inchi-trust.org/)) for metabolites.
 
 The ``isoenum`` Python package provides command-line interface that

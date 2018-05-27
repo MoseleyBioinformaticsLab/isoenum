@@ -41,7 +41,7 @@ isoenum
    :alt: Docker pulls status
 
 
-Isotopic (``iso``) enumerator (``enum``) - enumerate isotopically resolved
+Isotopic (``iso``) enumerator (``enum``) - enumerates isotopically resolved
 InChI (`International Chemical Identifier`_) for metabolites.
 
 The ``isoenum`` Python package provides command-line interface that
