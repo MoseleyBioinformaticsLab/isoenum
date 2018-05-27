@@ -41,11 +41,11 @@ isoenum
    :alt: Docker pulls status
 
 
-Isotopic (``iso``) enumerator (``enum``) - create isotopically resolved
+Isotopic (``iso``) enumerator (``enum``) - enumerate isotopically resolved
 InChI (`International Chemical Identifier`_) for metabolites.
 
 The ``isoenum`` Python package provides command-line interface that
-allows you to create isotopically-resolved ``InChI`` from one of
+allows you to enumerate the possible isotopically-resolved ``InChI`` from one of
 the `Chemical Table file`_  (``CTfile``) formats (i.e. ``molfile``, ``SDfile``)
 used to describe chemical molecules and reactions as well as from ``InChI``
 itself.
