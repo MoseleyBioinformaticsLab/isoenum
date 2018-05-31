@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 """This package provides routines to generate isotopically-resolved ``InChI`` 
 (International Chemical Identifier) from non-isotopically labeled ``CTfile``
 formatted files (e.g. ``Molfiles``, ``SDfiles``) or non-isotopically labeled 
@@ -28,10 +27,16 @@ This package includes the following modules:
 ``openbabel``
     This module provides functions to call the Open Babel software to convert 
     between ``InChI`` and ``CTfile`` formatted files. 
+
+``fileio``
+    This module provides functions for generating ``CTfile`` objects and
+    convert ``CTfile`` objects into ``InChI``.
+
+``utils``
+    This module provides reusable utility functions.
 """
 
 import logging
-
 
 __version__ = '0.1.5'
 
