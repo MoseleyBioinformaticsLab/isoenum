@@ -179,11 +179,19 @@ class Coupling(object):
         return self.name != other.name
 
     def __str__(self):
-        """String representation of coupling."""
+        """String representation of coupling.
+        
+        :return: String representation of coupling.
+        :rtype: :py:class:`str`.
+        """
         return '{}(coupling_path={})'.format(self.__class__.__qualname__, self.coupling_path)
 
     def __repr__(self):
-        """String representation of coupling."""
+        """String representation of coupling.
+        
+        :return: String representation of coupling.
+        :rtype: :py:class:`str`.
+        """
         return str(self)
 
 
