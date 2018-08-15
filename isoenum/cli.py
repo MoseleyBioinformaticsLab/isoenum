@@ -19,6 +19,14 @@ Usage:
                  [--format=<format>]
                  [--output=<path>]
                  [--verbose]
+    isoenum nmr (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
+                [--type=<experiment-type>]
+                [--jcoupling=<name>...]
+                [--decoupled=<element>...]
+                [--format=<format>]
+                [--output=<path>]
+                [--subset]
+                [--verbose]
 
 Options:
     -h, --help                                 Show this screen.
@@ -36,29 +44,28 @@ Options:
     -i, --ignore-iso                           Ignore existing "ISO" specification in the CTfile or InChI.
     -f, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
     -o, --output=<path>                        Path to output file.
+    -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
+    -j, --jcoupling=<type>                     Allowed J couplings.
+    -d, --decoupled=<element>                  Turn off J coupling for a given element.
+    --subset                                   Create atom subsets for each resonance.
 """
 
 from __future__ import print_function, division, unicode_literals
 
-import tempfile
 import os
 import sys
+import csv
 import io
 from collections import defaultdict
 from collections import Counter
-import requests
+from collections import OrderedDict
 
-import ctfile
-from .iso_property import create_iso_property
-from .openbabel import mol_to_inchi
-from .openbabel import inchi_to_mol
+import more_itertools
+
+from . import fileio
+from . import nmr
 from .conf import isotopes_conf
 from .labeling_schema import create_labeling_schema
-
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
 
 
 def cli(cmdargs):
@@ -69,92 +76,108 @@ def cli(cmdargs):
     :rtype: :py:obj:`None`
     """
     if cmdargs['name']:
-
         path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
+        ctf = fileio.create_ctfile(path)
 
-        try:
-            ctf = _create_ctfile(path)
-        except:
-            raise
+        sdfile = fileio.create_empty_sdfile_obj()
 
-        if isinstance(ctf, ctfile.ctfile.Molfile) or isinstance(ctf, ctfile.ctfile.SDfile):
-            molfiles = ctf.molfiles
-        else:
-            raise ValueError('Unknow "CTfile" type.')
-
-        if cmdargs['--format'] not in ('inchi', 'mol', 'sdf'):
-            raise ValueError('Unknown output format provided: "{}"'.format(cmdargs['--format']))
-
-        results = []
-
-        for molfile in molfiles:
-
-            enumerate_param_iso = _unpack_isotopes(cmdargs['--enumerate'])
-            all_param_iso = _unpack_isotopes(cmdargs['--all'])
-            specific_param_iso = _unpack_isotopes(cmdargs['--specific'])
-            existing_iso = ['{}-{}-{}'.format(isotope['atom_symbol'], isotope['isotope'], isotope['position'])
+        for molfile in ctf.molfiles:
+            enumerate_param_iso = _unpack(cmdargs['--enumerate'])
+            all_param_iso = _unpack(cmdargs['--all'])
+            specific_param_iso = _unpack(cmdargs['--specific'])
+            existing_iso = ['{}-{}-{}'.format(isotope['atom_symbol'], isotope['isotope'], isotope['atom_number'])
                             for isotope in molfile.iso]
-
-            ctfile_atoms = molfile.atoms
-            ctfile_positions = molfile.positions
 
             all_param_iso = _all_param_ok(isotopes=all_param_iso,
                                           isotopes_conf=isotopes_conf,
-                                          ctfile_atoms=ctfile_atoms,
-                                          ctfile_positions=ctfile_positions)
+                                          ctfile=molfile)
 
             specific_param_iso = _specific_param_ok(isotopes=specific_param_iso,
                                                     isotopes_conf=isotopes_conf,
-                                                    ctfile_atoms=ctfile_atoms,
-                                                    ctfile_positions=ctfile_positions)
+                                                    ctfile=molfile)
 
             existing_iso = _specific_param_ok(isotopes=existing_iso,
                                               isotopes_conf=isotopes_conf,
-                                              ctfile_atoms=ctfile_atoms,
-                                              ctfile_positions=ctfile_positions)
+                                              ctfile=molfile)
 
             enumerate_param_iso = _enumerate_param_ok(enumerate_param=enumerate_param_iso,
                                                       all_param=all_param_iso,
                                                       isotopes_conf=isotopes_conf,
-                                                      ctfile_atoms=ctfile_atoms)
+                                                      ctfile=molfile)
 
-            labeling_schema = create_labeling_schema(full_labeling_schema=cmdargs['--complete'],
-                                                     ignore_existing_isotopes=cmdargs['--ignore-iso'],
-                                                     enumerate_param_iso=enumerate_param_iso,
-                                                     all_param_iso=all_param_iso,
-                                                     specific_param_iso=specific_param_iso,
-                                                     existing_iso=existing_iso,
-                                                     isotopes_conf=isotopes_conf,
-                                                     ctfile_atoms=ctfile_atoms,
-                                                     ctfile_positions=ctfile_positions)
+            labeling_schemas = create_labeling_schema(full_labeling_schema=cmdargs['--complete'],
+                                                      ignore_existing_isotopes=cmdargs['--ignore-iso'],
+                                                      enumerate_param_iso=enumerate_param_iso,
+                                                      all_param_iso=all_param_iso,
+                                                      specific_param_iso=specific_param_iso,
+                                                      existing_iso=existing_iso,
+                                                      isotopes_conf=isotopes_conf,
+                                                      ctfile=molfile)
 
-            for schema in labeling_schema:
-                new_iso_property = create_iso_property(labeling_schema=schema)
-                molfile['Ctab']['CtabPropertiesBlock']['ISO'] = new_iso_property
+            for labeling_schema in labeling_schemas:
+                ctab_iso_layer_property = []
+                sdfile_data = OrderedDict()
+                for entry in labeling_schema:
+                    ctab_iso_layer_property.append((entry['position'], entry['isotope']))
 
-                inchi_str = '{}'.format(_create_inchi_from_ctfile_obj(molfile))
+                ctab_iso_layer_property = sorted(ctab_iso_layer_property, key=lambda x: int(x[0]))
+                molfile.replace_ctab_property(ctab_property_name='ISO', values=ctab_iso_layer_property)
+                new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
 
-                # need to create new ctfile from inchi string in order to normalize it
-                # in case original file had wrong atom numbering
-                new_molfile = _create_ctfile_from_inchi_str(inchi_str=inchi_str)
+                sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(molfile)))
+                sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
 
-                new_molfile_str = '{}'.format(new_molfile.writestr(file_format='ctfile'))
-                results.append({'inchi': inchi_str, 'molfile': new_molfile_str})
+        create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
 
-        _create_output(results, path=cmdargs['--output'], format=cmdargs['--format'])
+    elif cmdargs['nmr']:
+        path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
+        experiment_type = cmdargs['--type']
+        decoupled = [element.upper() for element in cmdargs['--decoupled']]
+        jcoupling = [coupling.upper() for coupling in cmdargs['--jcoupling']]
+        subset = cmdargs['--subset']
+
+        ctf = fileio.create_ctfile(path)
+        nmr_experiment = nmr.create_nmr_experiment(name=experiment_type, couplings=jcoupling, decoupled=decoupled)
+
+        sdfile = fileio.create_empty_sdfile_obj()
+        for molfile in ctf.molfiles:
+            molfile = fileio.normalize_ctfile_obj(molfile)
+            coupling_combinations = nmr_experiment.generate_coupling_combinations(molfile=molfile, subset=subset)
+
+            for coupling_combination in coupling_combinations:
+                ctab_iso_layer_property = []
+                sdfile_data = OrderedDict()
+
+                for coupling in coupling_combination:
+                    for atom in more_itertools.flatten(coupling.coupling_path):
+                        if atom.atom_symbol in coupling.nmr_active_atoms:
+                            ctab_iso_layer_property.append((str(atom.atom_number), str(atom.isotope)))
+
+                    sdfile_data.setdefault('CouplingType', []).append(coupling.name)
+
+                ctab_iso_layer_property = sorted(ctab_iso_layer_property, key=lambda x: int(x[0]))
+                molfile.replace_ctab_property(ctab_property_name='ISO', values=ctab_iso_layer_property)
+                new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
+
+                sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(molfile)))
+                sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
+
+        create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
 
 
-def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms):
-    """Check if `--enumerate` parameter is consistent.
-
-    :param list enumerate_param: Parameter that specifies isotopes.
-    :param list all_param: Parameter that specifies isotopes.
-    :param dict isotopes_conf: Default isotopes.
-    :param list ctfile_atoms: List of atoms.
-    :return: :py:obj:`True` if consistent, raises error otherwise.
-    :rtype: :py:obj:`True` or :py:class:`ValueError`.
+def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
+    """Check if `--enumerate` option is consistent.
+    
+    :param list enumerate_param: Option that specifies isotopes.
+    :param dict all_param: Check for consistency, `--enumerate` are not compatible with `--all` for the same atom.
+    :param dict isotopes_conf: Default isotopes configuration. 
+    :param ctfile: Instance of ``Molfile``. 
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
+    :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
+    :rtype: :py:class:`dict` or :py:class:`ValueError`. 
     """
-    atom_counter = Counter(ctfile_atoms)
+    atom_counter = Counter([atom.atom_symbol for atom in ctfile.atoms])
+    allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
     all_param_atoms = [entry['atom_symbol'] for entry in all_param.values()]
     enumerate_param_iso = []
 
@@ -182,9 +205,9 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms)
                                     'min': int(min_count), 'max': int(max_count)})
 
         if atom in all_param_atoms:
-            raise ValueError('"--enumerate" and "--all" parameters are not compatible for atom: "{}"'.format(atom))
+            raise ValueError('"--enumerate" and "--all" options are not compatible for atom: "{}"'.format(atom))
 
-        if atom not in ctfile_atoms:
+        if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
 
         if isotope not in isotopes_conf[atom]['isotopes']:
@@ -196,18 +219,20 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile_atoms)
     return enumerate_param_iso
 
 
-def _all_param_ok(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
-    """Check if `--all` parameter is consistent.
+def _all_param_ok(isotopes, isotopes_conf, ctfile):
+    """Check if `--all` option is consistent.
 
-    :param list isotopes: Parameter that specifies isotope.
-    :param dict isotopes_conf: Default isotopes.
-    :param list ctfile_atoms: List of atoms.
-    :param list ctfile_positions: List of atom positions.
-    :return: :py:obj:`True` if consistent, raises error otherwise.
-    :rtype: :py:obj:`True` or :py:class:`ValueError`.
+    :param list isotopes: Option that specifies isotopes.
+    :param dict isotopes_conf: Default isotopes configuration.
+    :param ctfile: Instance of ``Molfile``. 
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
+    :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
+    :rtype: :py:class:`dict` or :py:class:`ValueError`.
     """
+    allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
+    positions = [atom.atom_number for atom in ctfile.atoms]
+    position_atom = dict(zip(positions, allowed_atom_symbols))
     atom_isotope = defaultdict(list)
-    ctfile_position_atom = dict(zip(ctfile_positions, ctfile_atoms))
     all_param_iso = {}
 
     for isotopestr in isotopes:
@@ -217,7 +242,7 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
         except ValueError:
             raise ValueError('Incorrect isotope specification, use "atom-isotope" format.')
 
-        if atom not in ctfile_atoms:
+        if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
 
         if isotope not in isotopes_conf[atom]["isotopes"]:
@@ -225,28 +250,30 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
 
         atom_isotope[atom].append(isotope)
 
-        for position, ctfile_atom in ctfile_position_atom.items():
+        for position, ctfile_atom in position_atom.items():
             if atom == ctfile_atom:
                 all_param_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
 
     if all(len(isotopes) == 1 for isotopes in atom_isotope.values()):
         return all_param_iso
     else:
-        raise ValueError('"--all" parameter can only specify single isotope per atom type.')
+        raise ValueError('"--all" option can only specify single isotope per atom type.')
 
 
-def _specific_param_ok(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
-    """Check if `--specific` parameter is consistent.
+def _specific_param_ok(isotopes, isotopes_conf, ctfile):
+    """Check if `--specific` option is consistent.
 
-    :param list isotopes: Parameter that specifies isotopes.
-    :param dict isotopes_conf: Default isotopes.
-    :param list ctfile_atoms: List of atoms.
-    :param list ctfile_positions: List of atom positions.
-    :return: :py:obj:`True` if consistent, raises error otherwise.
-    :rtype: :py:obj:`True` or :py:class:`ValueError`.
+    :param list isotopes: Option that specifies isotopes.
+    :param dict isotopes_conf: Default isotopes configuration.
+    :param ctfile: Instance of ``Molfile``. 
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
+    :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
+    :rtype: :py:class:`dict` or :py:class:`ValueError`.
     """
     position_atom = defaultdict(list)
-    ctfile_position_atom = dict(zip(ctfile_positions, ctfile_atoms))
+    allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
+    positions = [atom.atom_number for atom in ctfile.atoms]
+    ctfile_position_atom = dict(zip(positions, allowed_atom_symbols))
     specific_param_iso = {}
 
     for isotopestr in isotopes:
@@ -256,7 +283,7 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
         except ValueError:
             raise ValueError('Incorrect isotope specification, use "atom-isotope-position" format.')
 
-        if atom not in ctfile_atoms:
+        if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
 
         if isotope not in isotopes_conf[atom]["isotopes"]:
@@ -271,137 +298,37 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile_atoms, ctfile_positions):
     if all(len(isotopes) == 1 for isotopes in position_atom.values()):
         return specific_param_iso
     else:
-        raise ValueError('"--specific" parameter can only specify single isotope per atom position.')
+        raise ValueError('"--specific" option can only specify single isotope per atom position.')
 
 
-def _unpack_isotopes(param):
-    """Unpack isotopes from command-line `--all` and `--specific` parameters.
+def _unpack(param):
+    """Unpack command-line option.
 
     :param list param: List of isotopes.
     :return: List of unpacked isotopes.
     :rtype: :py:class:`list`
     """
-    isotopes = []
-    for isotopestr in param:
-        isotopes.extend(isotopestr.split(','))
-    return isotopes
+    options = []
+    for option_str in param:
+        options.extend(option_str.split(','))
+    return options
 
 
-def _create_ctfile(path):
-    """Guesses what type of path is provided, i.e. is it existing file in ``Molfile`` format, 
-    existing file in ``SDfile`` file format, existing file containing ``InChI`` string, 
-    or ``InChI`` string and tries to create ``CTfile`` object.
+def save_output(outputstr, path, file_format):
+    """Save output results into file or print to stdout.
     
-    :param str path: Path to ``Molfile``, ``SDfile``, ``InChI``, or ``InChI`` string.
-    :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
-    :rtype: :class:`~ctfile.ctfile.CTfile`.
-    """
-    if os.path.isfile(path):
-        with open(path, 'r') as infile:
-            string = infile.read()
-
-            try:
-                return ctfile.loadstr(string)
-            except IndexError:
-                return _create_ctfile_from_inchi_file(path=path)
-
-    elif is_url(path):
-        try:
-            return ctfile.read_file(path)
-        except IndexError:
-            inchi_str = requests.get(path).text
-            return _create_ctfile_from_inchi_str(inchi_str=inchi_str)
-    else:
-        return _create_ctfile_from_inchi_str(inchi_str=path)
-
-
-def _create_ctfile_from_inchi_str(inchi_str):
-    """Create ``CTfile`` object from ``InChI`` string.
-    
-    :param str inchi_str: ``InChI`` string. 
-    :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
-    :rtype: :class:`~ctfile.ctfile.CTfile`. 
-    """
-    if not inchi_str.lower().startswith('inchi='):
-        inchi_str = 'InChI={}'.format(inchi_str)
-    else:
-        inchi_str = inchi_str
-
-    with tempfile.NamedTemporaryFile(mode='w') as tempfh:
-        tempfh.write(inchi_str)
-        tempfh.flush()
-        return _create_ctfile_from_inchi_file(path=tempfh.name)
-
-
-def _create_ctfile_from_inchi_file(path):
-    """Creates ``CTfile`` from ``InChI`` identifier.
-    
-    :param str path: Path to file containing ``InChI`` identifier.
-    :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
-    :rtype: :class:`~ctfile.ctfile.CTfile`.
-    """
-    with tempfile.NamedTemporaryFile() as tempfh:
-        inchi_to_mol(infilename=path, outfilename=tempfh.name)
-        with open(tempfh.name, 'r') as infile:
-            return ctfile.load(infile)
-
-
-def _create_inchi_from_ctfile_obj(ctf):
-    """Create ``InChI`` from ``CTfile`` instance.
-    
-    :param ctf: Instance of :class:`~ctfile.ctfile.CTfile`.
-    :type ctf: :class:`~ctfile.ctfile.CTfile`
-    :return: ``InChI`` string.
-    :rtype: :py:class:`str` 
-    """
-    with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
-        moltempfh.write(ctf.writestr(file_format='ctfile'))
-        moltempfh.flush()
-        mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
-        inchi_result = inchitempfh.read()
-        return inchi_result
-
-
-def _create_output(results, path=None, format='inchi'):
-    """Create output containing conversion results.
-    
-    :param list results: List of dictionaries, each containing ``InChI`` string and corresponding ``Molfile`` string.
-    :param str path: Path to where file will be saved. 
-    :param str format: File format: 'inchi', 'mol', or 'sdf'. 
+    :param str outputstr: Output string. 
+    :param str path: Where to save results.
+    :param str file_format: File format to create file extension.
     :return: None.
     :rtype: :py:obj:`None`
     """
-    output_format = format.lower()
-
-    if output_format == 'inchi':
-        output = io.StringIO()
-
-        for result in results:
-            inchi_string = result['inchi']
-            output.write(inchi_string)
-
-    elif output_format in ('mol', 'sdf'):
-        output = io.StringIO()
-
-        for result in results:
-            molfile_string = result['molfile']
-            inchi_string = result['inchi']
-
-            output.write(molfile_string)
-            output.write('> <InChI>\n')
-            output.write(inchi_string)
-            output.write('\n')
-            output.write('$$$$\n')
-
-    else:
-        raise ValueError('Unknown output format provided: "{}"'.format(format))
-
-    if path:
+    if path is not None:
         dirpath, basename = os.path.split(os.path.normpath(path))
         filename, extension = os.path.splitext(basename)
 
         if not extension:
-            extension = '.{}'.format(output_format)
+            extension = '.{}'.format(file_format)
 
         filename = '{}{}'.format(filename, extension)
         filepath = os.path.join(dirpath, filename)
@@ -410,20 +337,57 @@ def _create_output(results, path=None, format='inchi'):
             raise IOError('Directory does not exist: "{}"'.format(dirpath))
 
         with open(filepath, 'w') as outfile:
-            print(output.getvalue(), file=outfile)
-
+            print(outputstr, file=outfile)
     else:
-        print(output.getvalue(), file=sys.stdout)
+        print(outputstr, file=sys.stdout)
 
 
-def is_url(path):
-    """Test if path represents a valid URL.
-    :param str path: Path to file.
-    :return: True if path is valid url string, False otherwise.
-    :rtype: :py:obj:`True` or :py:obj:`False`
+def create_output(sdfile, path=None, file_format='inchi'):
+    """Create output containing conversion results.
+
+    :param sdfile: ``SDfile`` instance.
+    :type sdfile: :class:`~ctfile.ctfile.SDfile`.
+    :param str path: Path to where file will be saved. 
+    :param str format: File format: 'inchi', 'mol', 'sdf', 'json', or 'csv'. 
+    :return: None.
+    :rtype: :py:obj:`None`
     """
-    try:
-        parse_result = urlparse(path)
-        return all((parse_result.scheme, parse_result.netloc, parse_result.path))
-    except ValueError:
-        return False
+    default_output_formats = {'inchi', 'mol', 'sdf', 'csv', 'json'}
+    file_format = file_format.lower()
+
+    if file_format not in default_output_formats:
+        raise ValueError('Unknown output format: "{}"'.format(file_format))
+
+    if file_format in {'sdf', 'mol'}:
+        save_output(outputstr=sdfile.writestr(file_format='ctfile'),
+                    path=path,
+                    file_format=file_format)
+
+    elif file_format in {'json'}:
+        save_output(outputstr=sdfile.writestr(file_format='json'),
+                    path=path,
+                    file_format=file_format)
+
+    elif file_format in {'inchi'}:
+        output = []
+        for entry_id in sdfile:
+            output.extend([inchi.strip() for inchi in sdfile[entry_id]['data']['InChI']])
+
+        save_output(outputstr='\n'.join(output),
+                    path=path,
+                    file_format=file_format)
+
+    elif file_format in {'csv'}:
+        outputstr = io.StringIO()
+        csvwriter = csv.writer(outputstr, delimiter='\t')
+
+        for entry_id in sdfile:
+            csv_data = []
+            for data_id in sdfile[entry_id]['data']:
+                value = ' + '.join([item.strip() for item in sdfile[entry_id]['data'][data_id]])
+                csv_data.append(value)
+            csvwriter.writerow(csv_data)
+
+        save_output(outputstr=outputstr.getvalue(),
+                    path=path,
+                    file_format=file_format)
