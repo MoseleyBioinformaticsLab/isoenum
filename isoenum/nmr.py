@@ -325,9 +325,9 @@ class HResonance(Coupling):
 
     @property
     def name(self):
-        """String representation
+        """String representation.
 
-        :return: 
+        :return: String representation.
         :rtype: :py:class:`str`
         """
         return '[{}]{}'.format(
