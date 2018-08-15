@@ -16,6 +16,7 @@ except ImportError:
 
 def is_url(path):
     """Test if path represents a valid URL.
+    
     :param str path: Path to file.
     :return: True if path is valid url string, False otherwise.
     :rtype: :py:obj:`True` or :py:obj:`False`
