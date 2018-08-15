@@ -3,6 +3,19 @@
 Release History
 ===============
 
+0.2.0 (2018-08-15)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Added new command-line interface command ``nmr`` and module in order
+  to generate ``InChI`` associated with observed coupling combination
+  for a given NMR experiment type.
+- Added "1D 1H" and "1D 13C HSQC" NMR experiments.
+- Added new output formats "json" and "csv".
+- Updated API documentation.
+
+
 0.1.5 (2018-04-26)
 ~~~~~~~~~~~~~~~~~~
 
