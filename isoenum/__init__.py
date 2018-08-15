@@ -11,10 +11,6 @@ This package includes the following modules:
 ``cli``
     This module provides the command-line interface for the ``isoenum`` package.
 
-``conf``
-    This module provides the processing of configuration files necessary for 
-    isotopic enumerator.
-
 ``labeling_schema``
     This module provides functions for generating a labeling schema.
 
@@ -26,6 +22,10 @@ This package includes the following modules:
     This module provides functions to call the Open Babel software to convert 
     between ``InChI`` and ``CTfile`` formatted files. 
 
+``conf``
+    This module provides the processing of configuration files necessary for 
+    isotopic enumerator.
+
 ``fileio``
     This module provides functions for generating ``CTfile`` objects and
     convert ``CTfile`` objects into ``InChI``.
@@ -36,7 +36,7 @@ This package includes the following modules:
 
 import logging
 
-__version__ = '0.1.6dev'
+__version__ = '0.2.0'
 
 
 try:  # Python 2/3 compatibility code
