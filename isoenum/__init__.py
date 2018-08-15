@@ -15,14 +15,12 @@ This package includes the following modules:
     This module provides the processing of configuration files necessary for 
     isotopic enumerator.
 
-``iso_property``
-    This module provides the :func:`~isoenum.iso_property.create_iso_property` 
-    function that is responsible for generating the ``Ctab`` properties block (part of 
-    ``CTfile`` formatted files specifying "ISO" property for atoms) based on 
-    provided labeling schema.
-
 ``labeling_schema``
     This module provides functions for generating a labeling schema.
+
+``nmr``
+    This module provides descriptions of coupling combinations that
+    could be observed within NMR experiments.
 
 ``openbabel``
     This module provides functions to call the Open Babel software to convert 
