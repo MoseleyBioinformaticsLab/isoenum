@@ -742,6 +742,14 @@ Output:
                        [--format=<format>]
                        [--output=<path>]
                        [--verbose]
+          isoenum nmr (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
+                      [--type=<experiment-type>]
+                      [--jcoupling=<name>...]
+                      [--decoupled=<element>...]
+                      [--format=<format>]
+                      [--output=<path>]
+                      [--subset]
+                      [--verbose]
 
       Options:
           -h, --help                                 Show this screen.
@@ -759,6 +767,10 @@ Output:
           -i, --ignore-iso                           Ignore existing "ISO" specification in the CTfile or InChI.
           -f, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
           -o, --output=<path>                        Path to output file.
+          -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
+          -j, --jcoupling=<type>                     Allowed J couplings.
+          -d, --decoupled=<element>                  Turn off J coupling for a given element.
+          --subset                                   Create atom subsets for each resonance.
 
 
 Input files
