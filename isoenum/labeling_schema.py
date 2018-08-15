@@ -17,22 +17,24 @@ from collections import Counter
 
 def create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
                            enumerate_param_iso, all_param_iso, specific_param_iso, existing_iso,
-                           isotopes_conf, ctfile_atoms, ctfile_positions):
+                           isotopes_conf, ctfile):
     """Create labeling schema.
 
     :param bool full_labeling_schema: Specifies if default isotopes to be added to isotopic layer.
     :param bool ignore_existing_isotopes: Specifies if will ignore existing isotopic layer.
-    :param list enumerate_param_iso: List of isotope strings from `--enumerate` parameter. 
-    :param list all_param_iso: List of isotope strings from `--all` parameter.
-    :param list specific_param_iso: List of isotope strings from `--specific` parameter.
-    :param list existing_iso: List of isotope strings that were defined within `CTfile` or `InChI`.
+    :param list enumerate_param_iso: List of isotopes from `--enumerate` option. 
+    :param dict all_param_iso: Atom specific isotopes `--all` option.
+    :param dict specific_param_iso: Atom number specific isotopes from `--specific` option.
+    :param dict existing_iso: Atom number specific isotopes from ``Molfile``.
     :param dict isotopes_conf: Default isotopes.
-    :param list ctfile_atoms: List of atoms.
-    :param list ctfile_positions: List of atom positions.
+    :param ctfile: Instance of ``Molfile``. 
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
     :return: Labeling schema.
     :rtype: :py:class:`list`
     """
-    ctfile_position_atom = dict(zip(ctfile_positions, ctfile_atoms))
+    allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
+    positions = [atom.atom_number for atom in ctfile.atoms]
+    ctfile_position_atom = dict(zip(positions, allowed_atom_symbols))
     starting_iso = {}
 
     # first, use "--all" specification to create labeling schema
@@ -51,7 +53,7 @@ def create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
     if not enumerate_param_iso:
         # add default isotopes if "--full" parameter is specified
         if full_labeling_schema:
-            default_iso = _default_isotopes(ctfile_atoms, ctfile_positions, isotopes_conf, starting_iso)
+            default_iso = _default_isotopes(ctfile=ctfile, isotopes_conf=isotopes_conf, current_iso=starting_iso)
             starting_iso.update(default_iso)
 
         labeling_schema = sorted(starting_iso.values(), key=lambda k: int(k['position']))
@@ -78,22 +80,23 @@ def create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
         for prod in labeling_product:
             labeling_schema = {}
 
-            isotopes_per_atom = ['{}-{}'.format(atom, isotope) for atom, isotope in zip(ctfile_atoms, prod)]
+            isotopes_per_atom = ['{}-{}'.format(atom, isotope) for atom, isotope in zip(allowed_atom_symbols, prod)]
             counter = Counter(isotopes_per_atom)
 
-            valid_labeling = [True
-                              if entry['min'] <= counter['{}-{}'.format(entry['atom_symbol'],
-                                                                        entry['isotope'])] <= entry['max']
-                              else False
-                              for entry in enumerate_param_iso]
+            valid_labeling = [
+                True
+                if entry['min'] <= counter['{}-{}'.format(entry['atom_symbol'], entry['isotope'])] <= entry['max']
+                else False
+                for entry in enumerate_param_iso
+            ]
 
             if all(valid_labeling):
-                for atom, isotope, position in zip(ctfile_atoms, prod, ctfile_positions):
+                for atom, isotope, position in zip(allowed_atom_symbols, prod, positions):
                     if isotope:
                         labeling_schema[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
 
             if full_labeling_schema:
-                default_iso = _default_isotopes(ctfile_atoms, ctfile_positions, isotopes_conf, labeling_schema)
+                default_iso = _default_isotopes(ctfile=ctfile, isotopes_conf=isotopes_conf, current_iso=labeling_schema)
                 labeling_schema.update(default_iso)
 
             labeling_schema = sorted(labeling_schema.values(), key=lambda k: int(k['position']))
@@ -101,23 +104,24 @@ def create_labeling_schema(full_labeling_schema, ignore_existing_isotopes,
                 yield labeling_schema
 
 
-def _default_isotopes(ctfile_atoms, ctfile_positions, isotopes_conf, current_iso):
+def _default_isotopes(ctfile, isotopes_conf, current_iso):
     """Create dictionary with default isotopes.
 
-    :param list ctfile_atoms: List of atoms.
-    :param list ctfile_positions: List of atom positions.
+    :param ctfile: Instance of ``Molfile``. 
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
     :param dict isotopes_conf: Default isotopes.
     :param dict current_iso: Current isotopes to which default isotopes will be added. 
     :return: Default isotopes.
     :rtype: :py:class:`dict`
     """
     default_iso = {}
+    allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
+    positions = [atom.atom_number for atom in ctfile.atoms]
+    ctfile_position_atom = dict(zip(positions, allowed_atom_symbols))
 
-    ctfile_position_atom = dict(zip(ctfile_positions, ctfile_atoms))
-
-    for position in ctfile_positions:
-        if position not in current_iso:
-            atom = ctfile_position_atom[position]
+    for atom_number in positions:
+        if atom_number not in current_iso:
+            atom = ctfile_position_atom[atom_number]
             isotope = isotopes_conf[atom]['default']
-            default_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
+            default_iso[atom_number] = {'atom_symbol': atom, 'isotope': isotope, 'atom_number': atom_number}
     return default_iso
