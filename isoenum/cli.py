@@ -11,9 +11,9 @@ Usage:
     isoenum -h | --help
     isoenum --version
     isoenum name (<path-to-ctfile-file-or-inchi-file-or-inchi-string>) 
-                 [--specific=<element-isotope-position>...] 
-                 [--all=<element-isotope>...] 
-                 [--enumerate=<element-isotope-count>...] 
+                 [--specific=<isotope:element:position>...] 
+                 [--all=<isotope:element>...] 
+                 [--enumerate=<isotope:element:count>...] 
                  [--complete | --partial] 
                  [--ignore-iso]
                  [--format=<format>]
@@ -32,10 +32,11 @@ Options:
     -h, --help                                 Show this screen.
     --verbose                                  Print more information.
     -v, --version                              Show version.
-    -a, --all=<element-isotope>                Specify element and isotope, e.g. -a C-13 or --all=C-13
-    -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
-                                               e.g. -s C-13-1 or --specific=C-13-1.
-    -e, --enumerate=<element-isotope-min-max>  Enumerate all isotopically-resolved CTfile or InChI.
+    -a, --all=<isotope:element>                Specify element and isotope, e.g. -a 13:C or --all=13:C
+    -s, --specific=<isotope:element:position>  Specify element, isotope and specific position,
+                                               e.g. -s 13:C:1 or --specific=13:C:1.
+    -e, --enumerate=<isotope:element:min:max>  Enumerate all isotopically-resolved CTfile or InChI,
+                                               e.g. -e 13:C:2:4 or --enumerate=13:C:2:4
     -c, --complete                             Use complete labeling schema, i.e. every atom must specify
                                                "ISO" property, partial labeling schema will be used otherwise
                                                for specified labeling information only.
@@ -184,16 +185,16 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
     for isotopestr in enumerate_param:
 
         try:
-            atom, isotope, min_count, max_count = isotopestr.split('-')
+            isotope, atom, min_count, max_count = isotopestr.split(':')
 
         except ValueError:
             try:
-                atom, isotope, max_count = isotopestr.split('-')
+                isotope, atom, max_count = isotopestr.split(':')
                 min_count = 0
 
             except ValueError:
                 try:
-                    atom, isotope = isotopestr.split('-')
+                    isotope, atom = isotopestr.split(':')
                     max_count = atom_counter[atom]
                     min_count = 0
 
@@ -238,7 +239,7 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile):
     for isotopestr in isotopes:
 
         try:
-            atom, isotope = isotopestr.split('-')
+            isotope, atom = isotopestr.split(':')
         except ValueError:
             raise ValueError('Incorrect isotope specification, use "atom-isotope" format.')
 
@@ -279,7 +280,7 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile):
     for isotopestr in isotopes:
 
         try:
-            atom, isotope, position = isotopestr.split('-')
+            isotope, atom, position = isotopestr.split(':')
         except ValueError:
             raise ValueError('Incorrect isotope specification, use "atom-isotope-position" format.')
 
