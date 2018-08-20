@@ -199,8 +199,8 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
                     min_count = 0
 
                 except ValueError:
-                    raise ValueError('Incorrect isotope specification, use "atom-isotope-min-max",'
-                                     '"atom-isotope-max" or "atom-isotope" format.')
+                    raise ValueError('Incorrect isotope specification, use "isotope:atom:min:max",'
+                                     '"isotope:atom:max" or "isotope:atom" format.')
 
         enumerate_param_iso.append({'atom_symbol': atom, 'isotope': isotope,
                                     'min': int(min_count), 'max': int(max_count)})
@@ -241,7 +241,7 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile):
         try:
             isotope, atom = isotopestr.split(':')
         except ValueError:
-            raise ValueError('Incorrect isotope specification, use "atom-isotope" format.')
+            raise ValueError('Incorrect isotope specification, use "isotope:atom" format.')
 
         if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
@@ -282,7 +282,7 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile):
         try:
             isotope, atom, position = isotopestr.split(':')
         except ValueError:
-            raise ValueError('Incorrect isotope specification, use "atom-isotope-position" format.')
+            raise ValueError('Incorrect isotope specification, use "isotope:atom:position" format.')
 
         if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
