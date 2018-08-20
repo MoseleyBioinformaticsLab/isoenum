@@ -3,6 +3,17 @@
 Release History
 ===============
 
+0.2.1 (2018-08-20)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Updated CLI isotope specification: ``--specific=<isotope:element:position>``,
+  ``--all=<isotope:element>``, ``--enumerate=<isotope:element:min:max>``.
+- Updated all documentation examples according to new CLI.
+- Removed trailing "\n" from ``InChI`` strings.
+
+
 0.2.0 (2018-08-15)
 ~~~~~~~~~~~~~~~~~~
 
