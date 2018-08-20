@@ -160,7 +160,7 @@ which is file or string with information required to create isotopically-resolve
 
    .. code-block:: none
 
-      $ python3 -m isoenum name 1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3
+      $ python3 -m isoenum name '1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3'
 
 
 Isotopic layer specification: specific atoms
