@@ -107,7 +107,7 @@ def create_inchi_from_ctfile_obj(ctf):
         moltempfh.flush()
         openbabel.mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
         inchi_result = inchitempfh.read()
-        return inchi_result
+        return inchi_result.strip()
 
 
 def normalize_ctfile_obj(ctf):
