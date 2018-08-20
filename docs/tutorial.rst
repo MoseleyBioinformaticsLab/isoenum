@@ -173,13 +173,13 @@ Isotopic layer specification: specific atoms
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s C-13-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=C-13-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2
 
    Output:
 
@@ -191,13 +191,13 @@ Isotopic layer specification: specific atoms
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s C-13-1 -s C-13-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=C-13-1 --specific=C-13-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:1 --specific=13:C:2
 
    Output:
 
@@ -214,7 +214,7 @@ Isotopic layer specification: specific atoms
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s C-13-1 -s C-13-2 -i
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2 -i
 
    or
 
@@ -237,13 +237,13 @@ Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a C-13
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=C-13
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C
 
    Output:
 
@@ -256,13 +256,13 @@ Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a C-13 -a O-18
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -a 18:O
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=C-13 --all=O-18
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --all=18:O
 
    Output:
 
@@ -274,13 +274,13 @@ Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a C-13 -a O-18 -i
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -a 18:O -i
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=C-13 --all=O-18 --ignore-iso
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --all=18:O --ignore-iso
 
    Output:
 
@@ -293,13 +293,13 @@ Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a C-13 -s C-12-3 -i
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -s 12:C:3 -i
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=C-13 --specific=C-12-3 --ignore-iso
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --specific=12:C:3 --ignore-iso
 
    Output:
 
@@ -315,13 +315,13 @@ Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e C-13
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e 13:C
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=C-13
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=13:C
 
    Output:
 
@@ -350,13 +350,13 @@ Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e C-13-3-4
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e 13:C:3:4
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=C-13-3-4
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=13:C:3:4
 
    Output:
 
@@ -372,13 +372,13 @@ Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e C-13-3-4 -i
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e 13:C:3:4 -i
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=C-13-3-4 --ignore-iso
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=13:C:3:4 --ignore-iso
 
    Output:
 
@@ -405,13 +405,13 @@ Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e C-13-3-4 -e O-18-1-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e 13:C:3:4 -e 18:O:1:2
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=C-13-3-4 --enumerate=O-18-1-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=13:C:3:4 --enumerate=18:O:1:2
 
    Output:
 
@@ -439,13 +439,13 @@ Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e C-13-2-4 -a O-18 -s C-12-3
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e 13:C:2:4 -a 18:O -s 12:C:3
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=C-13-2-4 --all=O-18 --specific=C-12-3
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=13:C:2:4 --all=18:O --specific=12:C:3
 
    Output:
 
@@ -462,13 +462,13 @@ Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e C-13-2 -e C-12-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -e 13:C:2 -e 12:C:2
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=C-13-2 --enumerate=C-12-2
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --enumerate=13:C:2 --enumerate=12:C:2
 
    Output:
 
@@ -529,13 +529,13 @@ Output format
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s C-13-2 -f inchi
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f inchi
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=C-13-2 --format=inchi
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=inchi
 
    Output:
 
@@ -548,13 +548,13 @@ Output format
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s C-13-2 -f sdf
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f sdf
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=C-13-2 --format=sdf
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=sdf
 
    Output:
 
@@ -617,13 +617,13 @@ Output file
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a C-13 -f inchi -o outfile.inchi
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -f inchi -o outfile.inchi
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=C-13 --format=inchi --output=outfile.inchi
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --format=inchi --output=outfile.inchi
 
    Generated file will contain the following output:
 
@@ -636,13 +636,13 @@ Output file
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a C-13 -f sdf -o outfile.sdf
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -f sdf -o outfile.sdf
 
    or
 
    .. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=C-13 --format=sdf --output=outfile.sdf
+      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --format=sdf --output=outfile.sdf
 
    Generated file will contain the following output:
 
@@ -897,13 +897,13 @@ Docker isotopic layer specification: specific atoms
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s C-13-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s 13:C:2
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=C-13-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=13:C:2
 
    Output:
 
@@ -915,13 +915,13 @@ Docker isotopic layer specification: specific atoms
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s C-13-1 -s C-13-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=C-13-1 --specific=C-13-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=13:C:1 --specific=13:C:2
 
    Output:
 
@@ -938,13 +938,13 @@ Docker isotopic layer specification: specific atoms
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s C-13-1 -s C-13-2 -i
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2 -i
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=C-13-1 --specific=C-13-2 --ignore-iso
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=13:C:1 --specific=13:C:2 --ignore-iso
 
    Output:
 
@@ -961,13 +961,13 @@ Docker Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a C-13
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a 13:C
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=C-13
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=13:C
 
    Output:
 
@@ -980,13 +980,13 @@ Docker Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a C-13 -a O-18
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a 13:C -a 18:O
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=C-13 --all=O-18
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=13:C --all=18:O
 
    Output:
 
@@ -998,13 +998,13 @@ Docker Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a C-13 -a O-18 -i
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a 13:C -a 18:O -i
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=C-13 --all=O-18 --ignore-iso
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=13:C --all=18:O --ignore-iso
 
    Output:
 
@@ -1017,13 +1017,13 @@ Docker Isotopic layer specification: all atoms of a specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a C-13 -s C-12-3 -i
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -a 13:C -s 12:C:3 -i
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=C-13 --specific=C-12-3 --ignore-iso
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --all=13:C --specific=12:C:3 --ignore-iso
 
    Output:
 
@@ -1039,13 +1039,13 @@ Docker Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e C-13
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e 13:C
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=C-13
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=13:C
 
    Output:
 
@@ -1074,13 +1074,13 @@ Docker Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e C-13-3-4
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e 13:C:3:4
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=C-13-3-4
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=13:C:3:4
 
    Output:
 
@@ -1096,13 +1096,13 @@ Docker Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e C-13-3-4 -i
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e 13:C:3:4 -i
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=C-13-3-4 --ignore-iso
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=13:C:3:4 --ignore-iso
 
    Output:
 
@@ -1129,13 +1129,13 @@ Docker Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e C-13-3-4 -e O-18-1-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e 13:C:3:4 -e 18:O:1:2
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=C-13-3-4 --enumerate=O-18-1-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=13:C:3:4 --enumerate=18:O:1:2
 
    Output:
 
@@ -1163,13 +1163,13 @@ Docker Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e C-13-2-4 -a O-18 -s C-12-3
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e 13:C:2:4 -a 18:O -s 12:C:3
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=C-13-2-4 --all=O-18 --specific=C-12-3
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=13:C:2:4 --all=18:O --specific=12:C:3
 
    Output:
 
@@ -1186,13 +1186,13 @@ Docker Isotopic layer specification: enumerate atoms of specific type
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e C-13-2 -e C-12-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -e 13:C:2 -e 12:C:2
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=C-13-2 --enumerate=C-12-2
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --enumerate=13:C:2 --enumerate=12:C:2
 
    Output:
 
@@ -1253,13 +1253,13 @@ Output format
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s C-13-2 -f inchi
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s 13:C:2 -f inchi
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=C-13-2 --format=inchi
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=13:C:2 --format=inchi
 
    Output:
 
@@ -1272,13 +1272,13 @@ Output format
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s C-13-2 -f sdf
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol -s 13:C:2 -f sdf
 
    or
 
    .. code-block:: none
 
-      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=C-13-2 --format=sdf
+      # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol isoenum name /pentane-2_2-diol.mol --specific=13:C:2 --format=sdf
 
    Output:
 
@@ -1361,7 +1361,7 @@ must be mounted as volumes for the docker container to see them.
 
       # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol \
                    -v /absolute/path/to/outfile.inchi:/outfile.inchi \
-                   isoenum name /pentane-2_2-diol.mol -a C-13 -f inchi -o /outfile.inchi
+                   isoenum name /pentane-2_2-diol.mol -a 13:C -f inchi -o /outfile.inchi
 
    or
 
@@ -1369,7 +1369,7 @@ must be mounted as volumes for the docker container to see them.
 
       # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol \
                    -v /absolute/path/to/outfile.inchi:/outfile.inchi \
-                   isoenum name /pentane-2_2-diol.mol --all=C-13 --format=inchi --output=/outfile.inchi
+                   isoenum name /pentane-2_2-diol.mol --all=13:C --format=inchi --output=/outfile.inchi
 
    Generated file will contain the following output:
 
@@ -1384,7 +1384,7 @@ must be mounted as volumes for the docker container to see them.
 
       # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol \
                    -v /absolute/path/to/outfile.sdf:/outfile.sdf \
-                   isoenum name /pentane-2_2-diol.mol -a C-13 -f sdf -o /outfile.sdf
+                   isoenum name /pentane-2_2-diol.mol -a 13:C -f sdf -o /outfile.sdf
 
    or
 
@@ -1392,7 +1392,7 @@ must be mounted as volumes for the docker container to see them.
 
       # docker run -v /absolute/path/to/pentane-2_2-diol.mol:/pentane-2_2-diol.mol \
                    -v /absolute/path/to/outfile.sdf:/outfile.sdf \
-                   isoenum name /pentane-2_2-diol.mol --all=C-13 --format=sdf --output=/outfile.sdf
+                   isoenum name /pentane-2_2-diol.mol --all=13:C --format=sdf --output=/outfile.sdf
 
    Generated file will contain the following output:
 
