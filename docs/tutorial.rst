@@ -25,9 +25,9 @@ Output:
        isoenum -h | --help
        isoenum --version
        isoenum name (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
-                    [--specific=<element-isotope-position>...]
-                    [--all=<element-isotope>...]
-                    [--enumerate=<element-isotope-count>...]
+                    [--specific=<isotope:element:position>...]
+                    [--all=<isotope:element>...]
+                    [--enumerate=<isotope:element:count>...]
                     [--complete | --partial]
                     [--ignore-iso]
                     [--format=<format>]
@@ -46,10 +46,11 @@ Output:
        -h, --help                                 Show this screen.
        --verbose                                  Print more information.
        -v, --version                              Show version.
-       -a, --all=<element-isotope>                Specify element and isotope, e.g. -a C-13 or --all=C-13
-       -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
-                                                  e.g. -s C-13-1 or --specific=C-13-1.
-       -e, --enumerate=<element-isotope-min-max>  Enumerate all isotopically-resolved CTfile or InChI.
+       -a, --all=<isotope:element>                Specify element and isotope, e.g. -a 13:C or --all=13:C
+       -s, --specific=<isotope:element:position>  Specify element, isotope and specific position,
+                                                  e.g. -s 13:C:1 or --specific=13:C:1.
+       -e, --enumerate=<isotope:element:min:max>  Enumerate all isotopically-resolved CTfile or InChI,
+                                                  e.g. -e 13:C:2:4 or --enumerate=13:C:2:4
        -c, --complete                             Use complete labeling schema, i.e. every atom must specify
                                                   "ISO" property, partial labeling schema will be used otherwise
                                                   for specified labeling information only.
@@ -734,9 +735,9 @@ Output:
           isoenum -h | --help
           isoenum --version
           isoenum name (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
-                       [--specific=<element-isotope-position>...]
-                       [--all=<element-isotope>...]
-                       [--enumerate=<element-isotope-count>...]
+                       [--specific=<isotope:element:position>...]
+                       [--all=<isotope:element>...]
+                       [--enumerate=<isotope:element:count>...]
                        [--complete | --partial]
                        [--ignore-iso]
                        [--format=<format>]
@@ -755,10 +756,11 @@ Output:
           -h, --help                                 Show this screen.
           --verbose                                  Print more information.
           -v, --version                              Show version.
-          -a, --all=<element-isotope>                Specify element and isotope, e.g. -a C-13 or --all=C-13
-          -s, --specific=<element-isotope-position>  Specify element, isotope and specific position,
-                                                     e.g. -s C-13-1 or --specific=C-13-1.
-          -e, --enumerate=<element-isotope-min-max>  Enumerate all isotopically-resolved CTfile or InChI.
+          -a, --all=<isotope:element>                Specify element and isotope, e.g. -a 13:C or --all=13:C
+          -s, --specific=<isotope:element:position>  Specify element, isotope and specific position,
+                                                     e.g. -s 13:C:1 or --specific=13:C:1.
+          -e, --enumerate=<isotope:element:min:max>  Enumerate all isotopically-resolved CTfile or InChI,
+                                                     e.g. -e 13:C:2:4 or --enumerate=13:C:2:4
           -c, --complete                             Use complete labeling schema, i.e. every atom must specify
                                                      "ISO" property, partial labeling schema will be used otherwise
                                                      for specified labeling information only.
@@ -771,6 +773,7 @@ Output:
           -j, --jcoupling=<type>                     Allowed J couplings.
           -d, --decoupled=<element>                  Turn off J coupling for a given element.
           --subset                                   Create atom subsets for each resonance.
+
 
 
 Input files
