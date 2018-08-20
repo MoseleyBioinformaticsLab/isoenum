@@ -13,7 +13,7 @@ Usage:
     isoenum name (<path-to-ctfile-file-or-inchi-file-or-inchi-string>) 
                  [--specific=<isotope:element:position>...] 
                  [--all=<isotope:element>...] 
-                 [--enumerate=<isotope:element:count>...] 
+                 [--enumerate=<isotope:element:min:max>...] 
                  [--complete | --partial] 
                  [--ignore-iso]
                  [--format=<format>]
