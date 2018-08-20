@@ -57,7 +57,7 @@ Output:
        -p, --partial                              Use partial labeling schema, i.e. generate labeling schema
                                                   from the provided labeling information.
        -i, --ignore-iso                           Ignore existing "ISO" specification in the CTfile or InChI.
-       -f, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
+       -f, --format=<format>                      Format of output: inchi, mol, sdf, csv, json [default: inchi].
        -o, --output=<path>                        Path to output file.
        -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
        -j, --jcoupling=<type>                     Allowed J couplings.
@@ -767,7 +767,7 @@ Output:
           -p, --partial                              Use partial labeling schema, i.e. generate labeling schema
                                                      from the provided labeling information.
           -i, --ignore-iso                           Ignore existing "ISO" specification in the CTfile or InChI.
-          -f, --format=<format>                      Format of output: inchi, mol or sdf [default: inchi].
+          -f, --format=<format>                      Format of output: inchi, mol, sdf, csv, json [default: inchi].
           -o, --output=<path>                        Path to output file.
           -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
           -j, --jcoupling=<type>                     Allowed J couplings.
