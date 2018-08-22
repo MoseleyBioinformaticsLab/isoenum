@@ -10,6 +10,7 @@ Release History
 
 - Added ``ionize`` command and functionality in order to create charged versions
   of neutral molecules, e.g. zwitterion forms of amino acids (https://en.wikipedia.org/wiki/Zwitterion)
+- Removed Open Babel system call stdout messages.
 
 
 0.2.1 (2018-08-20)
