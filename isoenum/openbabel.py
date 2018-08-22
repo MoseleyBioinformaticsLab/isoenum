@@ -12,6 +12,13 @@ to convert between ``InChI`` and ``CTfile`` formatted files.
 import subprocess
 
 
+try:
+    from subprocess import DEVNULL
+except ImportError:
+    import os
+    DEVNULL = open(os.devnull, 'wb')
+
+
 def _test_openbabel():
     """Test if Open Babel software is installed.
     
@@ -41,12 +48,18 @@ def mol_to_inchi(infilename, outfilename, **options):
     _test_openbabel()
 
     if options:
-        subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
+        subprocess.call(['obabel', '-imol', '{}'.format(infilename),
                                  '-oinchi', '-O{}'.format(outfilename),
-                                 '{}'.format(' '.join(options.values()))], shell=False)
+                                 '{}'.format(' '.join(options.values()))],
+                                shell=False,
+                                stdout=DEVNULL,
+                                stderr=subprocess.STDOUT)
     else:
-        subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
-                                 '-oinchi', '-O{}'.format(outfilename)], shell=False)
+        subprocess.call(['obabel', '-imol', '{}'.format(infilename),
+                         '-oinchi', '-O{}'.format(outfilename)],
+                        shell=False,
+                        stdout=DEVNULL,
+                        stderr=subprocess.STDOUT)
 
 
 def inchi_to_mol(infilename, outfilename):
@@ -59,5 +72,8 @@ def inchi_to_mol(infilename, outfilename):
     """
     _test_openbabel()
 
-    subprocess.check_output(['obabel', '-iinchi', '{}'.format(infilename),
-                             '-omol', '-O{}'.format(outfilename), '--gen3D'], shell=False)
+    subprocess.call(['obabel', '-iinchi', '{}'.format(infilename),
+                     '-omol', '-O{}'.format(outfilename), '--gen3D'],
+                    shell=False,
+                    stdout=DEVNULL,
+                    stderr=subprocess.STDOUT)
