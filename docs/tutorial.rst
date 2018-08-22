@@ -33,6 +33,10 @@ Output:
                     [--format=<format>]
                     [--output=<path>]
                     [--verbose]
+       isoenum ionize (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
+                   (--state=<element:position:charge>)
+                   [--format=<format>]
+                   [--output=<path>]
        isoenum nmr (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
                    [--type=<experiment-type>]
                    [--jcoupling=<name>...]
@@ -62,6 +66,8 @@ Output:
        -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
        -j, --jcoupling=<type>                     Allowed J couplings.
        -d, --decoupled=<element>                  Turn off J coupling for a given element.
+       -z, --state=<element:position:charge>      Create ionized form of InChI from neutral molecule,
+                                                  e.g. N:6:+1, O:8:-1.
        --subset                                   Create atom subsets for each resonance.
 
 
@@ -743,6 +749,10 @@ Output:
                        [--format=<format>]
                        [--output=<path>]
                        [--verbose]
+          isoenum ionize (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
+                         (--state=<element:position:charge>)
+                         [--format=<format>]
+                         [--output=<path>]
           isoenum nmr (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
                       [--type=<experiment-type>]
                       [--jcoupling=<name>...]
@@ -772,6 +782,8 @@ Output:
           -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
           -j, --jcoupling=<type>                     Allowed J couplings.
           -d, --decoupled=<element>                  Turn off J coupling for a given element.
+          -z, --state=<element:position:charge>      Create ionized form of InChI from neutral molecule,
+                                                     e.g. N:6:+1, O:8:-1.
           --subset                                   Create atom subsets for each resonance.
 
 
