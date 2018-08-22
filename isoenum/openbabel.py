@@ -29,17 +29,24 @@ def _test_openbabel():
                          'software for your system: http://openbabel.org/wiki/Get_Open_Babel')
 
 
-def mol_to_inchi(infilename, outfilename):
+def mol_to_inchi(infilename, outfilename, **options):
     """Convert ``Molfile`` to ``InChI`` identifier.
     
     :param str infilename: Input file name.
     :param str outfilename: Output file name.
+    :param options: Key-value options to be passed to Open Babel.
     :return: None.
     :rtype: :py:obj:`None`
     """
     _test_openbabel()
-    result = subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
-                                      '-oinchi', '-O{}'.format(outfilename)], shell=False)
+
+    if options:
+        subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
+                                 '-oinchi', '-O{}'.format(outfilename),
+                                 '{}'.format(' '.join(options.values()))], shell=False)
+    else:
+        subprocess.check_output(['obabel', '-imol', '{}'.format(infilename),
+                                 '-oinchi', '-O{}'.format(outfilename)], shell=False)
 
 
 def inchi_to_mol(infilename, outfilename):
@@ -51,5 +58,6 @@ def inchi_to_mol(infilename, outfilename):
     :rtype: :py:obj:`None`
     """
     _test_openbabel()
-    result = subprocess.check_output(['obabel', '-iinchi', '{}'.format(infilename),
-                                      '-omol', '-O{}'.format(outfilename), '--gen3D'], shell=False)
+
+    subprocess.check_output(['obabel', '-iinchi', '{}'.format(infilename),
+                             '-omol', '-O{}'.format(outfilename), '--gen3D'], shell=False)
