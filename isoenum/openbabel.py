@@ -11,7 +11,6 @@ to convert between ``InChI`` and ``CTfile`` formatted files.
 
 import subprocess
 
-
 try:
     from subprocess import DEVNULL
 except ImportError:
