@@ -50,7 +50,7 @@ def create_ctfile(path):
     if isinstance(ctf, ctfile.Molfile) or isinstance(ctf, ctfile.SDfile):
         return ctf
     else:
-        raise ValueError('Unknow "CTfile" type.')
+        raise ValueError('Cannot create "CTfile" object.')
 
 
 def create_ctfile_from_ctfile_str(ctfile_str):
@@ -94,7 +94,7 @@ def create_ctfile_from_inchi_file(path):
             return ctfile.load(infile)
 
 
-def create_inchi_from_ctfile_obj(ctf):
+def create_inchi_from_ctfile_obj(ctf, **options):
     """Create ``InChI`` from ``CTfile`` instance.
 
     :param ctf: Instance of :class:`~ctfile.ctfile.CTfile`.
@@ -105,7 +105,7 @@ def create_inchi_from_ctfile_obj(ctf):
     with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
         moltempfh.write(ctf.writestr(file_format='ctfile'))
         moltempfh.flush()
-        openbabel.mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name)
+        openbabel.mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name, **options)
         inchi_result = inchitempfh.read()
         return inchi_result.strip()
 
