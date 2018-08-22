@@ -3,6 +3,15 @@
 Release History
 ===============
 
+0.3.0 (2018-08-22)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Added ``ionize`` command and functionality in order to create charged versions
+  of neutral molecules, e.g. zwitterion forms of amino acids (https://en.wikipedia.org/wiki/Zwitterion)
+
+
 0.2.1 (2018-08-20)
 ~~~~~~~~~~~~~~~~~~
 
