@@ -19,6 +19,10 @@ Usage:
                  [--format=<format>]
                  [--output=<path>]
                  [--verbose]
+    isoenum ionize (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
+                   (--state=<element:position:charge>...)
+                   [--format=<format>]
+                   [--output=<path>]
     isoenum nmr (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
                 [--type=<experiment-type>]
                 [--jcoupling=<name>...]
@@ -48,6 +52,8 @@ Options:
     -t, --type=<experiment-type>               Type of NMR experiment [default: 1D1H].
     -j, --jcoupling=<type>                     Allowed J couplings.
     -d, --decoupled=<element>                  Turn off J coupling for a given element.
+    -z, --state=<element:position:charge>      Create ionized form of InChI from neutral molecule, 
+                                               e.g. N:6:+1, O:8:-1.
     --subset                                   Create atom subsets for each resonance.
 """
 
@@ -130,6 +136,29 @@ def cli(cmdargs):
 
         create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
 
+    elif cmdargs['ionize']:
+        path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
+        atom_states = cmdargs['--state']
+        ctf = fileio.create_ctfile(path)
+
+        sdfile = fileio.create_empty_sdfile_obj()
+        for molfile in ctf.molfiles:
+            sdfile_data = OrderedDict()
+            for state in atom_states:
+                try:
+                    atom_symbol, atom_number, charge = state.split(':')
+                except ValueError:
+                    raise ValueError('Incorrect ionization specification, use "element:position:charge" format.')
+
+                molfile.add_charge(atom_symbol=atom_symbol, atom_number=atom_number, charge=charge)
+
+            new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
+            sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(ctf=molfile,
+                                                                                                       fixedH='-xF')))
+            sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
+
+        create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
+
     elif cmdargs['nmr']:
         path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
         experiment_type = cmdargs['--type']
@@ -199,8 +228,8 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
                     min_count = 0
 
                 except ValueError:
-                    raise ValueError('Incorrect isotope specification, use "isotope:atom:min:max",'
-                                     '"isotope:atom:max" or "isotope:atom" format.')
+                    raise ValueError('Incorrect isotope specification, use "isotope:element:min:max",'
+                                     '"isotope:element:max" or "isotope:element" format.')
 
         enumerate_param_iso.append({'atom_symbol': atom, 'isotope': isotope,
                                     'min': int(min_count), 'max': int(max_count)})
@@ -241,7 +270,7 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile):
         try:
             isotope, atom = isotopestr.split(':')
         except ValueError:
-            raise ValueError('Incorrect isotope specification, use "isotope:atom" format.')
+            raise ValueError('Incorrect isotope specification, use "isotope:element" format.')
 
         if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
@@ -282,7 +311,7 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile):
         try:
             isotope, atom, position = isotopestr.split(':')
         except ValueError:
-            raise ValueError('Incorrect isotope specification, use "isotope:atom:position" format.')
+            raise ValueError('Incorrect isotope specification, use "isotope:element:position" format.')
 
         if atom not in allowed_atom_symbols:
             raise ValueError('Incorrect atom "{}" provided.'.format(atom))
