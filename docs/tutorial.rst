@@ -230,6 +230,10 @@ create isotopically-resolved ``InChI``.
 Isotopic layer specification: specific atoms option
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 
+The ``-s`` or ``--specific`` option allows you to specify the isotopic information
+for an atom at a specific position within a molecule (e.g. carbon at position "2"
+will have absolute mass "13").
+
 * To designate the isotope of a specific atom within a given ``Molfile``, use
   the ``-s`` or ``--specific`` option. For example, specify the second carbon
   atom as carbon 13:
@@ -298,7 +302,8 @@ Isotopic layer specification: all atoms of a specific type option
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 The ``-a`` or ``--all`` option allows you to specify the isotopic information
-for all atoms of a specific type (i.e. all carbons, all hydrogens, etc.)
+for all atoms of a specific type (e.g. all carbons within a molecule will have
+ absolute mass "13" etc.)
 
 * To add isotope designations to all atoms of a specific element,
   use the ``-a`` or ``--all`` option:
