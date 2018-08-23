@@ -219,69 +219,79 @@ or
     $ python3 -m isoenum name '1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3'
 
 
-Isotopic layer specification: specific atoms
-''''''''''''''''''''''''''''''''''''''''''''
+The isoenum name command
+------------------------
+
+The ``name`` command of ``isoenum`` command-line interface provides facilities
+to add isotopic layer information to molecule in order to create
+isotopically-resolved ``InChI``.
+
+
+Isotopic layer specification: specific atoms option
+'''''''''''''''''''''''''''''''''''''''''''''''''''
 
 * To designate the isotope of a specific atom within a given ``Molfile``, use
   the ``-s`` or ``--specific`` option. For example, specify the second carbon
   atom as carbon 13:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
+
 
 * To designate the isotope for several atoms, repeat ``-s`` or ``--specific`` option:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:1 --specific=13:C:2
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:1 --specific=13:C:2
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
-   .. note::
+.. note::
 
-      Since original file already contained ``ISO`` specification for the first carbon atom,
-      it did not change the designation of that atom (i.e. ``i1+0`` was retained).
+    Since original file already contained ``ISO`` specification for the first carbon atom,
+    it did not change the designation of that atom (i.e. ``i1+0`` was retained).
+
 
 * To ignore existing ``ISO`` specifications, provide the ``-i`` or ``--ignore-iso`` option:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2 -i
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:1 -s 13:C:2 -i
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=C-13-1 --specific=C-13-2 --ignore-iso
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=C-13-1 --specific=C-13-2 --ignore-iso
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1
 
 
 Isotopic layer specification: all atoms of a specific type
