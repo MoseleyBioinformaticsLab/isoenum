@@ -187,39 +187,36 @@ We are going to use several input files to generate isotopically-resolved
     $$$$
 
 
-Examples
---------
-
 Input file/string specification
-'''''''''''''''''''''''''''''''
+-------------------------------
 
 As shown above, ``isoenum`` command-line interface asks user
 to provide one required parameter ``<path-to-ctfile-file-or-inchi-file-or-inchi-string>``
 which is file or string with information required to create isotopically-resolved ``InChI``:
 
-   * Path to ``CTfile`` (i.e. ``Molfile`` or ``SDfile``).
+* Path to ``CTfile`` (i.e. ``Molfile`` or ``SDfile``).
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol
 
-   * Path to the file containing an ``InChI``.
+* Path to the file containing an ``InChI``.
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.inchi
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.inchi
 
-   * ``InChI`` string.
+* ``InChI`` string.
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3
+    $ python3 -m isoenum name 'InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3'
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name '1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3'
+    $ python3 -m isoenum name '1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3'
 
 
 Isotopic layer specification: specific atoms
