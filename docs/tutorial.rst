@@ -222,9 +222,9 @@ or
 The isoenum name command
 ------------------------
 
-The ``name`` command of ``isoenum`` command-line interface provides facilities
-to add isotopic layer information to molecule in order to create
-isotopically-resolved ``InChI``.
+The ``name`` command of ``isoenum`` command-line interface provides
+facilities to add isotopic layer information to molecule in order to
+create isotopically-resolved ``InChI``.
 
 
 Isotopic layer specification: specific atoms option
@@ -294,83 +294,89 @@ Output:
     InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1
 
 
-Isotopic layer specification: all atoms of a specific type
-''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+Isotopic layer specification: all atoms of a specific type option
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+The ``-a`` or ``--all`` option allows you to specify the isotopic information
+for all atoms of a specific type (i.e. all carbons, all hydrogens, etc.)
 
 * To add isotope designations to all atoms of a specific element,
   use the ``-a`` or ``--all`` option:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1
+
 
 * To add isotope designations to different types of atoms,
   repeat the ``-a`` or ``--all`` option for each desired element:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -a 18:O
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -a 18:O
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --all=18:O
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --all=18:O
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1,6+2,7+2
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+1,5+1,6+2,7+2
+
 
 * To ignore existing ``ISO`` specifications, combine with the ``-i`` or ``--ignore-iso`` option:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -a 18:O -i
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -a 18:O -i
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --all=18:O --ignore-iso
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --all=18:O --ignore-iso
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1,3+1,4+1,5+1,6+2,7+2
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1,3+1,4+1,5+1,6+2,7+2
+
 
 * Also the ``-a`` or ``--all`` option can be combined with the ``-s`` or ``--specific`` option
   which has higher priority:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -s 12:C:3 -i
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -a 13:C -s 12:C:3 -i
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --specific=12:C:3 --ignore-iso
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --specific=12:C:3 --ignore-iso
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1,3+0,4+1,5+1
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+1,2+1,3+0,4+1,5+1
 
 
 Isotopic layer specification: enumerate atoms of specific type
