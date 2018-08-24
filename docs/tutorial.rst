@@ -602,97 +602,217 @@ Output:
 
 
 Output format
-'''''''''''''
+-------------
 
 * There are several output formats available:
 
-   * ``inchi`` - which produces ``InChI`` string.
-   * ``sdf`` - which produces ``SDfile`` with one or more ``Molfile`` and ``InChI`` associated with it.
-   * ``mol`` - same as ``sdf``.
+   * ``inchi``: produces ``InChI`` string.
+   * ``sdf``: produces ``SDfile`` with one or more ``Molfile`` and ``InChI`` associated with it.
+   * ``mol``: the same as ``sdf``.
+   * ``json``: produces JSON representation of ``SDfile``.
+   * ``csv``: produces tab-separated csv file with the information from ``SDfile`` data block.
+
 
 * To specify the ``inchi`` output format (which is set to default and does not require
   format specification), use the ``-f`` or ``--format`` option followed by ``inchi``:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f inchi
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f inchi
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=inchi
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=inchi
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
+
 
 * To specify the ``mol`` or ``sdf`` output format, use the ``-f`` or ``--format``
   option followed by ``mol`` or ``sdf``:
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f sdf
+   $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f sdf
 
-   or
+or
 
-   .. code-block:: none
+.. code-block:: none
 
-      $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=sdf
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=sdf
 
-   Output:
+Output:
 
-   .. code-block:: none
+.. code-block:: none
 
-      pentane-2_2-diol
-      OpenBabel04241818183D
+    pentane-2_2-diol
+    OpenBabel04241818183D
 
-       19 18  0  0  0  0  0  0  0  0999 V2000
-          0.8564    0.0224   -0.0199   C 0  0  0  0  0  0  0  0  0  0  0  0
-          5.0590   -2.7653   -0.2642   C 0  0  0  0  0  0  0  0  0  0  0  0
-          2.3767    0.0633   -0.0253   C 0  0  0  0  0  0  0  0  0  0  0  0
-          2.9725   -1.3472   -0.1203   C 0  0  0  0  0  0  0  0  0  0  0  0
-          4.5036   -1.3472   -0.1439   C 0  0  0  0  0  0  0  0  0  0  0  0
-          4.9424   -0.5621   -1.2388   O 0  0  0  0  0  0  0  0  0  0  0  0
-          5.0329   -0.7920    1.0484   O 0  0  0  0  0  0  0  0  0  0  0  0
-          0.4514    1.0368    0.0457   H 0  0  0  0  0  0  0  0  0  0  0  0
-          0.4813   -0.5495    0.8345   H 0  0  0  0  0  0  0  0  0  0  0  0
-          0.4733   -0.4367   -0.9365   H 0  0  0  0  0  0  0  0  0  0  0  0
-          4.7458   -3.2426   -1.1982   H 0  0  0  0  0  0  0  0  0  0  0  0
-          4.7417   -3.3903    0.5788   H 0  0  0  0  0  0  0  0  0  0  0  0
-          6.1556   -2.7490   -0.2585   H 0  0  0  0  0  0  0  0  0  0  0  0
-          2.7259    0.5602    0.8869   H 0  0  0  0  0  0  0  0  0  0  0  0
-          2.7092    0.6719   -0.8743   H 0  0  0  0  0  0  0  0  0  0  0  0
-          2.5969   -1.8221   -1.0358   H 0  0  0  0  0  0  0  0  0  0  0  0
-          2.6148   -1.9367    0.7329   H 0  0  0  0  0  0  0  0  0  0  0  0
-          5.0489   -1.1442   -2.0068   H 0  0  0  0  0  0  0  0  0  0  0  0
-          4.6612   -1.2841    1.7969   H 0  0  0  0  0  0  0  0  0  0  0  0
-        1  3  1  0  0  0  0
-        1  8  1  0  0  0  0
-        1  9  1  0  0  0  0
-        1 10  1  0  0  0  0
-        2  5  1  0  0  0  0
-        2 11  1  0  0  0  0
-        2 12  1  0  0  0  0
-        2 13  1  0  0  0  0
-        3  4  1  0  0  0  0
-        3 14  1  0  0  0  0
-        3 15  1  0  0  0  0
-        4  5  1  0  0  0  0
-        4 16  1  0  0  0  0
-        4 17  1  0  0  0  0
-        5  6  1  0  0  0  0
-        5  7  1  0  0  0  0
-        6 18  1  0  0  0  0
-        7 19  1  0  0  0  0
-      M  ISO  2   1  12   2  13
-      M  END
-      > <InChI>
-      InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
+     19 18  0  0  0  0  0  0  0  0999 V2000
+        0.8564    0.0224   -0.0199   C 0  0  0  0  0  0  0  0  0  0  0  0
+        5.0590   -2.7653   -0.2642   C 0  0  0  0  0  0  0  0  0  0  0  0
+        2.3767    0.0633   -0.0253   C 0  0  0  0  0  0  0  0  0  0  0  0
+        2.9725   -1.3472   -0.1203   C 0  0  0  0  0  0  0  0  0  0  0  0
+        4.5036   -1.3472   -0.1439   C 0  0  0  0  0  0  0  0  0  0  0  0
+        4.9424   -0.5621   -1.2388   O 0  0  0  0  0  0  0  0  0  0  0  0
+        5.0329   -0.7920    1.0484   O 0  0  0  0  0  0  0  0  0  0  0  0
+        0.4514    1.0368    0.0457   H 0  0  0  0  0  0  0  0  0  0  0  0
+        0.4813   -0.5495    0.8345   H 0  0  0  0  0  0  0  0  0  0  0  0
+        0.4733   -0.4367   -0.9365   H 0  0  0  0  0  0  0  0  0  0  0  0
+        4.7458   -3.2426   -1.1982   H 0  0  0  0  0  0  0  0  0  0  0  0
+        4.7417   -3.3903    0.5788   H 0  0  0  0  0  0  0  0  0  0  0  0
+        6.1556   -2.7490   -0.2585   H 0  0  0  0  0  0  0  0  0  0  0  0
+        2.7259    0.5602    0.8869   H 0  0  0  0  0  0  0  0  0  0  0  0
+        2.7092    0.6719   -0.8743   H 0  0  0  0  0  0  0  0  0  0  0  0
+        2.5969   -1.8221   -1.0358   H 0  0  0  0  0  0  0  0  0  0  0  0
+        2.6148   -1.9367    0.7329   H 0  0  0  0  0  0  0  0  0  0  0  0
+        5.0489   -1.1442   -2.0068   H 0  0  0  0  0  0  0  0  0  0  0  0
+        4.6612   -1.2841    1.7969   H 0  0  0  0  0  0  0  0  0  0  0  0
+      1  3  1  0  0  0  0
+      1  8  1  0  0  0  0
+      1  9  1  0  0  0  0
+      1 10  1  0  0  0  0
+      2  5  1  0  0  0  0
+      2 11  1  0  0  0  0
+      2 12  1  0  0  0  0
+      2 13  1  0  0  0  0
+      3  4  1  0  0  0  0
+      3 14  1  0  0  0  0
+      3 15  1  0  0  0  0
+      4  5  1  0  0  0  0
+      4 16  1  0  0  0  0
+      4 17  1  0  0  0  0
+      5  6  1  0  0  0  0
+      5  7  1  0  0  0  0
+      6 18  1  0  0  0  0
+      7 19  1  0  0  0  0
+    M  ISO  2   1  12   2  13
+    M  END
+    > <InChI>
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
-      $$$$
+    $$$$
+
+
+* To specify the ``json`` output format, use the ``-f`` or ``--format``
+  option followed by ``json``:
+
+.. code-block:: none
+
+   $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f json
+
+or
+
+.. code-block:: none
+
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=json
+
+Output:
+
+.. code-block:: none
+
+    {
+        "1": {
+            "molfile": {
+                "HeaderBlock": {
+                    "molecule_name": "",
+                    "software": "OpenBabel02101812223D",
+                    "comment": ""
+                },
+                "Ctab": {
+                    "CtabCountsLine": {
+                        "number_of_atoms": "19",
+                        "number_of_bonds": "18",
+                        "number_of_atom_lists": "0",
+                        "not_used1": "0",
+                        "chiral_flag": "0",
+                        "number_of_stext_entries": "0",
+                        "not_used2": "0",
+                        "not_used3": "0",
+                        "not_used4": "0",
+                        "not_used5": "0",
+                        "number_of_properties": "999",
+                        "version": "V2000"
+                    },
+                    "CtabAtomBlock": [
+                        {
+                            "x": "0.8986",
+                            "y": "-0.0477",
+                            "z": "0.0323",
+                            "atom_symbol": "C",
+                            "mass_difference": "0",
+                            "charge": "0",
+                            "atom_stereo_parity": "0",
+                            "hydrogen_count": "0",
+                            "stereo_care_box": "0",
+                            "valence": "0",
+                            "h0designator": "0",
+                            "not_used1": "0",
+                            "not_used2": "0",
+                            "atom_atom_mapping_number": "0",
+                            "inversion_retention_flag": "0",
+                            "exact_change_flag": "0"
+                        },
+                        ...
+                    ],
+                    "CtabBondBlock": [
+                        {
+                            "first_atom_number": "1",
+                            "second_atom_number": "3",
+                            "bond_type": "1",
+                            "bond_stereo": "0",
+                            "not_used1": "0",
+                            "bond_topology": "0",
+                            "reacting_center_status": "0"
+                        },
+                        ...
+                    ],
+                    "CtabPropertiesBlock": {
+                        "ISO": [
+                            {
+                                "atom_number": "1",
+                                "absolute_mass": "12"
+                            },
+                            {
+                                "atom_number": "2",
+                                "absolute_mass": "13"
+                            }
+                        ]
+                    }
+                }
+            },
+            "data": {
+                "InChI": [
+                    "InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1"
+                ]
+            }
+        }
+    }
+
+
+* To specify the ``csv`` output format, use the ``-f`` or ``--format``
+  option followed by ``csv``:
+
+.. code-block:: none
+
+   $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol -s 13:C:2 -f csv
+
+or
+
+.. code-block:: none
+
+    $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --specific=13:C:2 --format=csv
+
+Output:
+
+.. code-block:: none
+
+    InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
 
 Output file
