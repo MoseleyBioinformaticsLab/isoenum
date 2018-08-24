@@ -626,6 +626,8 @@ with the following chemical structure:
 
 or
 
+.. code-block:: none
+
     $ python3 -m isoenum ionize 'InChI=1S/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1' --state=N:6:+1 --state=O:8:-1 --format=inchi
 
 Output:
@@ -637,6 +639,41 @@ Output:
 The generated ``InChI`` corresponds to the following structure:
 
 .. image:: _static/l-valine-zwitterion.svg
+
+
+We can also create ionized versions of molecules. For example, the following ``InChI``
+represents neutral Adenosine monophosphate (AMP):
+
+.. code-block:: none
+
+    InChI=1S/C10H14N5O7P/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(22-10)1-21-23(18,19)20/h2-4,6-7,10,16-17H,1H2,(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1
+
+with the following chemical structure:
+
+.. image:: _static/amp.svg
+
+* To create ionized ``InChI``:
+
+.. code-block:: none
+
+    $ python3 -m isoenum ionize 'InChI=1S/C10H14N5O7P/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(22-10)1-21-23(18,19)20/h2-4,6-7,10,16-17H,1H2,(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1' -z O:18:-1 -z O:19:-1 -f inchi
+
+or
+
+.. code-block:: none
+
+    $ python3 -m isoenum ionize 'InChI=1S/C10H14N5O7P/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(22-10)1-21-23(18,19)20/h2-4,6-7,10,16-17H,1H2,(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1' --state=O:18:-1 --state=O:19:-1 --format=inchi
+
+Output:
+
+.. code-block:: none
+
+    InChI=1/C10H14N5O7P/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(22-10)1-21-23(18,19)20/h2-4,6-7,10,16-17H,1H2,(H2,11,12,13)(H2,18,19,20)/p-2/t4-,6-,7-,10-/m1/s1/fC10H12N5O7P/h11H2/q-2
+
+
+The generated ``InChI`` corresponds to the following structure:
+
+.. image:: _static/amp-ion.svg
 
 
 
