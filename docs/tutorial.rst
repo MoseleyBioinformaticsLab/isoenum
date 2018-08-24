@@ -601,6 +601,45 @@ Output:
     InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1,3+1,4+0
 
 
+The isoenum ionize command
+--------------------------
+
+The ``ionize`` command of ``isoenum`` command-line interface provides
+facilities to add charge information to a neutral molecule.
+
+For example, the following ``InChI`` represents amino acid L-Valine:
+
+.. code-block:: none
+
+    InChI=1S/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1
+
+with the following chemical structure:
+
+.. image:: _static/l-valine.svg
+
+
+* To create zwitterion ``InChI``:
+
+.. code-block:: none
+
+    $ python3 -m isoenum ionize 'InChI=1S/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1' -z N:6:+1 -z O:8:-1 -f inchi
+
+or
+
+    $ python3 -m isoenum ionize 'InChI=1S/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1' --state=N:6:+1 --state=O:8:-1 --format=inchi
+
+Output:
+
+.. code-block:: none
+
+    InChI=1/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1/f/h6H
+
+The generated ``InChI`` corresponds to the following structure:
+
+.. image:: _static/l-valine-zwitterion.svg
+
+
+
 Output format
 -------------
 
