@@ -676,6 +676,13 @@ The generated ``InChI`` corresponds to the following structure:
 .. image:: _static/amp-ion.svg
 
 
+The isoenum nmr command
+-----------------------
+
+The ``nmr`` command of ``isoenum`` command-line interface provides
+facilities to create isotopically-resolved ``InChI`` based on theoretical
+NMR coupling patterns (e.g. J1CH, J3HH, etc.).
+
 
 Output format
 -------------
