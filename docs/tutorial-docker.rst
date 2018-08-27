@@ -1,4 +1,4 @@
-The isoenum docker Tutorial
+The isoenum Docker Tutorial
 ===========================
 
 
