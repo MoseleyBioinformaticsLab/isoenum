@@ -1,6 +1,12 @@
 The isoenum Tutorial
 ====================
 
+.. note::
+    Read :doc:`tutorial-docker` to see examples provided below
+    but with the use of a docker container with the ``isoenum`` Python
+    package and all its dependencies instead of using the
+    ``isoenum`` Python package directly.
+
 Command-line interface
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -236,7 +242,7 @@ will have absolute mass "13").
 
 * To designate the isotope of a specific atom within a given ``Molfile``, use
   the ``-s`` or ``--specific`` option. For example, specify the second carbon
-  atom as carbon 13:
+  atom as carbon "13":
 
 .. code-block:: none
 
@@ -428,7 +434,7 @@ Output:
 
 * A minimum and maximum number can be set to limit ``InChI`` generation to desired minimum and maximum
   number of atoms of the specified element. For example, generate all possible ``InChI`` where the number of
-  carbon 13 atoms is in the range from 3 to 4:
+  carbon "13" atoms is in the range from 3 to 4:
 
 .. code-block:: none
 
@@ -544,7 +550,7 @@ Output:
 
 * It is also possible to combine the ``-e`` or ``--enumerate`` option for the same element but different
   isotopes (also note that we are not specifying minimum number in this example, it will be set to 0 by default).
-  For example, we want to generate ``InChI`` with up to 2 carbon 12 and up to 2 carbon 13:
+  For example, we want to generate ``InChI`` with up to 2 carbon "12" and up to 2 carbon "13":
 
 .. code-block:: none
 
