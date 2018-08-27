@@ -102,6 +102,9 @@ def create_inchi_from_ctfile_obj(ctf, **options):
     :return: ``InChI`` string.
     :rtype: :py:class:`str` 
     """
+    if 'CHG' in ctf['Ctab']['CtabPropertiesBlock']:
+        options.update({'fixedH':'-xF'})
+
     with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
         moltempfh.write(ctf.writestr(file_format='ctfile'))
         moltempfh.flush()
