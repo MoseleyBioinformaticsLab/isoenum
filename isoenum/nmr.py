@@ -13,6 +13,8 @@ import itertools
 
 import more_itertools
 
+from . import utils
+
 
 class ResonanceAtom(object):
     """Resonance atom - part of the coupling path."""
@@ -270,7 +272,7 @@ class J3HH(Coupling):
         """
         couplings = []
         for neighbor_carbon_atom in carbon_atom.neighbor_carbon_atoms:
-            if len(carbon_atom.neighbor_carbon_atoms) > 0 and len(neighbor_carbon_atom.neighbor_carbon_atoms) > 0:
+            if len(neighbor_carbon_atom.neighbor_hydrogen_atoms) > 0:
                 coupling_path = [
                     [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, None)) for atom in carbon_atom.neighbor_hydrogen_atoms],
                     [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, None))],
@@ -385,11 +387,8 @@ class NMR1D1H(NMRExperiment):
         """
         super(NMR1D1H, self).__init__(name=name, couplings=couplings, decoupled=decoupled,
                                       default_coupling_definitions=default_coupling_definitions)
-        combinations = []
-        for rsize in range(1, len(self.coupling_definitions) + 1):
-            combinations.extend(list(itertools.combinations(self.coupling_definitions, rsize)))
 
-        self.possible_coupling_type_combinations = [combination for combination in combinations
+        self.possible_coupling_type_combinations = [combination for combination in utils.all_combinations(self.coupling_definitions)
                                                     if any(isinstance(coupling, HResonance)
                                                     for coupling in combination)]
 
@@ -407,16 +406,20 @@ class NMR1D1H(NMRExperiment):
         valid_subset_coupling_combinations = []
 
         for carbon_atom in molfile.carbon_atoms:
-            for coupling_type_combination in self.possible_coupling_type_combinations:
+            if len(carbon_atom.neighbor_hydrogen_atoms) > 0:
+                for coupling_type_combination in self.possible_coupling_type_combinations:
+                    coupling_combination_lists = []
+                    for coupling_type in coupling_type_combination:
+                        couplings = coupling_type.couplings(carbon_atom)
 
-                coupling_combination = []
-                for coupling_type in coupling_type_combination:
-                    couplings = coupling_type.couplings(carbon_atom)
-                    for coupling in couplings:
-                        coupling_combination.append(coupling)
+                        if couplings:
+                            coupling_combination_lists.append(utils.all_combinations(couplings))
 
-                if coupling_combination not in valid_coupling_combinations:
-                    valid_coupling_combinations.append(coupling_combination)
+                        for product in itertools.product(*coupling_combination_lists):
+                            coupling_combination = list(more_itertools.flatten(product))
+
+                            if coupling_combination not in valid_coupling_combinations:
+                                valid_coupling_combinations.append(coupling_combination)
 
         if subset:
             for coupling_combination in valid_coupling_combinations:
