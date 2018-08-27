@@ -80,7 +80,7 @@ def cli(cmdargs):
     
     :param dict cmdargs: Command-line arguments.
     :return: None.
-    :rtype: :py:obj:`None`
+    :rtype: :py:obj:`None`.
     """
     if cmdargs['name']:
         path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
@@ -92,7 +92,7 @@ def cli(cmdargs):
             enumerate_param_iso = _unpack(cmdargs['--enumerate'])
             all_param_iso = _unpack(cmdargs['--all'])
             specific_param_iso = _unpack(cmdargs['--specific'])
-            existing_iso = ['{}-{}-{}'.format(isotope['atom_symbol'], isotope['isotope'], isotope['atom_number'])
+            existing_iso = ['{}:{}:{}'.format(isotope['isotope'], isotope['atom_symbol'], isotope['atom_number'])
                             for isotope in molfile.iso]
 
             all_param_iso = _all_param_ok(isotopes=all_param_iso,
@@ -153,8 +153,7 @@ def cli(cmdargs):
                 molfile.add_charge(atom_symbol=atom_symbol, atom_number=atom_number, charge=charge)
 
             new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
-            sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(ctf=molfile,
-                                                                                                       fixedH='-xF')))
+            sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(ctf=molfile)))
             sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
 
         create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
@@ -189,7 +188,7 @@ def cli(cmdargs):
                 molfile.replace_ctab_property(ctab_property_name='ISO', values=ctab_iso_layer_property)
                 new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
 
-                sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(molfile)))
+                sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(ctf=new_molfile)))
                 sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
 
         create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
@@ -336,7 +335,7 @@ def _unpack(param):
 
     :param list param: List of isotopes.
     :return: List of unpacked isotopes.
-    :rtype: :py:class:`list`
+    :rtype: :py:class:`list`.
     """
     options = []
     for option_str in param:
@@ -351,7 +350,7 @@ def save_output(outputstr, path, file_format):
     :param str path: Where to save results.
     :param str file_format: File format to create file extension.
     :return: None.
-    :rtype: :py:obj:`None`
+    :rtype: :py:obj:`None`.
     """
     if path is not None:
         dirpath, basename = os.path.split(os.path.normpath(path))
@@ -380,7 +379,7 @@ def create_output(sdfile, path=None, file_format='inchi'):
     :param str path: Path to where file will be saved. 
     :param str format: File format: 'inchi', 'mol', 'sdf', 'json', or 'csv'. 
     :return: None.
-    :rtype: :py:obj:`None`
+    :rtype: :py:obj:`None`.
     """
     default_output_formats = {'inchi', 'mol', 'sdf', 'csv', 'json'}
     file_format = file_format.lower()
