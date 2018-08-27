@@ -11,6 +11,7 @@ Documentation index:
    :caption: Contents:
 
    tutorial
+   tutorial-docker
    api
    license
 
