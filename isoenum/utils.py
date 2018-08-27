@@ -8,6 +8,8 @@ isoenum.utils
 This module provides reusable utility functions.
 """
 
+import itertools
+
 try:
     from urllib.parse import urlparse
 except ImportError:
@@ -26,3 +28,16 @@ def is_url(path):
         return all((parse_result.scheme, parse_result.netloc, parse_result.path))
     except ValueError:
         return False
+
+
+def all_combinations(items):
+    """Generate combinations of variable size.
+    
+    :param items: Sequence of items.
+    :return: List of all combinations.
+    :rtype: :py:class:`list`.
+    """
+    combinations = []
+    for rsize in range(1, len(items) + 1):
+        combinations.extend(list(itertools.combinations(items, rsize)))
+    return combinations
