@@ -3,6 +3,18 @@
 Release History
 ===============
 
+0.3.1 (2018-08-27)
+~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fixed bug that gave an error if existing "ISO" property was present.
+- Fixed bug generating incorrect coupling for "C" atoms that did not
+  have any "H" attached to it (e.g. "C=O").
+- Fixed bug that did not create multiple subsets fo "J3HH" couplings.
+- Added logic to use "FixedH" option to create ``InChI`` for charged molecules.
+
+
 0.3.0 (2018-08-22)
 ~~~~~~~~~~~~~~~~~~
 
