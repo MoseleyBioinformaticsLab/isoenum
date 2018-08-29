@@ -229,7 +229,7 @@ or
 The isoenum name command
 ------------------------
 
-The ``name`` command of ``isoenum`` command-line interface provides
+The ``name`` command of the ``isoenum`` command-line interface provides
 facilities to add isotopic layer information to a molecule in order to
 create isotopically-resolved ``InChI``.
 
@@ -526,7 +526,7 @@ Output:
 
 
 * The ``-e`` (``--enumerate``) option can be combined with the ``-a`` (``--all``) and
-  ``-s`` (``--specific``) options except ``-e`` (``--enumerate``) option cannot specify
+  ``-s`` (``--specific``) options except the ``-e`` (``--enumerate``) option cannot specify
   the same element as the ``-a`` (``--all``) option.
 
 .. code-block:: none
@@ -800,7 +800,7 @@ The generated ``InChI`` corresponds to the following structure:
 
 .. image:: _static/l-valine-zwitterion.svg
 
-Next we want to enumerate all possible isotopomers for "1D1H" NMR experiment:
+Next, we want to enumerate all possible isotopomers for "1D1H" NMR experiment:
 
 .. code-block:: none
 
