@@ -88,8 +88,8 @@ Install on Windows
 Dependencies
 ------------
 
-The ``isoenum`` Python package requires **non-pip-installable** dependency:
-the `Open Babel`_ chemistry library version 2.3.90 or later which relies on
+The ``isoenum`` Python package requires a **non-pip-installable** dependency:
+the `Open Babel`_ chemistry library version 2.3.90 or later, which relies on
 ``InChI`` library_ version 1.0.4 or later to perform ``InChI`` conversions.
 
 Refer to the official documentation to install `Open Babel`_ on your system:
@@ -101,7 +101,7 @@ Docker
 ~~~~~~
 
 In addition to PyPI_ package, ``Dockerfile`` and the automatically built DockerHub_
-container which contains the ``isoenum`` Python package and all its dependencies are
+container, which contains the ``isoenum`` Python package and all its dependencies, are
 also provided.
 
 To use the ``isoenum`` Python package, you will need to setup docker for your system
