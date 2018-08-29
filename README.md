@@ -53,8 +53,8 @@ py -3 -m pip install isoenum
 
 ### Dependencies
 
-The ``isoenum`` Python package requires **non-pip-installable** dependency: the
-[Open Babel](http://openbabel.org) chemistry library version 2.3.90 or later
+The ``isoenum`` Python package requires a **non-pip-installable** dependency: the
+[Open Babel](http://openbabel.org) chemistry library version 2.3.90 or later,
 which relies on ``InChI`` [library](https://www.inchi-trust.org/downloads) version 1.0.4 or later to perform ``InChI``
 conversions.
 
@@ -67,7 +67,7 @@ Refer to the official documentation to install [Open Babel](http://openbabel.org
 
 In addition to [PyPI](https://pypi.org/project/isoenum) package, ``Dockerfile`` and
 the automatically built [DockerHub](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
-container which contains the ``isoenum`` Python package and all its dependencies are 
+container, which contains the ``isoenum`` Python package and all its dependencies, are 
 also provided.
 
 To use the ``isoenum`` Python package, you will need to setup docker for your system
