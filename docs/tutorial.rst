@@ -2,6 +2,7 @@ The isoenum Tutorial
 ====================
 
 .. note::
+
     Read :doc:`tutorial-docker` to see examples provided below
     but with the use of a docker container with the ``isoenum`` Python
     package and all its dependencies instead of using the
@@ -83,7 +84,7 @@ Usage examples
 Input files
 -----------
 
-We are going to use several input files to generate isotopically-resolved
+We will use several input files to generate isotopically-resolved
 ``InChI``.
 
 * ``Molfile`` example:
@@ -196,9 +197,9 @@ We are going to use several input files to generate isotopically-resolved
 Input file/string specification
 -------------------------------
 
-As shown above, ``isoenum`` command-line interface asks user
-to provide one required parameter ``<path-to-ctfile-file-or-inchi-file-or-inchi-string>``
-which is file or string with information required to create isotopically-resolved ``InChI``:
+As shown above, the ``isoenum`` command-line interface asks the user
+to provide one required parameter ``<path-to-ctfile-file-or-inchi-file-or-inchi-string>``,
+which is the file or string with information required to create isotopically-resolved ``InChI``:
 
 * Path to ``CTfile`` (i.e. ``Molfile`` or ``SDfile``).
 
@@ -229,14 +230,14 @@ The isoenum name command
 ------------------------
 
 The ``name`` command of ``isoenum`` command-line interface provides
-facilities to add isotopic layer information to molecule in order to
+facilities to add isotopic layer information to a molecule in order to
 create isotopically-resolved ``InChI``.
 
 
 Isotopic layer specification: specific atoms option
 '''''''''''''''''''''''''''''''''''''''''''''''''''
 
-The ``-s`` or ``--specific`` option allows you to specify the isotopic information
+The ``-s`` or ``--specific`` option allows the user to specify the isotopic information
 for an atom at a specific position within a molecule (e.g. carbon at position "2"
 will have absolute mass "13").
 
@@ -261,7 +262,7 @@ Output:
     InChI=1S/C5H12O2/c1-3-4-5(2,6)7/h6-7H,3-4H2,1-2H3/i1+0,2+1
 
 
-* To designate the isotope for several atoms, repeat ``-s`` or ``--specific`` option:
+* To designate the isotope for several atoms, repeat the ``-s`` or ``--specific`` option:
 
 .. code-block:: none
 
@@ -281,7 +282,7 @@ Output:
 
 .. note::
 
-    Since original file already contained ``ISO`` specification for the first carbon atom,
+    Since the original file already contained the ``ISO`` specification for the first carbon atom,
     it did not change the designation of that atom (i.e. ``i1+0`` was retained).
 
 
@@ -307,9 +308,9 @@ Output:
 Isotopic layer specification: all atoms of a specific type option
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-The ``-a`` or ``--all`` option allows you to specify the isotopic information
+The ``-a`` or ``--all`` option allows the user to specify the isotopic information
 for all atoms of a specific type (e.g. all carbons within a molecule will have
- absolute mass "13" etc.)
+absolute mass "13" etc.)
 
 * To add isotope designations to all atoms of a specific element,
   use the ``-a`` or ``--all`` option:
@@ -393,9 +394,9 @@ Output:
 Isotopic layer specification: enumerate atoms of specific type option
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
-The ``-e`` or ``--enumerate`` option allows you to create a set of ``InChI``
+The ``-e`` or ``--enumerate`` option allows the user to create a set of ``InChI``
 for a molecule with a different number of isotopes (e.g. create all ``InChI``
-where number of carbon atoms with absolute mass "13" ranges from 3 to 4).
+where the number of carbon atoms with absolute mass "13" ranges from 0 to 5).
 
 
 * To enumerate atoms of a specific element type, use the ``-e`` or ``--enumerate`` option:
@@ -611,7 +612,7 @@ The isoenum ionize command
 --------------------------
 
 The ``ionize`` command of ``isoenum`` command-line interface provides
-facilities to add charge information to a neutral molecule.
+facilities to add charge information to a given molecule.
 
 For example, the following ``InChI`` represents amino acid L-Valine:
 
@@ -624,7 +625,7 @@ with the following chemical structure:
 .. image:: _static/l-valine.svg
 
 
-* To create zwitterion ``InChI``:
+* To create ``InChI`` that represents the zwitterion form:
 
 .. code-block:: none
 
@@ -646,9 +647,14 @@ The generated ``InChI`` corresponds to the following structure:
 
 .. image:: _static/l-valine-zwitterion.svg
 
+.. note::
 
-We can also create ionized versions of molecules. For example, the following ``InChI``
-represents neutral Adenosine monophosphate (AMP):
+    Notice that the ``InChI`` is non-standard.  This is because zwitterionic forms of
+    molecules cannot be represented in standard ``InChI``, but can be represented with
+    the standard fixed hydrogen layer (``FixedH``) extension.
+
+
+For a second example, the following ``InChI`` represents neutral Adenosine monophosphate (AMP):
 
 .. code-block:: none
 
@@ -658,7 +664,7 @@ with the following chemical structure:
 
 .. image:: _static/amp.svg
 
-* To create ionized ``InChI``:
+* To create the biochemically-relevant ionized ``InChI``:
 
 .. code-block:: none
 
@@ -685,7 +691,7 @@ The generated ``InChI`` corresponds to the following structure:
 The isoenum nmr command
 -----------------------
 
-The ``nmr`` command of ``isoenum`` command-line interface provides
+The ``nmr`` command of the ``isoenum`` command-line interface provides
 facilities to create isotopically-resolved ``InChI`` based on theoretical
 NMR coupling patterns (e.g. J1CH, J3HH, etc.).
 
@@ -699,7 +705,7 @@ with the following chemical structure:
 
 .. image:: _static/l-valine.svg
 
-* To create set of ``InChI`` for "1D1H" NMR experiment:
+* To create the theoretically possible set of ``InChI`` for "1D1H" NMR experiment:
 
 .. code-block:: none
 
@@ -744,11 +750,16 @@ Output:
     [1H16]HResonance + [1H16:1H15]J3HH	InChI=1S/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1/i3H,4H
     [1H16]HResonance + [1H16:13C4]J1CH + [1H16:1H15]J3HH	InChI=1S/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1/i3H,4+1H
 
+.. note::
+
+    Notice that the ``csv`` output includes a J-coupling description of the transient peak
+    and the representative ``InChI``.
+
 
 Workflow to generate InChI for data deposition from NMR experiments
 -------------------------------------------------------------------
 
-1. Get standard ``InChI`` with correct bonded structure and stereochemistry.
+1. Obtain standard ``InChI`` with correct bonded structure and stereochemistry.
 2. Convert to fully representative ``InChI`` with proper ionization states
    if necessary (the ``ionize`` command).
 3. Enumerate partial isotopomer ``InChI`` (the ``nmr`` command).
@@ -765,8 +776,8 @@ with the following chemical structure:
 
 .. image:: _static/l-valine.svg
 
-We want to generate partial isotopomer ``InChI`` for zwitterion form of l-valine.
-To change the ionization state within molecule, we need to use ``ionize`` command
+We want to generate partial isotopomer ``InChI`` for the zwitterionic form of l-valine.
+To change the ionization state within molecule, we need to use the ``ionize`` command
 on a standard ``InChI``:
 
 .. code-block:: none
@@ -834,7 +845,9 @@ Output:
     [1H16]HResonance + [1H16:1H15]J3HH	InChI=1/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1/i3H,4H/f/h6H
     [1H16]HResonance + [1H16:13C4]J1CH + [1H16:1H15]J3HH	InChI=1/C5H11NO2/c1-3(2)4(6)5(7)8/h3-4H,6H2,1-2H3,(H,7,8)/t4-/m0/s1/i3H,4+1H/f/h6H
 
-Finally, select appropriate ``InChI`` from the generated possibilities.
+Finally, **select** appropriate ``InChI`` from the generated possibilities and **associate**
+them with the appropriate transient peak (chemical shift).
+
 
 Output format
 -------------
@@ -1053,8 +1066,8 @@ Output:
 Output file
 -----------
 
-* To save the generated output into a file, use ``-o`` or ``--output`` option followed by filename.
-  For example, save the generated output in ``inchi`` format:
+* To save the generated output into a file, use the ``-o`` or ``--output`` option
+  followed by the filename. For example, save the generated output in ``inchi`` format:
 
 .. code-block:: none
 
@@ -1066,7 +1079,7 @@ or
 
     $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --format=inchi --output=outfile.inchi
 
-Generated file will contain the following output:
+The generated file will contain the following output:
 
 .. code-block:: none
 
@@ -1085,7 +1098,7 @@ or
 
     $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --format=sdf --output=outfile.sdf
 
-Generated file will contain the following output:
+The generated file will contain the following output:
 
 .. code-block:: none
 
@@ -1149,7 +1162,7 @@ or
 
     $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --format=json --output=outfile.json
 
-Generated file will contain the following output:
+The generated file will contain the following output:
 
 .. code-block:: none
 
@@ -1244,7 +1257,7 @@ or
 
     $ python3 -m isoenum name tests/example_data/pentane-2_2-diol.mol --all=13:C --format=csv --output=outfile.csv
 
-Generated file will contain the following output:
+The generated file will contain the following output:
 
 .. code-block:: none
 
