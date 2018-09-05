@@ -5,8 +5,9 @@
 isoenum.openbabel
 ~~~~~~~~~~~~~~~~~
 
-This module provides :func:`~isoenum.openbabel.mol_to_inchi` and :func:`~isoenum.openbabel.inchi_to_mol`
-to convert between ``InChI`` and ``CTfile`` formatted files. 
+This module provides :func:`~isoenum.openbabel.mol_to_inchi`, :func:`~isoenum.openbabel.inchi_to_mol`, 
+and :func:`~isoenum.openbabel.smiles_to_mol to convert between ``InChI``, ``SMILES``, 
+and ``Molfile`` formatted files. 
 """
 
 import subprocess
