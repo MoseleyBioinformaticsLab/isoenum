@@ -76,3 +76,20 @@ def inchi_to_mol(infilename, outfilename):
                     shell=False,
                     stdout=DEVNULL,
                     stderr=subprocess.STDOUT)
+
+
+def smiles_to_mol(infilename, outfilename):
+    """Convert ``SMILES`` identifier to ``Molfile``.
+    
+    :param str infilename: Input file name.
+    :param str outfilename: Output file name.
+    :return: None.
+    :rtype: :py:obj:`None`
+    """
+    _test_openbabel()
+
+    subprocess.call(['obabel', '-ismiles', '{}'.format(infilename),
+                     '-omol', '-O{}'.format(outfilename), '--gen3D'],
+                    shell=False,
+                    stdout=DEVNULL,
+                    stderr=subprocess.STDOUT)
