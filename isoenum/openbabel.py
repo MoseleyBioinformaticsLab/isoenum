@@ -48,16 +48,10 @@ def convert(input_file_path, output_file_path, input_format, output_format, **op
     """
     _test_openbabel()
 
+    cmd = ['obabel', '-i{}'.format(input_format), '{}'.format(input_file_path),
+           '-o{}'.format(output_format), '-O{}'.format(output_file_path)]
+
     if options:
-        subprocess.call(['obabel', '-i{}'.format(input_format), '{}'.format(input_file_path),
-                         '-o{}'.format(output_format), '-O{}'.format(output_file_path),
-                         '{}'.format(' '.join(options.values()))],
-                        shell=False,
-                        stdout=DEVNULL,
-                        stderr=subprocess.STDOUT)
-    else:
-        subprocess.call(['obabel', '-i{}'.format(input_format), '{}'.format(input_file_path),
-                         '-o{}'.format(output_format), '-O{}'.format(output_file_path)],
-                        shell=False,
-                        stdout=DEVNULL,
-                        stderr=subprocess.STDOUT)
+        cmd.append('{}'.format(' '.join(options.values())))
+
+    subprocess.call(cmd, shell=False, stdout=DEVNULL, stderr=subprocess.STDOUT)
