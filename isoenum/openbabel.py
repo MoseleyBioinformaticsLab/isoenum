@@ -5,8 +5,7 @@
 isoenum.openbabel
 ~~~~~~~~~~~~~~~~~
 
-This module provides :func:`~isoenum.openbabel.mol_to_inchi`, :func:`~isoenum.openbabel.inchi_to_mol`, 
-and :func:`~isoenum.openbabel.smiles_to_mol to convert between ``InChI``, ``SMILES``, 
+This module provides :func:`~isoenum.openbabel.convert` to convert between ``InChI``, ``SMILES``, 
 and ``Molfile`` formatted files. 
 """
 
