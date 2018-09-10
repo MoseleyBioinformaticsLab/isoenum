@@ -19,12 +19,13 @@ from . import openbabel
 from . import utils
 
 
-def create_ctfile(path):
+def create_ctfile(path, xyx_coordinates='--gen3D'):
     """Guesses what type of path is provided, i.e. is it existing file in ``Molfile`` format, 
     existing file in ``SDfile`` file format, existing file containing ``InChI`` string, 
     or ``InChI`` string and tries to create ``CTfile`` object.
 
     :param str path: Path to ``Molfile``, ``SDfile``, ``InChI``, or ``InChI`` string.
+    :param str xyx_coordinates: Option that generates x, y, z coordinates (e.g., "--gen2D" or "--gen3D").
     :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
     :rtype: :class:`~ctfile.ctfile.CTfile`.
     """
@@ -35,14 +36,14 @@ def create_ctfile(path):
             try:
                 return ctfile.loadstr(string)
             except IndexError:
-                ctf = create_ctfile_from_inchi_file(path=path, gen3D='--gen3D')
+                ctf = create_ctfile_from_inchi_file(path=path, xyx_coordinates=xyx_coordinates)
 
     elif utils.is_url(path):
         try:
             return ctfile.read_file(path)
         except IndexError:
             inchi_str = requests.get(path).text
-            ctf = create_ctfile_from_inchi_str(inchi_str=inchi_str)
+            ctf = create_ctfile_from_inchi_str(inchi_str=inchi_str, xyx_coordinates=xyx_coordinates)
 
     else:
         ctf = create_ctfile_from_inchi_str(inchi_str=path)
@@ -63,12 +64,13 @@ def create_ctfile_from_ctfile_str(ctfile_str):
     return ctfile.loadstr(ctfile_str)
 
 
-def create_ctfile_from_inchi_str(inchi_str):
+def create_ctfile_from_inchi_str(inchi_str, xyx_coordinates='--gen3D'):
     """Create ``CTfile`` object from ``InChI`` string.
 
-    :param str inchi_str: ``InChI`` string. 
+    :param str inchi_str: ``InChI`` string.
+    :param str xyx_coordinates: Option that generates x, y, z coordinates (e.g., "--gen2D" or "--gen3D").
     :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
-    :rtype: :class:`~ctfile.ctfile.CTfile`. 
+    :rtype: :class:`~ctfile.ctfile.CTfile`.
     """
     if not inchi_str.lower().startswith('inchi='):
         inchi_str = 'InChI={}'.format(inchi_str)
@@ -78,7 +80,7 @@ def create_ctfile_from_inchi_str(inchi_str):
     with tempfile.NamedTemporaryFile(mode='w') as tempfh:
         tempfh.write(inchi_str)
         tempfh.flush()
-        return create_ctfile_from_inchi_file(path=tempfh.name, gen3D='--gen3D')
+        return create_ctfile_from_inchi_file(path=tempfh.name, xyx_coordinates=xyx_coordinates)
 
 
 def create_ctfile_from_inchi_file(path, **options):
