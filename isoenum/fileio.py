@@ -35,7 +35,7 @@ def create_ctfile(path):
             try:
                 return ctfile.loadstr(string)
             except IndexError:
-                ctf = create_ctfile_from_inchi_file(path=path)
+                ctf = create_ctfile_from_inchi_file(path=path, gen3D='--gen3D')
 
     elif utils.is_url(path):
         try:
@@ -78,10 +78,10 @@ def create_ctfile_from_inchi_str(inchi_str):
     with tempfile.NamedTemporaryFile(mode='w') as tempfh:
         tempfh.write(inchi_str)
         tempfh.flush()
-        return create_ctfile_from_inchi_file(path=tempfh.name)
+        return create_ctfile_from_inchi_file(path=tempfh.name, gen3D='--gen3D')
 
 
-def create_ctfile_from_inchi_file(path):
+def create_ctfile_from_inchi_file(path, **options):
     """Creates ``CTfile`` from ``InChI`` identifier.
 
     :param str path: Path to file containing ``InChI`` identifier.
@@ -89,7 +89,11 @@ def create_ctfile_from_inchi_file(path):
     :rtype: :class:`~ctfile.ctfile.CTfile`.
     """
     with tempfile.NamedTemporaryFile() as tempfh:
-        openbabel.inchi_to_mol(infilename=path, outfilename=tempfh.name)
+        openbabel.convert(input_file_path=path,
+                          output_file_path=tempfh.name,
+                          input_format='inchi',
+                          output_format='mol',
+                          **options)
         with open(tempfh.name, 'r') as infile:
             return ctfile.load(infile)
 
@@ -108,7 +112,11 @@ def create_inchi_from_ctfile_obj(ctf, **options):
     with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
         moltempfh.write(ctf.writestr(file_format='ctfile'))
         moltempfh.flush()
-        openbabel.mol_to_inchi(infilename=moltempfh.name, outfilename=inchitempfh.name, **options)
+        openbabel.convert(input_file_path=moltempfh.name,
+                          output_file_path=inchitempfh.name,
+                          input_format='mol',
+                          output_format='inchi',
+                          **options)
         inchi_result = inchitempfh.read()
         return inchi_result.strip()
 
