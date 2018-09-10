@@ -22,9 +22,7 @@ jobs:
       python: '2.7'
       script:
         - python -m pytest -v --cov=./isoenum
-
-    - stage: coverage
-      script: codecov
+        - codecov
 
 
 
