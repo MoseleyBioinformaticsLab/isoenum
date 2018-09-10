@@ -1,23 +1,37 @@
 language: python
-dist: xenial
-python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-# command to install prerequisites
+#dist: xenial
+#python:
+#  - "2.7"
+#  - "3.4"
+#  - "3.5"
+#  - "3.6"
+#  - "3.7"
+# install prerequisites
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install openbabel
-# command to install dependencies
+# install dependencies
 install:
   - pip install -r requirements.txt
   - pip install codecov
   - pip install pytest-cov
-# command to run tests
-script:
-  - python -m pytest -v --cov=./isoenum
-#generate code coverage report
-after_success:
-  - codecov
+# run tests
+jobs:
+  include:
+    - stage: test
+      python: '2.7'
+      script:
+        - python -m pytest -v --cov=./isoenum
+
+    - stage: coverage
+      script: codecov
+
+
+
+
+
+#script:
+#  - python -m pytest -v --cov=./isoenum
+##generate code coverage report
+#after_success:
+#  - codecov
