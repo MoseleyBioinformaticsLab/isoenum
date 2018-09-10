@@ -36,61 +36,29 @@ def _test_openbabel():
                          'software for your system: http://openbabel.org/wiki/Get_Open_Babel')
 
 
-def mol_to_inchi(infilename, outfilename, **options):
-    """Convert ``Molfile`` to ``InChI`` identifier.
+def convert(input_file_path, output_file_path, input_format, output_format, **options):
+    """Convert between formats using Open Babel.
     
-    :param str infilename: Input file name.
-    :param str outfilename: Output file name.
-    :param options: Key-value options to be passed to Open Babel.
+    :param str input_file_path: Path to input file.
+    :param str output_file_path: Path to output file.
+    :param str input_format: Input file format.
+    :param str output_format: Output file format.
+    :param options: Additional key-value options to pass to Open Babel.
     :return: None.
-    :rtype: :py:obj:`None`
+    :rtype: :py:obj:`None` 
     """
     _test_openbabel()
 
     if options:
-        subprocess.call(['obabel', '-imol', '{}'.format(infilename),
-                                 '-oinchi', '-O{}'.format(outfilename),
-                                 '{}'.format(' '.join(options.values()))],
-                                shell=False,
-                                stdout=DEVNULL,
-                                stderr=subprocess.STDOUT)
-    else:
-        subprocess.call(['obabel', '-imol', '{}'.format(infilename),
-                         '-oinchi', '-O{}'.format(outfilename)],
+        subprocess.call(['obabel', '-i{}'.format(input_format), '{}'.format(input_file_path),
+                         '-o{}'.format(output_format), '-O{}'.format(output_file_path),
+                         '{}'.format(' '.join(options.values()))],
                         shell=False,
                         stdout=DEVNULL,
                         stderr=subprocess.STDOUT)
-
-
-def inchi_to_mol(infilename, outfilename):
-    """Convert ``InChI`` identifier to ``Molfile``.
-    
-    :param str infilename: Input file name.
-    :param str outfilename: Output file name.
-    :return: None.
-    :rtype: :py:obj:`None`
-    """
-    _test_openbabel()
-
-    subprocess.call(['obabel', '-iinchi', '{}'.format(infilename),
-                     '-omol', '-O{}'.format(outfilename), '--gen3D'],
-                    shell=False,
-                    stdout=DEVNULL,
-                    stderr=subprocess.STDOUT)
-
-
-def smiles_to_mol(infilename, outfilename):
-    """Convert ``SMILES`` identifier to ``Molfile``.
-    
-    :param str infilename: Input file name.
-    :param str outfilename: Output file name.
-    :return: None.
-    :rtype: :py:obj:`None`
-    """
-    _test_openbabel()
-
-    subprocess.call(['obabel', '-ismiles', '{}'.format(infilename),
-                     '-omol', '-O{}'.format(outfilename), '--gen3D'],
-                    shell=False,
-                    stdout=DEVNULL,
-                    stderr=subprocess.STDOUT)
+    else:
+        subprocess.call(['obabel', '-i{}'.format(input_format), '{}'.format(input_file_path),
+                         '-o{}'.format(output_format), '-O{}'.format(output_file_path)],
+                        shell=False,
+                        stdout=DEVNULL,
+                        stderr=subprocess.STDOUT)
