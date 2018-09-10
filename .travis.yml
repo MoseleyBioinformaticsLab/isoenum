@@ -30,6 +30,7 @@ jobs:
 
 #script:
 #  - python -m pytest -v --cov=./isoenum
-##generate code coverage report
-#after_success:
-#  - codecov
+
+#generate code coverage report
+after_success:
+  - codecov
