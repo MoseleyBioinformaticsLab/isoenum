@@ -112,7 +112,7 @@ class Coupling(object):
         else:
             atoms_difference = set(new_atoms).symmetric_difference(original_atoms)
             for atom in atoms_difference:
-                new_atoms.append(ResonanceAtom(atom=atom, isotope=self.subset_atoms.get(atom.atom_symbol, None)))
+                new_atoms.append(ResonanceAtom(atom=atom, isotope=self.subset_atoms.get(atom.atom_symbol, '')))
             return new_atoms
 
     def is_resonance_compatible(self, resonance):
@@ -216,8 +216,8 @@ class J1CH(Coupling):
         couplings = []
         if len(carbon_atom.neighbor_hydrogen_atoms) > 0:
             coupling_path = [
-                [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, None)) for atom in carbon_atom.neighbor_hydrogen_atoms],
-                [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, None))]
+                [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, '')) for atom in carbon_atom.neighbor_hydrogen_atoms],
+                [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, ''))]
             ]
             couplings.append(self.__class__(coupling_path=coupling_path,
                                             nmr_active_atoms=self.nmr_active_atoms,
@@ -244,9 +244,9 @@ class J2HH(Coupling):
         couplings = []
         if len(carbon_atom.neighbor_hydrogen_atoms) == 2:
             coupling_path = [
-                [ResonanceAtom(atom=carbon_atom.neighbor_hydrogen_atoms[0], isotope=self.nmr_active_atoms.get(carbon_atom.neighbor_hydrogen_atoms[0].atom_symbol, None))],
-                [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, None))],
-                [ResonanceAtom(atom=carbon_atom.neighbor_hydrogen_atoms[1], isotope=self.nmr_active_atoms.get(carbon_atom.neighbor_hydrogen_atoms[1].atom_symbol, None))]
+                [ResonanceAtom(atom=carbon_atom.neighbor_hydrogen_atoms[0], isotope=self.nmr_active_atoms.get(carbon_atom.neighbor_hydrogen_atoms[0].atom_symbol, ''))],
+                [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, ''))],
+                [ResonanceAtom(atom=carbon_atom.neighbor_hydrogen_atoms[1], isotope=self.nmr_active_atoms.get(carbon_atom.neighbor_hydrogen_atoms[1].atom_symbol, ''))]
             ]
             couplings.append(self.__class__(coupling_path=coupling_path,
                                             nmr_active_atoms=self.nmr_active_atoms,
@@ -274,10 +274,10 @@ class J3HH(Coupling):
         for neighbor_carbon_atom in carbon_atom.neighbor_carbon_atoms:
             if len(neighbor_carbon_atom.neighbor_hydrogen_atoms) > 0:
                 coupling_path = [
-                    [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, None)) for atom in carbon_atom.neighbor_hydrogen_atoms],
-                    [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, None))],
-                    [ResonanceAtom(atom=neighbor_carbon_atom, isotope=self.nmr_active_atoms.get(neighbor_carbon_atom.atom_symbol, None))],
-                    [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, None)) for atom in neighbor_carbon_atom.neighbor_hydrogen_atoms]
+                    [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, '')) for atom in carbon_atom.neighbor_hydrogen_atoms],
+                    [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, ''))],
+                    [ResonanceAtom(atom=neighbor_carbon_atom, isotope=self.nmr_active_atoms.get(neighbor_carbon_atom.atom_symbol, ''))],
+                    [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, '')) for atom in neighbor_carbon_atom.neighbor_hydrogen_atoms]
                 ]
                 couplings.append(self.__class__(coupling_path=coupling_path,
                                             nmr_active_atoms=self.nmr_active_atoms,
@@ -317,8 +317,8 @@ class HResonance(Coupling):
         couplings = []
         if len(carbon_atom.neighbor_hydrogen_atoms) > 0:
             coupling_path = [
-                [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, None)) for atom in carbon_atom.neighbor_hydrogen_atoms],
-                [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, None))]
+                [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, '')) for atom in carbon_atom.neighbor_hydrogen_atoms],
+                [ResonanceAtom(atom=carbon_atom, isotope=self.nmr_active_atoms.get(carbon_atom.atom_symbol, ''))]
             ]
             couplings.append(self.__class__(coupling_path=coupling_path,
                                             nmr_active_atoms=self.nmr_active_atoms,
