@@ -325,18 +325,6 @@ class HResonance(Coupling):
                                             subset_atoms=self.subset_atoms))
         return couplings
 
-    @property
-    def name(self):
-        """String representation.
-
-        :return: String representation.
-        :rtype: :py:class:`str`
-        """
-        return '[{}]{}'.format(
-            ','.join(['{}{}{}'.format(atom.isotope, atom.atom_symbol, atom.atom_number)
-            for atom in self.coupling_path[0]]),
-            self.coupling_type)
-
 
 class NMRExperiment(object):
     """NMR experiment."""
