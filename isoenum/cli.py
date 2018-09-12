@@ -357,7 +357,7 @@ def save_output(outputstr, path, file_format):
         dirpath, basename = os.path.split(os.path.normpath(path))
         filename, extension = os.path.splitext(basename)
 
-        if not extension:
+        if not extension or extension not in output_formats_conf:
             extension = '.{}'.format(file_format)
 
         filename = '{}{}'.format(filename, extension)
