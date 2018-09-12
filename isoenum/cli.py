@@ -72,6 +72,7 @@ import more_itertools
 from . import fileio
 from . import nmr
 from .conf import isotopes_conf
+from .conf import output_formats_conf
 from .labeling_schema import create_labeling_schema
 
 
@@ -381,11 +382,11 @@ def create_output(sdfile, path=None, file_format='inchi'):
     :return: None.
     :rtype: :py:obj:`None`.
     """
-    default_output_formats = {'inchi', 'mol', 'sdf', 'csv', 'json'}
     file_format = file_format.lower()
 
-    if file_format not in default_output_formats:
-        raise ValueError('Unknown output format: "{}"'.format(file_format))
+    if file_format not in output_formats_conf:
+        raise ValueError('Unknown output format: "{}".\n'
+                         'Available formats are: {}'.format(file_format, output_formats_conf))
 
     if file_format in {'sdf', 'mol'}:
         save_output(outputstr=sdfile.writestr(file_format='ctfile'),
