@@ -143,6 +143,25 @@ Setup the ``isoenum`` container:
       # docker build -t isoenum .
 
 
+Development version installation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Install development version on Linux, Mac OS X
+----------------------------------------------
+
+.. code:: bash
+
+    python3 -m pip install git+git://github.com/MoseleyBioinformaticsLab/isoenum.git
+
+
+Install development version on Windows
+--------------------------------------
+
+.. code:: bash
+
+   py -3 -m pip install git+git://github.com/MoseleyBioinformaticsLab/isoenum.git
+
+
 License
 ~~~~~~~
 
