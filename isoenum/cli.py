@@ -81,7 +81,7 @@ def cli(cmdargs):
     
     :param dict cmdargs: Command-line arguments.
     :return: None.
-    :rtype: :py:obj:`None`.
+    :rtype: :py:obj:`None`
     """
     if cmdargs['name']:
         path = cmdargs['<path-to-ctfile-file-or-inchi-file-or-inchi-string>']
@@ -204,7 +204,7 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
     :param ctfile: Instance of ``Molfile``. 
     :type ctfile: :class:`~ctfile.ctfile.Molfile`.
     :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
-    :rtype: :py:class:`dict` or :py:class:`ValueError`. 
+    :rtype: :py:class:`dict` or :py:class:`ValueError`
     """
     atom_counter = Counter([atom.atom_symbol for atom in ctfile.atoms])
     allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
@@ -257,7 +257,7 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile):
     :param ctfile: Instance of ``Molfile``. 
     :type ctfile: :class:`~ctfile.ctfile.Molfile`.
     :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
-    :rtype: :py:class:`dict` or :py:class:`ValueError`.
+    :rtype: :py:class:`dict` or :py:class:`ValueError`
     """
     allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
     positions = [atom.atom_number for atom in ctfile.atoms]
@@ -298,7 +298,7 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile):
     :param ctfile: Instance of ``Molfile``. 
     :type ctfile: :class:`~ctfile.ctfile.Molfile`.
     :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
-    :rtype: :py:class:`dict` or :py:class:`ValueError`.
+    :rtype: :py:class:`dict` or :py:class:`ValueError`
     """
     position_atom = defaultdict(list)
     allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
@@ -336,7 +336,7 @@ def _unpack(param):
 
     :param list param: List of isotopes.
     :return: List of unpacked isotopes.
-    :rtype: :py:class:`list`.
+    :rtype: :py:class:`list`
     """
     options = []
     for option_str in param:
@@ -351,7 +351,7 @@ def save_output(outputstr, path, file_format):
     :param str path: Where to save results.
     :param str file_format: File format to create file extension.
     :return: None.
-    :rtype: :py:obj:`None`.
+    :rtype: :py:obj:`None`
     """
     if path is not None:
         dirpath, basename = os.path.split(os.path.normpath(path))
@@ -380,7 +380,7 @@ def create_output(sdfile, path=None, file_format='inchi'):
     :param str path: Path to where file will be saved. 
     :param str format: File format: 'inchi', 'mol', 'sdf', 'json', or 'csv'. 
     :return: None.
-    :rtype: :py:obj:`None`.
+    :rtype: :py:obj:`None`
     """
     file_format = file_format.lower()
 
