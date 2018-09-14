@@ -2,11 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
 import pytest
 
 
+def setup_module(module):
+    if not os.path.exists("tests/example_data/tmp/"):
+        os.mkdir("tests/example_data/tmp")
+
+
+def teardown_module(module):
+    if os.path.exists("tests/example_data/tmp/"):
+        shutil.rmtree("tests/example_data/tmp")
+
+
 @pytest.mark.parametrize('path, parameters', [
-    ('tests/example_data/bmse000040.mol', '-a 13:C'),
+    ('tests/example_data/bmse000040.mol', '-a 13:C'), # -f inchi -o tests/test.inchi'),
     ('tests/example_data/bmse000040.mol', '-e 13:C'),
     ('tests/example_data/bmse000040.mol', '-s 13:C:2'),
     ('tests/example_data/bmse000040.sdf', '-a 13:C'),
