@@ -35,7 +35,7 @@ def all_combinations(items):
     
     :param items: Sequence of items.
     :return: List of all combinations.
-    :rtype: :py:class:`list`.
+    :rtype: :py:class:`list`
     """
     combinations = []
     for rsize in range(1, len(items) + 1):
