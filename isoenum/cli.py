@@ -202,7 +202,7 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
     :param dict all_param: Check for consistency, `--enumerate` are not compatible with `--all` for the same atom.
     :param dict isotopes_conf: Default isotopes configuration. 
     :param ctfile: Instance of ``Molfile``. 
-    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`
     :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
     :rtype: :py:class:`dict` or :py:class:`ValueError`
     """
@@ -255,7 +255,7 @@ def _all_param_ok(isotopes, isotopes_conf, ctfile):
     :param list isotopes: Option that specifies isotopes.
     :param dict isotopes_conf: Default isotopes configuration.
     :param ctfile: Instance of ``Molfile``. 
-    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`
     :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
     :rtype: :py:class:`dict` or :py:class:`ValueError`
     """
@@ -296,7 +296,7 @@ def _specific_param_ok(isotopes, isotopes_conf, ctfile):
     :param list isotopes: Option that specifies isotopes.
     :param dict isotopes_conf: Default isotopes configuration.
     :param ctfile: Instance of ``Molfile``. 
-    :type ctfile: :class:`~ctfile.ctfile.Molfile`.
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`
     :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
     :rtype: :py:class:`dict` or :py:class:`ValueError`
     """
