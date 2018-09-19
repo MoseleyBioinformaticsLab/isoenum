@@ -203,8 +203,8 @@ def _enumerate_param_ok(enumerate_param, all_param, isotopes_conf, ctfile):
     :param dict isotopes_conf: Default isotopes configuration. 
     :param ctfile: Instance of ``Molfile``. 
     :type ctfile: :class:`~ctfile.ctfile.Molfile`
-    :return: :py:class:`dict` with position specific labeling if consistent, raises error otherwise.
-    :rtype: :py:class:`dict` or :py:class:`ValueError`
+    :return: :py:class:`list` with position specific labeling if consistent, raises error otherwise.
+    :rtype: :py:class:`list` or :py:class:`ValueError`
     """
     atom_counter = Counter([atom.atom_symbol for atom in ctfile.atoms])
     allowed_atom_symbols = [atom.atom_symbol for atom in ctfile.atoms]
