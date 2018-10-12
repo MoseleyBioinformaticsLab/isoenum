@@ -54,7 +54,7 @@ py -3 -m pip install isoenum
 ### Dependencies
 
 The ``isoenum`` Python package requires a **non-pip-installable** dependency: the
-[Open Babel](http://openbabel.org) chemistry library version 2.3.90 or later,
+[Open Babel](http://openbabel.org) chemistry library version 2.4.1 or later,
 which relies on ``InChI`` [library](https://www.inchi-trust.org/downloads) version 1.0.4 or later to perform ``InChI``
 conversions.
 
