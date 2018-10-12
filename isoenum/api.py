@@ -1,5 +1,11 @@
-"""
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
+"""
+isoenum.api
+
+This module provides routines to augment ``CTfile`` objects 
+with additional information and used by ``isoenum`` package CLI. 
 """
 
 from collections import defaultdict
