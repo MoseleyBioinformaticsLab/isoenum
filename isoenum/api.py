@@ -70,11 +70,12 @@ def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_i
 
 
 def chg(path_or_id, atom_states):
-    """
+    """Create ``SDfile`` with charge information.
     
-    :param path_or_id: 
-    :param atom_states: 
-    :return: 
+    :param str path_or_id: Path to ``CTfile`` or file identifier. 
+    :param list atom_states: List of charges for specific elements. 
+    :return: instance of ``SDfile``.
+    :rtype: :class:`ctfile.ctfile.SDfile`
     """
     ctfile = fileio.create_ctfile(path_or_id=path_or_id)
     sdfile = fileio.create_empty_sdfile_obj()
