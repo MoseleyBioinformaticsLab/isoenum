@@ -21,17 +21,19 @@ from .conf import isotopes_conf
 
 
 def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_iso_opt):
-    """
+    """Create isotopically-resolved SDfile.
     
-    :param path_or_id: 
-    :param specific_opt: 
-    :param all_opt: 
-    :param enumerate_opt: 
-    :param complete_opt: 
-    :param ignore_iso_opt:
-    :return: 
+    :param str path_or_id: Path to ``CTfile`` or file identifier. 
+    :param list specific_opt: List of isotopes per specific element type and position.
+    :param list all_opt: List of isotopes for specific element type. 
+    :param list enumerate_opt: List of isotopes to perform enumeration. 
+    :param complete_opt: Identify if every element need to have isotope information.
+    :type complete_opt: py:obj:`True` or py:obj:`False`  
+    :param ignore_iso_opt: Ignore existing isotope information or not.
+    :type ignore_iso_opt: py:obj:`True` or py:obj:`False`
+    :return: instance of ``SDfile``.
+    :rtype: :class:`ctfile.ctfile.SDfile`
     """
-
     ctfile = fileio.create_ctfile(path_or_id=path_or_id)
     sdfile = fileio.create_empty_sdfile_obj()
 
