@@ -21,7 +21,7 @@ from .conf import isotopes_conf
 
 
 def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_iso_opt):
-    """Create isotopically-resolved SDfile.
+    """Create isotopically-resolved ``SDfile``.
     
     :param str path_or_id: Path to ``CTfile`` or file identifier. 
     :param list specific_opt: List of isotopes per specific element type and position.
@@ -98,14 +98,16 @@ def chg(path_or_id, atom_states):
 
 
 def iso_nmr(path_or_id, experiment_type, couplings, decoupled, subset):
-    """
+    """Create isotopically-resolved ``SDfile`` assuming specific NMR experiment type.
     
-    :param path_or_id: 
-    :param experiment_type: 
-    :param couplings: 
-    :param decoupled: 
-    :param subset: 
-    :return: 
+    :param str path_or_id: Path to ``CTfile`` or file identifier.
+    :param str experiment_type: NMR experiment type (1D1H of 1DCHSQC). 
+    :param str couplings: What couplings to include?
+    :param str decoupled: What elements are decoupled?
+    :param subset: Create subsets?
+    :type subset: py:obj:`True` or py:obj:`False`
+    :return: instance of ``SDfile``.
+    :rtype: :class:`ctfile.ctfile.SDfile`
     """
     ctfile = fileio.create_ctfile(path_or_id=path_or_id)
     sdfile = fileio.create_empty_sdfile_obj()
