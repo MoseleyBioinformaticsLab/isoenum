@@ -113,12 +113,12 @@ def cli(cmdargs):
                                                       isotopes_conf=isotopes_conf,
                                                       ctfile=molfile)
 
-            labeling_schemas = create_labeling_schema(full_labeling_schema=cmdargs['--complete'],
+            labeling_schemas = create_labeling_schema(complete_labeling_schema=cmdargs['--complete'],
                                                       ignore_existing_isotopes=cmdargs['--ignore-iso'],
-                                                      enumerate_param_iso=enumerate_param_iso,
-                                                      all_param_iso=all_param_iso,
-                                                      specific_param_iso=specific_param_iso,
+                                                      all_iso=all_param_iso,
+                                                      specific_iso=specific_param_iso,
                                                       existing_iso=existing_iso,
+                                                      enumerate_iso=enumerate_param_iso,
                                                       isotopes_conf=isotopes_conf,
                                                       ctfile=molfile)
 
