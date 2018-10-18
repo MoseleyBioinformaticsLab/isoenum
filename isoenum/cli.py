@@ -73,7 +73,7 @@ from . import fileio
 from . import nmr
 from .conf import isotopes_conf
 from .conf import output_formats_conf
-from .labeling_schema import create_labeling_schema
+from .labeling import create_labeling_schema
 
 
 def cli(cmdargs):
