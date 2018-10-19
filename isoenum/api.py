@@ -288,6 +288,9 @@ def visualize(path_or_id, output_path, output_format='svg', **options):
     """
     ctfile = fileio.create_ctfile(path_or_id=path_or_id)
 
+    if output_format not in {'svg', 'png'}:
+        output_format = 'svg'
+
     with tempfile.NamedTemporaryFile(mode='w') as tempfh:
         tempfh.write(ctfile.writestr(file_format='ctfile'))
         tempfh.flush()
