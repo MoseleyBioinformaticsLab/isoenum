@@ -3,13 +3,15 @@
 
 """
 isoenum.api
+~~~~~~~~~~~
 
 This module provides routines to augment ``CTfile`` objects 
 with additional information and used by ``isoenum`` package CLI. 
 """
 
-from collections import defaultdict
+import tempfile
 from collections import Counter
+from collections import defaultdict
 from collections import OrderedDict
 
 import more_itertools
@@ -17,12 +19,13 @@ import more_itertools
 from . import fileio
 from . import labeling
 from . import nmr
+from . import openbabel
 from .conf import isotopes_conf
 
 
 def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_iso_opt):
     """Create isotopically-resolved ``SDfile``.
-    
+
     :param str path_or_id: Path to ``CTfile`` or file identifier. 
     :param list specific_opt: List of isotopes per specific element type and position.
     :param list all_opt: List of isotopes for specific element type. 
@@ -71,7 +74,7 @@ def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_i
 
 def chg(path_or_id, atom_states):
     """Create ``SDfile`` with charge information.
-    
+
     :param str path_or_id: Path to ``CTfile`` or file identifier. 
     :param list atom_states: List of charges for specific elements. 
     :return: instance of ``SDfile``.
@@ -99,11 +102,11 @@ def chg(path_or_id, atom_states):
 
 def iso_nmr(path_or_id, experiment_type, couplings, decoupled, subset):
     """Create isotopically-resolved ``SDfile`` assuming specific NMR experiment type.
-    
+
     :param str path_or_id: Path to ``CTfile`` or file identifier.
     :param str experiment_type: NMR experiment type (1D1H of 1DCHSQC). 
-    :param str couplings: What couplings to include?
-    :param str decoupled: What elements are decoupled?
+    :param list couplings: What couplings to include?
+    :param list decoupled: What elements are decoupled?
     :param subset: Create subsets?
     :type subset: py:obj:`True` or py:obj:`False`
     :return: instance of ``SDfile``.
@@ -273,3 +276,22 @@ def _check_enumerate_opt(enumerate_opt, all_iso, isotopes_conf, ctfile):
             raise ValueError('Incorrect count "{}" provided for atom "{}".'.format(max_count, atom))
 
     return enumerate_iso
+
+
+def visualize(ctfile, output_path, output_format='svg', **options):
+    """Visualize ``CTfile`` object.
+
+    :param ctfile: Subclass of :class:`~ctfile.ctfile.CTfile` object.
+    :type ctfile: :class:`~ctfile.ctfile.Molfile` or :class:`~ctfile.ctfile.SDfile`
+    :param str output_format: Image output format. 
+    :param str output_path: Image output path.
+    """
+    with tempfile.NamedTemporaryFile(mode='w') as tempfh:
+        tempfh.write(ctfile.writestr(file_format='ctfile'))
+        tempfh.flush()
+
+        openbabel.convert(input_file_path=tempfh.name,
+                          output_file_path=output_path,
+                          input_format='mol',
+                          output_format=output_format,
+                          **options)
