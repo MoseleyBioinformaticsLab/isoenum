@@ -32,8 +32,8 @@ Usage:
                 [--subset]
                 [--verbose]
     isoenum vis (<path-to-ctfile-file-or-inchi-file-or-inchi-string>) 
-                [--output=<path>]
-                [--format=<format>]
+                (--format=<format>)
+                (--output=<path>)
 
 Options:
     -h, --help                                 Show this screen.
@@ -106,6 +106,10 @@ def cli(cmdargs):
 
         create_output(sdfile=sdfile, path=cmdargs['--output'], file_format=cmdargs['--format'])
 
+    elif cmdargs['vis']:
+        api.visualize(path_or_id=path_or_id,
+                      output_path=cmdargs['--output'],
+                      output_format=cmdargs['--format'])
 
 def _unpack(param):
     """Unpack command-line option.
