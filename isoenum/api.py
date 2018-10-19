@@ -26,7 +26,7 @@ from .conf import isotopes_conf
 def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_iso_opt):
     """Create isotopically-resolved ``SDfile``.
 
-    :param str path_or_id: Path to ``CTfile`` or file identifier. 
+    :param str path_or_id: Path to ``CTfile`` or file identifier.
     :param list specific_opt: List of isotopes per specific element type and position.
     :param list all_opt: List of isotopes for specific element type. 
     :param list enumerate_opt: List of isotopes to perform enumeration. 
@@ -278,14 +278,16 @@ def _check_enumerate_opt(enumerate_opt, all_iso, isotopes_conf, ctfile):
     return enumerate_iso
 
 
-def visualize(ctfile, output_path, output_format='svg', **options):
+def visualize(path_or_id, output_path, output_format='svg', **options):
     """Visualize ``CTfile`` object.
 
-    :param ctfile: Subclass of :class:`~ctfile.ctfile.CTfile` object.
+    :param str path_or_id: Path to ``CTfile`` or file identifier.
     :type ctfile: :class:`~ctfile.ctfile.Molfile` or :class:`~ctfile.ctfile.SDfile`
     :param str output_format: Image output format. 
     :param str output_path: Image output path.
     """
+    ctfile = fileio.create_ctfile(path_or_id=path_or_id)
+
     with tempfile.NamedTemporaryFile(mode='w') as tempfh:
         tempfh.write(ctfile.writestr(file_format='ctfile'))
         tempfh.flush()
