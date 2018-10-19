@@ -51,11 +51,10 @@ def create_ctfile(path_or_id, xyx_coordinates='--gen2D', explicit_hydrogens='-h'
         ctf = create_ctfile_from_identifier_str(identifier_str=path_or_id,
                                                 xyx_coordinates=xyx_coordinates,
                                                 explicit_hydrogens=explicit_hydrogens)
-    # if ctf:
-    #     return ctf
-    # else:
-    #     raise ValueError('Cannot create "CTfile" object, empty object.')
-    return ctf
+    if ctf:
+        return ctf
+    else:
+        raise ValueError('Cannot create "CTfile" object, empty object.')
 
 
 def create_ctfile_from_ctfile_str(ctfile_str):
