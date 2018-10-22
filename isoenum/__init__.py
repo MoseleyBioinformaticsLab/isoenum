@@ -36,7 +36,7 @@ This package includes the following modules:
 
 import logging
 
-__version__ = '0.3.2dev'
+__version__ = '0.3.2'
 
 
 try:  # Python 2/3 compatibility code
