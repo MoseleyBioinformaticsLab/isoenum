@@ -11,7 +11,7 @@ This package includes the following modules:
 ``cli``
     This module provides the command-line interface for the ``isoenum`` package.
 
-``labeling_schema``
+``labeling``
     This module provides functions for generating a labeling schema.
 
 ``nmr``
