@@ -53,6 +53,6 @@ def convert(input_file_path, output_file_path, input_format, output_format, **op
            '-o{}'.format(output_format), '-O{}'.format(output_file_path)]
 
     if options:
-        cmd.append('{}'.format(' '.join(options.values())))
+        cmd.extend(options.values())
 
     subprocess.call(cmd, shell=False, stdout=DEVNULL, stderr=subprocess.STDOUT)
