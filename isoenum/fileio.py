@@ -131,6 +131,11 @@ def create_inchi_from_ctfile_obj(ctf, **options):
     :return: ``InChI`` string.
     :rtype: :py:class:`str` 
     """
+    # apply fixed hydrogen layer when atom charges are present
+    atom_charges = [atom.charge for atom in ctf.atoms if atom.charge != '0']
+    if atom_charges:
+        options.update({'fixedH': '-xF'})
+
     with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
         moltempfh.write(ctf.writestr(file_format='ctfile'))
         moltempfh.flush()
