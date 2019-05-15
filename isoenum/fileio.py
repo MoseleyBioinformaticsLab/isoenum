@@ -129,7 +129,7 @@ def create_inchi_from_ctfile_obj(ctf, **options):
     :param ctf: Instance of :class:`~ctfile.ctfile.CTfile`.
     :type ctf: :class:`~ctfile.ctfile.CTfile`
     :return: ``InChI`` string.
-    :rtype: :py:class:`str` 
+    :rtype: :py:class:`str`
     """
     # apply fixed hydrogen layer when atom charges are present
     atom_charges = [atom.charge for atom in ctf.atoms if atom.charge != '0']
@@ -178,3 +178,24 @@ def create_empty_molfile_obj():
     :rtype: :class:`~ctfile.ctfile.Molfile`
     """
     return ctfile.Molfile()
+
+
+def create_svg_str(inchi_str, **options):
+    """Create SVG string from ``InChI`` identifier string.
+
+    :param str inchi_str: ``InChI`` identifier.
+    :param options: Additional options to be passed to Open Babel.
+    :return: SVG XML code.
+    :rtype: :py:class:`str`
+    """
+    with tempfile.NamedTemporaryFile(mode='w') as inchi_tempfh, tempfile.NamedTemporaryFile(mode='r') as svg_tempfh:
+        inchi_tempfh.write(inchi_str)
+        inchi_tempfh.flush()
+
+        openbabel.convert(input_file_path=inchi_tempfh.name,
+                          output_file_path=svg_tempfh.name,
+                          input_format='inchi',
+                          output_format='svg',
+                          **options)
+        svg_str = svg_tempfh.read()
+    return svg_str
