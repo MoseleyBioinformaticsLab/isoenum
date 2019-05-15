@@ -11,12 +11,17 @@ convert ``CTfile`` objects into ``InChI`` and vice versa.
 
 import os
 import tempfile
+import logging
 
 import ctfile
 import requests
 
 from . import openbabel
 from . import utils
+
+
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.StreamHandler())
 
 
 def create_ctfile(path_or_id, xyx_coordinates='--gen2D', explicit_hydrogens='-h'):
@@ -28,7 +33,7 @@ def create_ctfile(path_or_id, xyx_coordinates='--gen2D', explicit_hydrogens='-h'
     :param str xyx_coordinates: Option that generates x, y, z coordinates (e.g., "--gen2D" or "--gen3D").
     :param str explicit_hydrogens: Option that makes hydrogens atoms explicit when generating ``CTfile`` object.
     :return: Subclass of :class:`~ctfile.ctfile.CTfile` object.
-    :rtype: :class:`~ctfile.ctfile.CTfile`
+    :rtype: :class:`~ctfile.ctfile.Molfile` or :class:`~ctfile.ctfile.SDfile`
     """
     if os.path.isfile(path_or_id):
         with open(path_or_id, 'r') as infile:
@@ -126,9 +131,6 @@ def create_inchi_from_ctfile_obj(ctf, **options):
     :return: ``InChI`` string.
     :rtype: :py:class:`str` 
     """
-    if 'CHG' in ctf['Ctab']['CtabPropertiesBlock']:
-        options.update({'fixedH': '-xF'})
-
     with tempfile.NamedTemporaryFile(mode='w') as moltempfh, tempfile.NamedTemporaryFile(mode='r') as inchitempfh:
         moltempfh.write(ctf.writestr(file_format='ctfile'))
         moltempfh.flush()
@@ -138,7 +140,7 @@ def create_inchi_from_ctfile_obj(ctf, **options):
                           output_format='inchi',
                           **options)
         inchi_result = inchitempfh.read()
-        return inchi_result.strip()
+    return inchi_result.strip()
 
 
 def normalize_ctfile_obj(ctf, xyx_coordinates='--gen2D', explicit_hydrogens='-h'):
