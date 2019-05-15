@@ -5,8 +5,9 @@
 isoenum.openbabel
 ~~~~~~~~~~~~~~~~~
 
-This module provides :func:`~isoenum.openbabel.convert` to convert between ``InChI``, ``SMILES``, 
-and ``Molfile`` formatted files. 
+This module provides :func:`~isoenum.openbabel.convert` to convert
+between different file formats used in molecular modeling and computational
+chemistry (e.g. ``InChI``, ``SMILES``, ``Molfile``, etc.).
 """
 
 import subprocess
