@@ -16,7 +16,8 @@ try:
     from subprocess import DEVNULL
 except ImportError:
     import os
-    DEVNULL = open(os.devnull, 'wb')
+
+    DEVNULL = open(os.devnull, "wb")
 
 
 def _test_openbabel():
@@ -26,15 +27,21 @@ def _test_openbabel():
     :rtype: :py:obj:`None`
     """
     try:
-        openbabel_version_test = subprocess.check_output(['obabel', '-V'])
-        openbabel_version = openbabel_version_test.decode('utf-8')
-        if not openbabel_version.startswith('Open Babel'):
-            raise SystemExit('Open Babel version information cannot be found: {}'.format(openbabel_version))
+        openbabel_version_test = subprocess.check_output(["obabel", "-V"])
+        openbabel_version = openbabel_version_test.decode("utf-8")
+        if not openbabel_version.startswith("Open Babel"):
+            raise SystemExit(
+                "Open Babel version information cannot be found: {}".format(
+                    openbabel_version
+                )
+            )
     except OSError:
-        raise SystemExit('Open Babel software is not installed, exiting. '
-                         'See installation instructions to get Open Babel '
-                         'software for your operating system:'
-                         'http://openbabel.org/wiki/Get_Open_Babel')
+        raise SystemExit(
+            "Open Babel software is not installed, exiting. "
+            "See installation instructions to get Open Babel "
+            "software for your operating system:"
+            "http://openbabel.org/wiki/Get_Open_Babel"
+        )
 
 
 def convert(input_file_path, output_file_path, input_format, output_format, **options):
@@ -50,8 +57,13 @@ def convert(input_file_path, output_file_path, input_format, output_format, **op
     """
     _test_openbabel()
 
-    cmd = ['obabel', '-i{}'.format(input_format), '{}'.format(input_file_path),
-           '-o{}'.format(output_format), '-O{}'.format(output_file_path)]
+    cmd = [
+        "obabel",
+        "-i{}".format(input_format),
+        "{}".format(input_file_path),
+        "-o{}".format(output_format),
+        "-O{}".format(output_file_path),
+    ]
 
     if options:
         for option in options.values():
