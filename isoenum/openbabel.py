@@ -33,7 +33,8 @@ def _test_openbabel():
     except OSError:
         raise SystemExit('Open Babel software is not installed, exiting. '
                          'See installation instructions to get Open Babel '
-                         'software for your system: http://openbabel.org/wiki/Get_Open_Babel')
+                         'software for your operating system:'
+                         'http://openbabel.org/wiki/Get_Open_Babel')
 
 
 def convert(input_file_path, output_file_path, input_format, output_format, **options):
@@ -53,6 +54,7 @@ def convert(input_file_path, output_file_path, input_format, output_format, **op
            '-o{}'.format(output_format), '-O{}'.format(output_file_path)]
 
     if options:
-        cmd.extend(options.values())
+        for option in options.values():
+            cmd.extend(option.split())
 
     subprocess.call(cmd, shell=False, stdout=DEVNULL, stderr=subprocess.STDOUT)
