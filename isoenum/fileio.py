@@ -199,3 +199,35 @@ def create_svg_str(inchi_str, **options):
                           **options)
         svg_str = svg_tempfh.read()
     return svg_str
+
+
+def circular_consistency_test(inchi_str):
+    """Perform conversion from ``InChI`` string to ``molfile`` and back to
+    ``InChI`` string."""
+    original_inchi_str = inchi_str.strip()
+
+    with tempfile.NamedTemporaryFile(mode='w') as temp_inchi_fh, \
+         tempfile.NamedTemporaryFile(mode='w') as temp_mol_fh, \
+         tempfile.NamedTemporaryFile(mode='w') as temp_converted_inchi_fh:
+
+        temp_inchi_fh.write(original_inchi_str)
+        temp_inchi_fh.flush()
+
+        options = {}
+        if inchi_str.startswith('InChI=1/'):
+            options['fixedh'] = '-xF'
+
+        openbabel.convert(input_file_path=temp_inchi_fh.name, output_file_path=temp_mol_fh.name,
+                          input_format='inchi', output_format='mol', gen3D='--gen3D')
+
+        openbabel.convert(input_file_path=temp_mol_fh.name, output_file_path=temp_converted_inchi_fh.name,
+                          input_format='mol', output_format='inchi', **options)
+
+        with open(temp_converted_inchi_fh.name, 'r') as inf:
+            converted_inchi_str = inf.read().strip()
+
+    if original_inchi_str != converted_inchi_str:
+        logger.warning('WARNING: Circular conversion test (InChI to molfile to InChI) did not pass.'
+                       'Original InChI: {}'
+                       'Converted InChI: {}'.format(original_inchi_str, converted_inchi_str))
+
