@@ -202,8 +202,13 @@ def create_svg_str(inchi_str, **options):
 
 
 def circular_consistency_test(inchi_str):
-    """Perform conversion from ``InChI`` string to ``molfile`` and back to
-    ``InChI`` string."""
+    """Perform conversion from ``InChI`` string to ``Molfile`` and back to
+    ``InChI`` string.
+
+    :param str inchi_str: ``InChI`` string.
+    :return: None
+    :rtype: :py:obj:`None`
+    """
     original_inchi_str = inchi_str.strip()
 
     with tempfile.NamedTemporaryFile(mode='w') as temp_inchi_fh, \
