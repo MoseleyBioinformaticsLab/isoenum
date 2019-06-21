@@ -36,7 +36,12 @@ This package includes the following modules:
 
 import logging
 
-__version__ = '0.3.2'
+from . import fileio
+from . import api
+from . import openbabel
+
+
+__version__ = '0.3.2.dev'
 
 
 try:  # Python 2/3 compatibility code
