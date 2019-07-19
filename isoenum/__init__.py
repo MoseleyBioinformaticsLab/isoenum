@@ -41,7 +41,7 @@ from . import api
 from . import openbabel
 
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 
 try:  # Python 2/3 compatibility code
