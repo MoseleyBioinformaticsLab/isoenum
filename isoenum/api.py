@@ -171,6 +171,40 @@ def create_new_molfile(molfile, ctab_iso_layer):
     return new_molfile
 
 
+def create_aggregate_molfile(ctfile, entry_ids):
+    """Create aggregate `Molfile` that has isotopic labeling from all associated entry ids.
+
+    :param ctfile: `SDfile` instance.
+    :type ctfile: :class:`~ctfile.ctfile.SDfile`
+    :param list entry_ids: List of entry ids within `SDfile` instance.
+    :return: Tuple of new `Molfile` and data associated with it.
+    :rtype: :py:class:`tuple`
+    """
+    ctab_iso_layer = []
+    coupling_types = set()
+    sdfile_data = OrderedDict()
+
+    for entry_id in entry_ids:
+        molfile = ctfile[entry_id]['molfile']
+
+        for coupling in ctfile[entry_id]['data']['CouplingType']:
+            coupling_types.add(coupling)
+
+        for atom in molfile.atoms:
+            iso_property = {'atom_number': str(atom.atom_number),
+                            'isotope': str(atom.isotope)}
+            if iso_property not in ctab_iso_layer:
+                ctab_iso_layer.append(iso_property)
+            else:
+                continue
+
+    new_molfile = create_new_molfile(molfile=molfile, ctab_iso_layer=ctab_iso_layer)
+    sdfile_data['CouplingType'] = sorted(coupling_types, key=lambda x: (x.split("]")[1], x))
+    sdfile_data['InChI'] = [fileio.create_inchi_from_ctfile_obj(ctf=new_molfile)]
+
+    return new_molfile, sdfile_data
+
+
 def create_inchi_groups(ctfile):
     """Organize `InChI` into groups based on their identical `InChI` string and similar coupling type.
 
