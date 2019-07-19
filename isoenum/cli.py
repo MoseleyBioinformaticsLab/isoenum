@@ -111,6 +111,7 @@ def cli(cmdargs):
                       output_path=cmdargs['--output'],
                       output_format=cmdargs['--format'])
 
+
 def _unpack(param):
     """Unpack command-line option.
 
@@ -158,7 +159,7 @@ def create_output(sdfile, path=None, file_format='inchi'):
     :param sdfile: ``SDfile`` instance.
     :type sdfile: :class:`~ctfile.ctfile.SDfile`.
     :param str path: Path to where file will be saved. 
-    :param str format: File format: 'inchi', 'mol', 'sdf', 'json', or 'csv'. 
+    :param str file_format: File format: 'inchi', 'mol', 'sdf', 'json', or 'csv'.
     :return: None.
     :rtype: :py:obj:`None`
     """
