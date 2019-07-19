@@ -23,7 +23,7 @@ from . import openbabel
 from .conf import isotopes_conf
 
 
-def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_iso_opt):
+def iso(path_or_id, specific_opt=None, all_opt=None, enumerate_opt=None, complete_opt=False, ignore_iso_opt=False):
     """Create isotopically-resolved ``SDfile``.
 
     :param str path_or_id: Path to ``CTfile`` or file identifier.
@@ -40,9 +40,18 @@ def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_i
     ctfile = fileio.create_ctfile(path_or_id=path_or_id)
     sdfile = fileio.create_empty_sdfile_obj()
 
+    if specific_opt is None:
+        specific_opt = []
+
+    if all_opt is None:
+        all_opt = []
+
+    if enumerate_opt is None:
+        enumerate_opt = []
+
     for molfile in ctfile.molfiles:
-        existing_opt = ['{}:{}:{}'.format(isotope['isotope'], isotope['atom_symbol'], isotope['atom_number'])
-                        for isotope in molfile.iso]
+        existing_opt = ['{}:{}:{}'.format(atom.isotope, atom.atom_symbol, atom.atom_number)
+                        for atom in molfile.atoms if atom.isotope]
 
         specific_iso = _check_specific_opt(isotopes=specific_opt, isotopes_conf=isotopes_conf, ctfile=molfile)
         existing_iso = _check_specific_opt(isotopes=existing_opt, isotopes_conf=isotopes_conf, ctfile=molfile)
@@ -57,16 +66,13 @@ def iso(path_or_id, specific_opt, all_opt, enumerate_opt, complete_opt, ignore_i
                                                            isotopes_conf=isotopes_conf, ctfile=molfile)
 
         for labeling_schema in labeling_schemas:
-            ctab_iso_layer_property = []
             sdfile_data = OrderedDict()
-            for entry in labeling_schema:
-                ctab_iso_layer_property.append((entry['position'], entry['isotope']))
-
-            ctab_iso_layer_property = sorted(ctab_iso_layer_property, key=lambda x: int(x[0]))
-            molfile.replace_ctab_property(ctab_property_name='ISO', values=ctab_iso_layer_property)
             new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
 
-            sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(molfile)))
+            for isotope_spec in labeling_schema:
+                new_molfile.atom_by_number(atom_number=isotope_spec['atom_number']).isotope = isotope_spec['isotope']
+
+            sdfile_data.setdefault('InChI', []).append('{}'.format(fileio.create_inchi_from_ctfile_obj(new_molfile)))
             sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
 
     return sdfile
@@ -121,25 +127,38 @@ def iso_nmr(path_or_id, experiment_type, couplings, decoupled, subset):
         coupling_combinations = nmr_experiment.generate_coupling_combinations(molfile=molfile, subset=subset)
 
         for coupling_combination in coupling_combinations:
-            ctab_iso_layer_property = []
             sdfile_data = OrderedDict()
 
+            ctab_iso_layer = []
             for coupling in coupling_combination:
                 for atom in more_itertools.flatten(coupling.coupling_path):
                     if atom.atom_symbol in coupling.nmr_active_atoms:
-                        ctab_iso_layer_property.append((str(atom.atom_number), str(atom.isotope)))
+                        ctab_iso_layer.append({'atom_number': str(atom.atom_number),
+                                               'isotope': str(atom.isotope)})
 
                 sdfile_data.setdefault('CouplingType', []).append(coupling.name)
 
-            ctab_iso_layer_property = sorted(ctab_iso_layer_property, key=lambda x: int(x[0]))
-            molfile.replace_ctab_property(ctab_property_name='ISO', values=ctab_iso_layer_property)
-            new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
+            new_molfile = create_new_molfile(molfile=molfile, ctab_iso_layer=ctab_iso_layer)
 
             sdfile_data.setdefault('InChI', []).append(
                 '{}'.format(fileio.create_inchi_from_ctfile_obj(ctf=new_molfile)))
             sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
-
     return sdfile
+
+
+def create_new_molfile(molfile, ctab_iso_layer):
+    """Create new `Molfile` instance with new isotopic labeling specification.
+
+    :param ctfile: `Molfile` instance.
+    :type ctfile: :class:`~ctfile.ctfile.Molfile`
+    :param list ctab_iso_layer: Isotopic layer specification.
+    :return: New `Molfile` instance.
+    :rtype: :class:`~ctfile.ctfile.Molfile`
+    """
+    new_molfile = fileio.create_ctfile_from_ctfile_str(ctfile_str=molfile.writestr(file_format='ctfile'))
+    for isotope_spec in ctab_iso_layer:
+        new_molfile.atom_by_number(atom_number=isotope_spec['atom_number']).isotope = isotope_spec['isotope']
+    return new_molfile
 
 
 def _check_specific_opt(isotopes, isotopes_conf, ctfile):
@@ -158,10 +177,9 @@ def _check_specific_opt(isotopes, isotopes_conf, ctfile):
     ctfile_position_atom = dict(zip(positions, allowed_atom_symbols))
     specific_iso = {}
 
-    for isotopestr in isotopes:
-
+    for isotope_str in isotopes:
         try:
-            isotope, atom, position = isotopestr.split(':')
+            isotope, atom, position = isotope_str.split(':')
         except ValueError:
             raise ValueError('Incorrect isotope specification, use "isotope:element:position" format.')
 
@@ -175,7 +193,7 @@ def _check_specific_opt(isotopes, isotopes_conf, ctfile):
             raise ValueError('There is no "{}" atom at position "{}"'.format(atom, position))
 
         position_atom[position].append('{}-{}'.format(atom, isotope))
-        specific_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
+        specific_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'atom_number': position}
 
     if all(len(isotopes) == 1 for isotopes in position_atom.values()):
         return specific_iso
@@ -199,10 +217,9 @@ def _check_all_opt(isotopes, isotopes_conf, ctfile):
     atom_isotope = defaultdict(list)
     all_iso = {}
 
-    for isotopestr in isotopes:
-
+    for isotope_str in isotopes:
         try:
-            isotope, atom = isotopestr.split(':')
+            isotope, atom = isotope_str.split(':')
         except ValueError:
             raise ValueError('Incorrect isotope specification, use "isotope:element" format.')
 
@@ -216,7 +233,7 @@ def _check_all_opt(isotopes, isotopes_conf, ctfile):
 
         for position, ctfile_atom in position_atom.items():
             if atom == ctfile_atom:
-                all_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
+                all_iso[position] = {'atom_symbol': atom, 'isotope': isotope, 'atom_number': position}
 
     if all(len(isotopes) == 1 for isotopes in atom_isotope.values()):
         return all_iso
@@ -240,19 +257,18 @@ def _check_enumerate_opt(enumerate_opt, all_iso, isotopes_conf, ctfile):
     all_param_atoms = [entry['atom_symbol'] for entry in all_iso.values()]
     enumerate_iso = []
 
-    for isotopestr in enumerate_opt:
-
+    for isotope_str in enumerate_opt:
         try:
-            isotope, atom, min_count, max_count = isotopestr.split(':')
+            isotope, atom, min_count, max_count = isotope_str.split(':')
 
         except ValueError:
             try:
-                isotope, atom, max_count = isotopestr.split(':')
+                isotope, atom, max_count = isotope_str.split(':')
                 min_count = 0
 
             except ValueError:
                 try:
-                    isotope, atom = isotopestr.split(':')
+                    isotope, atom = isotope_str.split(':')
                     max_count = atom_counter[atom]
                     min_count = 0
 
