@@ -146,6 +146,16 @@ def iso_nmr(path_or_id, experiment_type, couplings, decoupled, subset):
     return sdfile
 
 
+def coupling_descr(coupling_types):
+    """Concatenate a list of coupling types into coupling description string.
+
+    :param coupling_types: List of coupling types.
+    :return: Coupling description string.
+    :rtype: :py:class:`str`
+    """
+    return " + ".join([coupling_type.split("]")[1] for coupling_type in coupling_types])
+
+
 def create_new_molfile(molfile, ctab_iso_layer):
     """Create new `Molfile` instance with new isotopic labeling specification.
 
