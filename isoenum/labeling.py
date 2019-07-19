@@ -56,7 +56,7 @@ def create_labeling_schema(complete_labeling_schema, ignore_existing_isotopes,
             default_iso = _default_isotopes(ctfile=ctfile, isotopes_conf=isotopes_conf, current_iso=starting_iso)
             starting_iso.update(default_iso)
 
-        labeling_schema = sorted(starting_iso.values(), key=lambda k: int(k['position']))
+        labeling_schema = sorted(starting_iso.values(), key=lambda k: int(k['atom_number']))
         yield labeling_schema
 
     else:
@@ -71,7 +71,7 @@ def create_labeling_schema(complete_labeling_schema, ignore_existing_isotopes,
             list_of_isotopes_per_position[position].extend(isotopes_per_atom.get(atom, [None]))
 
         for entry in starting_iso.values():
-            list_of_isotopes_per_position[entry['position']] = [entry['isotope']]
+            list_of_isotopes_per_position[entry['atom_number']] = [entry['isotope']]
 
         list_of_isotopes_per_position_sorted_by_position = [list_of_isotopes_per_position[iso] for iso in
                                                             sorted(list_of_isotopes_per_position, key=int)]
@@ -93,13 +93,13 @@ def create_labeling_schema(complete_labeling_schema, ignore_existing_isotopes,
             if all(valid_labeling):
                 for atom, isotope, position in zip(allowed_atom_symbols, prod, positions):
                     if isotope:
-                        labeling_schema[position] = {'atom_symbol': atom, 'isotope': isotope, 'position': position}
+                        labeling_schema[position] = {'atom_symbol': atom, 'isotope': isotope, 'atom_number': position}
 
             if complete_labeling_schema:
                 default_iso = _default_isotopes(ctfile=ctfile, isotopes_conf=isotopes_conf, current_iso=labeling_schema)
                 labeling_schema.update(default_iso)
 
-            labeling_schema = sorted(labeling_schema.values(), key=lambda k: int(k['position']))
+            labeling_schema = sorted(labeling_schema.values(), key=lambda k: int(k['atom_number']))
             if labeling_schema:
                 yield labeling_schema
 
