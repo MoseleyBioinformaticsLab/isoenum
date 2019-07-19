@@ -161,6 +161,22 @@ def create_new_molfile(molfile, ctab_iso_layer):
     return new_molfile
 
 
+def create_inchi_groups(ctfile):
+    """Organize `InChI` into groups based on their identical `InChI` string and similar coupling type.
+
+    :param ctfile: `SDfile` instance.
+    :type ctfile: :class:`~ctfile.ctfile.SDfile`
+    :return: Dictionary of related `InChI` groups.
+    :rtype: :rtype: :py:class:`dict`
+    """
+    inchi_groups = defaultdict(list)
+    for entry_id, entry in ctfile.items():
+        inchi_str = entry["data"]["InChI"][0]
+        descr = coupling_descr(coupling_types=entry["data"]["CouplingType"])
+        inchi_groups[(inchi_str, descr)].append(entry_id)
+    return inchi_groups
+
+
 def _check_specific_opt(isotopes, isotopes_conf, ctfile):
     """Check if `specific` option is consistent.
 
