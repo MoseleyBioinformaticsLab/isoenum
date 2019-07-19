@@ -143,6 +143,8 @@ def iso_nmr(path_or_id, experiment_type, couplings, decoupled, subset):
             sdfile_data.setdefault('InChI', []).append(
                 '{}'.format(fileio.create_inchi_from_ctfile_obj(ctf=new_molfile)))
             sdfile.add_molfile(molfile=new_molfile, data=sdfile_data)
+
+    annotate_me_groups(ctfile=sdfile)
     return sdfile
 
 
@@ -219,6 +221,33 @@ def create_inchi_groups(ctfile):
         descr = coupling_descr(coupling_types=entry["data"]["CouplingType"])
         inchi_groups[(inchi_str, descr)].append(entry_id)
     return inchi_groups
+
+
+def annotate_me_groups(ctfile):
+    """Annotate magnetically equivalent (have the same `InChI`) coupling type groups.
+
+    :param ctfile: `SDfile` instance.
+    :type ctfile: :class:`~ctfile.ctfile.SDfile`
+    :return: None.
+    :rtype: :py:obj:`None`
+    """
+    inchi_groups = create_inchi_groups(ctfile)
+    me_ids = {inchi_str: group_id for inchi_str, group_id in zip(inchi_groups.keys(), list(range(1, len(inchi_groups) + 1)))}
+
+    for data in ctfile.sdfdata:
+        inchi_str = data["InChI"][0]
+        descr = coupling_descr(coupling_types=data["CouplingType"])
+        me_group_id = "ME{}".format(me_ids[(inchi_str, descr)])
+        data["MEGroup"] = [me_group_id]
+
+    for inchi_group, entry_ids in inchi_groups.items():
+        if len(entry_ids) > 1:
+            new_molfile, sdfile_data = create_aggregate_molfile(ctfile=ctfile, entry_ids=entry_ids)
+            me_group_id = "MEA{}".format(me_ids[inchi_group])
+            sdfile_data["MEGroup"] = [me_group_id]
+            ctfile.add_molfile(molfile=new_molfile, data=sdfile_data)
+        else:
+            continue
 
 
 def _check_specific_opt(isotopes, isotopes_conf, ctfile):
