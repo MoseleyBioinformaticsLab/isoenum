@@ -280,8 +280,8 @@ class J3HH(Coupling):
                     [ResonanceAtom(atom=atom, isotope=self.nmr_active_atoms.get(atom.atom_symbol, '')) for atom in neighbor_carbon_atom.neighbor_hydrogen_atoms]
                 ]
                 couplings.append(self.__class__(coupling_path=coupling_path,
-                                            nmr_active_atoms=self.nmr_active_atoms,
-                                            subset_atoms=self.subset_atoms))
+                                                nmr_active_atoms=self.nmr_active_atoms,
+                                                subset_atoms=self.subset_atoms))
         return couplings
 
     def is_resonance_compatible(self, resonance):
@@ -303,8 +303,8 @@ class HResonance(Coupling):
 
     def __init__(self, coupling_path=None, nmr_active_atoms=None, subset_atoms=None):
         super(HResonance, self).__init__(coupling_path=coupling_path,
-                                   nmr_active_atoms=nmr_active_atoms,
-                                   subset_atoms=subset_atoms)
+                                         nmr_active_atoms=nmr_active_atoms,
+                                         subset_atoms=subset_atoms)
 
     def couplings(self, carbon_atom):
         """Generate resonance.
@@ -428,11 +428,23 @@ class NMR1D1H(NMRExperiment):
 class NMR1DCHSQC(NMR1D1H):
     """1D 13C HSQC NMR experiment."""
 
-    def __init__(self, name, couplings=None, decoupled=None,
-                 default_coupling_definitions=(HResonance(nmr_active_atoms={'C': '13', 'H': '1'}, subset_atoms={'H': '2'}),
-                                               J1CH(nmr_active_atoms={'C': '13', 'H': '1'}, subset_atoms={'H': '2'}),
-                                               J2HH(nmr_active_atoms={'C': '13', 'H': '1'}, subset_atoms={'H': '2'}),
-                                               J3HH(nmr_active_atoms={'H': '1'}, subset_atoms={'H': '2'}))):
+    def __init__(
+        self,
+        name,
+        couplings=None,
+        decoupled=None,
+        default_coupling_definitions=(
+            HResonance(nmr_active_atoms={'C': '13', 'H': '1'}, subset_atoms={'H': '2'}),
+            J1CH(nmr_active_atoms={'C': '13', 'H': '1'}, subset_atoms={'H': '2'}),
+            J2HH(nmr_active_atoms={'C': '13', 'H': '1'}, subset_atoms={'H': '2'}),
+            J3HH(nmr_active_atoms={'H': '1'}, subset_atoms={'H': '2'}))):
+        """
+
+        :param name:
+        :param couplings:
+        :param decoupled:
+        :param default_coupling_definitions:
+        """
         super(NMR1DCHSQC, self).__init__(name=name, couplings=couplings, decoupled=decoupled,
                                          default_coupling_definitions=default_coupling_definitions)
 
