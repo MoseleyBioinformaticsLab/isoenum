@@ -35,9 +35,9 @@ def teardown_module(module):
     ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.sdf', '-a 13:C'),
     ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.sdf', '-e 13:C'),
     ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/bmse000040.sdf', '-s 13:C:2'),
-    ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/acetic_acid.inchi', '-a 13:C'),
-    ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/acetic_acid.inchi', '-e 13:C'),
-    ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/acetic_acid.inchi', '-s 13:C:2')
+    ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/valine.inchi', '-a 13:C'),
+    ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/valine.inchi', '-e 13:C'),
+    ('https://raw.githubusercontent.com/MoseleyBioinformaticsLab/isoenum/master/tests/example_data/valine.inchi', '-s 13:C:2')
 ])
 def test_name_command(path, parameters):
     command = "python -m isoenum name {} {}".format(path, parameters)
