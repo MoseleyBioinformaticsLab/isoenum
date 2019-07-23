@@ -2,7 +2,7 @@ language: python
 # install prerequisites
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install openbabel
+  - sudo snap install openbabel
 # install dependencies
 install:
   - pip install -r requirements.txt
@@ -12,18 +12,22 @@ install:
 jobs:
   include:
     - stage: test
+      dist: bionic
       python: '2.7'
       script:
         - python -m pytest -v --cov=./isoenum
     - stage: test
+      dist: bionic
       python: '3.4'
       script:
         - python -m pytest -v --cov=./isoenum
     - stage: test
+      dist: bionic
       python: '3.5'
       script:
         - python -m pytest -v --cov=./isoenum
     - stage: test
+      dist: bionic
       python: '3.6'
       script:
         - python -m pytest -v --cov=./isoenum
