@@ -3,6 +3,7 @@ language: python
 before_install:
   - sudo apt-get -qq update
   - sudo snap install openbabel
+  - sudo snap alias openbabel.obabel obabel
 # install dependencies
 install:
   - pip install -r requirements.txt
