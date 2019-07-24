@@ -2,8 +2,14 @@ language: python
 # install prerequisites
 before_install:
   - sudo apt-get -qq update
-  - sudo snap install openbabel
-  - sudo snap alias openbabel.obabel obabel
+  - sudo apt-get install cmake -y
+  - wget https://github.com/openbabel/openbabel/archive/openbabel-2-4-1.zip
+  - unzip openbabel-2-4-1.zip
+  - cd openbabel-openbabel-2-4-1
+  - mkdir build && cs build
+  - cmake ..
+  - make -j2
+  - sudo make install
 # install dependencies
 install:
   - pip install -r requirements.txt
