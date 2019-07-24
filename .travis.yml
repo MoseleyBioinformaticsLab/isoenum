@@ -6,7 +6,7 @@ before_install:
   - wget https://github.com/openbabel/openbabel/archive/openbabel-2-4-1.zip
   - unzip openbabel-2-4-1.zip
   - cd openbabel-openbabel-2-4-1
-  - mkdir build && cs build
+  - mkdir build && cd build
   - cmake ..
   - make -j2
   - sudo make install
