@@ -8,7 +8,7 @@
 [![Code coverage information](https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/MoseleyBioinformaticsLab/isoenum)
 
 [![Docker Automated build](https://img.shields.io/docker/automated/moseleybioinformaticslab/isoenum.svg)](https://github.com/MoseleyBioinformaticsLab/isoenum)
-[![Docker Build Status](https://img.shields.io/docker/build/moseleybioinformaticslab/isoenum.svg)](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
+[![Docker Build Status](https://img.shields.io/docker/build/moseleybioinformaticslab/isoenum.svg)](https://hub.docker.com/r/moseleybioinformaticslab/isoenum/builds)
 [![Docker Pulls Status](https://img.shields.io/docker/pulls/moseleybioinformaticslab/isoenum.svg)](https://hub.docker.com/r/moseleybioinformaticslab/isoenum)
 
 

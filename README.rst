@@ -33,7 +33,7 @@ isoenum
    :alt: Docker automated build
 
 .. image:: https://img.shields.io/docker/build/moseleybioinformaticslab/isoenum.svg
-   :target: https://hub.docker.com/r/moseleybioinformaticslab/isoenum
+   :target: https://hub.docker.com/r/moseleybioinformaticslab/isoenum/builds
    :alt: Docker build status
 
 .. image:: https://img.shields.io/docker/pulls/moseleybioinformaticslab/isoenum.svg
