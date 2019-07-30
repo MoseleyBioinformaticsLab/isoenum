@@ -1,7 +1,7 @@
 # To build this docker image run the following command from directory containing Dockerfile:
 #     docker build -t isoenum .
 
-FROM fedora:27
+FROM fedora:30
 
 MAINTAINER	Andrey Smelter
 
