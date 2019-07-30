@@ -10,7 +10,10 @@ between different file formats used in molecular modeling and computational
 chemistry (e.g. ``InChI``, ``SMILES``, ``Molfile``, etc.).
 """
 
+import re
 import subprocess
+
+from packaging import version
 
 try:
     from subprocess import DEVNULL
@@ -20,7 +23,7 @@ except ImportError:
     DEVNULL = open(os.devnull, "wb")
 
 
-def _test_openbabel():
+def _test_openbabel(required_openbabel_version="2.4.1"):
     """Test if Open Babel software is installed.
     
     :return: None.
@@ -29,12 +32,26 @@ def _test_openbabel():
     try:
         openbabel_version_test = subprocess.check_output(["obabel", "-V"])
         openbabel_version = openbabel_version_test.decode("utf-8")
-        if not openbabel_version.startswith("Open Babel"):
+
+        version_pattern = re.compile("\d{1,2}\.\d{1,2}\.\d{1,2}")
+        openbabel_version_number = re.search(version_pattern, openbabel_version)
+
+        if not openbabel_version_number:
             raise SystemExit(
                 "Open Babel version information cannot be found: {}".format(
                     openbabel_version
                 )
             )
+        else:
+            if version.parse(openbabel_version_number.group()) < version.parse(
+                required_openbabel_version
+            ):
+                raise SystemExit(
+                    "Open Babel version {} is required.".format(
+                        required_openbabel_version
+                    )
+                )
+
     except OSError:
         raise SystemExit(
             "Open Babel software is not installed, exiting. "
