@@ -3,6 +3,26 @@
 Release History
 ===============
 
+0.4.0 (2019-07-19)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Added documentation on how to install development version from GitHub.
+- Simplified set of functions that interfaces with Open Babel.
+- Added default output formats configuration file.
+- Generalized functions that create ``CTfile`` objects to accept
+  both ``InChI`` and ``SMILES``.
+- Added API functions module.
+- Added functionality to annotate `Molfiles` that have the same `InChI` and
+  coupling type but different labeling schema as magnetically equivalent.
+
+**Bugfixes**
+
+- Fixed bug that used arbitrary output file format extension to save the results.
+- Fixed bug not being able to pass two-word options to Open Babel.
+
+
 0.3.1 (2018-08-27)
 ~~~~~~~~~~~~~~~~~~
 
