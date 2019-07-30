@@ -31,7 +31,8 @@ REQUIRES = [
     'docopt >= 0.6.2',
     'ctfile >= 0.1.6',
     'more_itertools >= 4.1.0',
-    'requests >= 2.18.4'
+    'requests >= 2.18.4',
+    'packaging >= 19.1'
 ]
 
 
