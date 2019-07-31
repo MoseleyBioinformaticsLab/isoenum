@@ -1,7 +1,7 @@
 Welcome to isoenum's documentation!
 ===================================
 
-.. include:: ../README.rst
+.. mdinclude:: ../README.md
 
 Documentation index:
 ====================
