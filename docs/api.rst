@@ -8,7 +8,7 @@ The isoenum API Reference
    :member-order: bysource
    :members:
 
-.. automodule:: isoenum.labeling_schema
+.. automodule:: isoenum.labeling
    :member-order: bysource
    :members:
 
