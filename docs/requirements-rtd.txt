@@ -1,4 +1,4 @@
-m2r
+recommonmark
 docopt >= 0.6.2
 ctfile >= 0.1.8
 more_itertools >= 4.1.0
