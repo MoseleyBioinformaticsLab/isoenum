@@ -16,6 +16,7 @@ import logging
 import ctfile
 import requests
 
+from . import exceptions
 from . import openbabel
 from . import utils
 
@@ -59,7 +60,7 @@ def create_ctfile(path_or_id, xyx_coordinates='--gen2D', explicit_hydrogens='-h'
     if ctf:
         return ctf
     else:
-        raise ValueError('Cannot create "CTfile" object, empty object.')
+        raise exceptions.EmptyCTFileError('Cannot create "CTfile" object.')
 
 
 def create_ctfile_from_ctfile_str(ctfile_str):
