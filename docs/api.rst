@@ -31,3 +31,7 @@ The isoenum API Reference
 .. automodule:: isoenum.openbabel
    :member-order: bysource
    :members:
+
+.. automodule:: isoenum.exceptions
+   :member-order: bysource
+   :members:
