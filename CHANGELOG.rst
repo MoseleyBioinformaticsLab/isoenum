@@ -3,6 +3,14 @@
 Release History
 ===============
 
+0.4.1 (2019-08-12)
+~~~~~~~~~~~~~~~~~~
+
+**Improvements**
+
+- Added custom exceptions module.
+
+
 0.4.0 (2019-07-30)
 ~~~~~~~~~~~~~~~~~~
 
