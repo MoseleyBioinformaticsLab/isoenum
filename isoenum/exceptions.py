@@ -1,4 +1,7 @@
 """
+isoenum.exceptions
+~~~~~~~~~~~~~~~~~~
+
 Custom exceptions.
 """
 
