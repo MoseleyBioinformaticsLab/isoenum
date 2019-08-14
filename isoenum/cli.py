@@ -9,7 +9,9 @@ Isotopic enumerator (isoenum) command-line interface
 
 Usage:
     isoenum -h | --help
+
     isoenum --version
+
     isoenum name (<path-to-ctfile-file-or-inchi-file-or-inchi-string>) 
                  [--specific=<isotope:element:position>...] 
                  [--all=<isotope:element>...] 
@@ -19,10 +21,12 @@ Usage:
                  [--format=<format>]
                  [--output=<path>]
                  [--verbose]
+
     isoenum ionize (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
                    (--state=<element:position:charge>...)
                    [--format=<format>]
                    [--output=<path>]
+
     isoenum nmr (<path-to-ctfile-file-or-inchi-file-or-inchi-string>)
                 [--type=<experiment-type>]
                 [--jcoupling=<name>...]
@@ -31,6 +35,7 @@ Usage:
                 [--output=<path>]
                 [--subset]
                 [--verbose]
+
     isoenum vis (<path-to-ctfile-file-or-inchi-file-or-inchi-string>) 
                 (--format=<format>)
                 (--output=<path>)
