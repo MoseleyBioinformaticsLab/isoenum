@@ -13,6 +13,7 @@ Documentation index:
    tutorial
    tutorial-docker
    api
+   changelog
    license
 
 
