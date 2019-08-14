@@ -11,6 +11,10 @@ This package includes the following modules:
 ``cli``
     This module provides the command-line interface for the ``isoenum`` package.
 
+``api``
+    This module provides routines to augment ``CTfile`` objects with additional
+    information and used by ``isoenum`` package CLI.
+
 ``labeling``
     This module provides functions for generating a labeling schema.
 
@@ -32,6 +36,9 @@ This package includes the following modules:
 
 ``utils``
     This module provides reusable utility functions.
+
+``exceptions``
+    This module provides ``isoenum`` package custom exceptions.
 """
 
 import logging
